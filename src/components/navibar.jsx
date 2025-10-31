@@ -1,5 +1,6 @@
 // components/Navibar.jsx
 import './Navibar.css';
+
 import { Link } from 'react-router-dom';
 import loginface from '../assets/loginface.svg';
 
