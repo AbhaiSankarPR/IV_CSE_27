@@ -1,5 +1,5 @@
 import './App.css';
-import Navibar from './components/Navibar.jsx';
+import Navibar from "./components/navibar.jsx";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // example placeholder pages
