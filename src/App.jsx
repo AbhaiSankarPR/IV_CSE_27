@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // example placeholder pages
 import Home from './pages/Home';
 // import Schedule from './pages/Schedule';
-import Coordinators from './pages/coordinators';
+import Coordinators from './pages/coordinators.jsx';
 // import Images from './pages/Images';
 
 function App() {
