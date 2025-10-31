@@ -1,0 +1,60 @@
+/* Navibar.css */
+.navbar {
+  background-color: #0f0f0f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-family: 'Inter', sans-serif;
+border-bottom: thin solid rgba(50, 50, 50, 0.838);
+  border-width: 1px;
+}
+
+/* Logo stays bright and bold */
+.logo {
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+/* Right-side links start gray, turn white on hover */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-right a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-right a:hover {
+  color: white;
+}
+
+/* Avatar circle on far right */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #444;
+  cursor: pointer;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background-color: #aaa;
+}

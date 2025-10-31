@@ -1,0 +1,78 @@
+/* Coordinators.css */
+.coordinators-container {
+  color: white;
+  background-color: #0f0f0f;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.coordinators-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.intro {
+  text-align: center;
+  color: #bbb;
+  margin-bottom: 3rem;
+}
+
+.team-group {
+  margin-bottom: 2rem;
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #cdcdcd;
+  transition: transform 0.2s ease;
+}
+
+.team-group:hover {
+  transform: translateY(-3px);
+}
+
+.team-group h3 {
+  color: #0077ff;
+  margin-bottom: 0.5rem;
+}
+
+.team-group p {
+  color: #ccc;
+}
+
+.team-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.member-card {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  width: 150px;
+  transition: transform 0.2s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+}
+
+.member-card img {
+  width: 10dvw;
+  height: 25dvh;
+  object-fit: cover;
+  border-radius: 10dvh;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-align: center;
+}
