@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 import Home from "../pages/Home";
-import Coordinators from "../pages/coordinators";
-import Images from "../pages/images";
+import Coordinators from "../pages/Coordinators";
+import Images from "../pages/Images";
 import ErrorPage from "../pages/ErrorPage";
 
 // Define and export the router
