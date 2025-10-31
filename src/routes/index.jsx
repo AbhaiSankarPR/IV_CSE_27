@@ -1,0 +1,34 @@
+import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+
+import Home from "../pages/Home";
+import Coordinators from "../pages/coordinators";
+import Images from "../pages/images";
+import ErrorPage from "../pages/ErrorPage";
+
+// Define and export the router
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/coordinators",
+        element: <Coordinators />,
+      },
+      {
+        path: "/images",
+        element: <Images />,
+      },
+      {
+        path: "/schedule",
+        element: <div>Schedule Page Coming Soon...</div>,
+      },
+    ],
+  },
+]);
