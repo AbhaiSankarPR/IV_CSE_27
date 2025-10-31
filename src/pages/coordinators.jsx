@@ -1,5 +1,5 @@
 // pages/Coordinators.jsx
-import './Coordinators.css';
+import './coordinators.css';
 import pramad from '../assets/pramad.jpg';
 import aditya from '../assets/Adithyasuresh.png';
 
