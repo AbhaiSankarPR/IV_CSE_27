@@ -6,6 +6,7 @@ import Coordinators from "../pages/Coordinators";
 import Images from "../pages/Images";
 import ErrorPage from "../pages/ErrorPage";
 import AuthPage from "../pages/AuthPage";
+import Schedule from "../pages/Schedule";
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +32,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/schedule",
-        element: <div>Schedule Page Coming Soon...</div>,
-      },
+        element: <Schedule/>,
+      }
+      // {
+      //   path: "/schedule",
+      //   element: <div>Schedule Page Coming Soon...</div>,
+      // },
     ],
   },
 ]);
