@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import loginface from "../assets/loginface.svg";
 
-function Navibar() {
+function Navbar() {
   const getNavLinkClass = ({ isActive }) => {
     return isActive
       ? "text-white font-medium"
@@ -42,4 +42,4 @@ function Navibar() {
   );
 }
 
-export default Navibar;
+export default Navbar;
