@@ -17,17 +17,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen pt-10 md:pt-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
       <div className="relative w-full min-h-screen flex flex-col lg:flex-row overflow-hidden">
 
-        {/* --- FORM CONTAINER --- */}
         <div
           className={`flex flex-col items-center justify-center w-full lg:w-1/2 px-6 sm:px-10 transition-transform duration-700 ease-in-out ${
             isLogin ? "translate-x-0" : "lg:translate-x-full"
           }`}
         >
           {isLogin ? (
-            // --- LOGIN FORM ---
             <div className="w-full max-w-md">
               <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
                 Welcome Back
@@ -58,7 +56,6 @@ export default function AuthPage() {
               </p>
             </div>
           ) : (
-            // --- SIGNUP FORM ---
             <div className="w-full max-w-md">
               <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
                 Create Account
@@ -131,7 +128,6 @@ export default function AuthPage() {
           )}
         </div>
 
-        {/* --- SLIDING GREEN PANEL (Visible only on large screens) --- */}
         <div
           className={`hidden lg:flex absolute top-0 left-0 h-full w-1/2 bg-green-500 flex-col justify-center items-center text-black font-semibold text-center p-10 transition-transform duration-700 ease-in-out ${
             isLogin ? "translate-x-full" : "translate-x-0"
