@@ -5,7 +5,7 @@ import Home from "../pages/Home";
 import Coordinators from "../pages/Coordinators";
 import Images from "../pages/Images";
 import ErrorPage from "../pages/ErrorPage";
-import Login from "../pages/Login";
+import AuthPage from "../pages/AuthPage";
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +26,8 @@ export const router = createBrowserRouter([
         element: <Images />,
       },
       {
-        path: "/login",
-        element: <Login />,
+        path: "/auth",
+        element: <AuthPage />,
       },
       {
         path: "/schedule",
