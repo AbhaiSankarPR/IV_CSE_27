@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"; // Import Outlet
+import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 
 function App() {

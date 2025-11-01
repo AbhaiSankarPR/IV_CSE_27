@@ -15,11 +15,9 @@ export default function Images() {
     "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
   ];
 
-  const uniqueImages = [...new Set(imageUrls)];
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5">
-      {uniqueImages.map((img, i) => (
+      {imageUrls.map((img, i) => (
         <div className="w-full h-64" key={i}>
           <img
             src={img}

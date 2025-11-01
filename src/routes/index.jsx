@@ -6,7 +6,6 @@ import Coordinators from "../pages/Coordinators";
 import Images from "../pages/Images";
 import ErrorPage from "../pages/ErrorPage";
 
-// Define and export the router
 export const router = createBrowserRouter([
   {
     path: "/",
