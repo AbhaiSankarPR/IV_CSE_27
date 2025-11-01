@@ -52,7 +52,7 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/coordinators">
             Co-ordinators
           </NavLink>
-          <NavLink to="/login">
+          <NavLink to="/auth">
             <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
               <img
                 src={loginface}
