@@ -1,0 +1,71 @@
+import { useForm } from "react-hook-form";
+
+export default function Signin({ onToggleMode }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const onLoginSubmit = (data) => {
+    console.log("Login Data:", data);
+    alert("Login successful!");
+  };
+
+  return (
+    <div className="w-full max-w-md">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
+        Welcome Back
+      </h2>
+
+      <form className="space-y-4" onSubmit={handleSubmit(onLoginSubmit)}>
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Invalid email address",
+            },
+          })}
+        />
+        {errors.email && (
+          <p className="text-red-400 text-sm">{errors.email.message}</p>
+        )}
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+          {...register("password", {
+            required: "Password is required",
+          })}
+        />
+        {errors.password && (
+          <p className="text-red-400 text-sm">{errors.password.message}</p>
+        )}
+
+        <button
+          type="submit"
+          className="w-full py-3 bg-green-500 text-black rounded font-semibold hover:bg-green-400 transition"
+        >
+          Login
+        </button>
+      </form>
+
+      <p className="text-sm text-gray-400 mt-4 text-center">
+        Don’t have an account?{" "}
+        <button
+          onClick={onToggleMode}
+          className="text-green-400 hover:underline cursor-pointer"
+        >
+          Sign up
+        </button>
+      </p>
+    </div>
+  );
+}
