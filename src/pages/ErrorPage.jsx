@@ -17,7 +17,7 @@ export default function ErrorPage() {
         to="/"
         className="px-6 py-2 bg-brand-blue text-white rounded-lg font-semibold no-underline transition-transform hover:scale-105"
       >
-        Go Back Home
+        Go Back to Home
       </Link>
     </div>
   );
