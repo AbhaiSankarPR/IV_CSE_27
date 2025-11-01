@@ -23,13 +23,12 @@ function Navbar() {
         <NavLink className={getNavLinkClass} to="/schedule">
           Schedule
         </NavLink>
-        <NavLink className={getNavLinkClass} to="/coordinators">
-          Co-ordinators
-        </NavLink>
         <NavLink className={getNavLinkClass} to="/images">
           Images
         </NavLink>
-
+        <NavLink className={getNavLinkClass} to="/coordinators">
+          Co-ordinators
+        </NavLink>
         <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
           <img
             src={loginface}
