@@ -2,16 +2,31 @@ import { useState } from "react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    setPasswordError("");
+    alert("Signup successful!");
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
       <div className="relative w-full h-screen flex overflow-hidden">
+        {/* Form Container */}
         <div
           className={`absolute top-0 left-0 h-full w-1/2 flex flex-col items-center justify-center transition-transform duration-700 ease-in-out ${
             isLogin ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {isLogin ? (
+            // --- LOGIN FORM ---
             <div className="w-[70%] max-w-md">
               <h2 className="text-4xl font-bold mb-6 text-center">Welcome Back</h2>
               <form className="space-y-4">
@@ -40,9 +55,10 @@ export default function AuthPage() {
               </p>
             </div>
           ) : (
+            // --- SIGNUP FORM ---
             <div className="w-[70%] max-w-md">
               <h2 className="text-4xl font-bold mb-6 text-center">Create Account</h2>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSignupSubmit}>
                 <input
                   type="text"
                   placeholder="Name"
@@ -56,9 +72,46 @@ export default function AuthPage() {
                 <input
                   type="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (confirmPassword && e.target.value !== confirmPassword) {
+                      setPasswordError("Passwords do not match");
+                    } else {
+                      setPasswordError("");
+                    }
+                  }}
                   className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
                 />
-                <button className="w-full py-3 bg-green-500 text-black rounded font-semibold hover:bg-green-400 transition">
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (password && e.target.value !== password) {
+                      setPasswordError("Passwords do not match");
+                    } else {
+                      setPasswordError("");
+                    }
+                  }}
+                  className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+                />
+
+                {/* Password Error */}
+                {passwordError && (
+                  <p className="text-red-400 text-sm">{passwordError}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={passwordError || !password || !confirmPassword}
+                  className={`w-full py-3 rounded font-semibold transition ${
+                    passwordError || !password || !confirmPassword
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : "bg-green-500 text-black hover:bg-green-400"
+                  }`}
+                >
                   Sign Up
                 </button>
               </form>
