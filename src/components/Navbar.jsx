@@ -29,13 +29,15 @@ function Navbar() {
         <NavLink className={getNavLinkClass} to="/coordinators">
           Co-ordinators
         </NavLink>
-        <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
-          <img
-            src={loginface}
-            alt="loginface"
-            className="w-full h-full object-cover block bg-text-mid"
-          />
-        </div>
+        <NavLink to="/login">
+  <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
+    <img
+      src={loginface}
+      alt="loginface"
+      className="w-full h-full object-cover block bg-text-mid"
+    />
+  </div>
+</NavLink>
       </div>
     </nav>
   );
