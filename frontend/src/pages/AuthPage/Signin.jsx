@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Signin({ onToggleMode }) {
   const { login } = useAuth();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const {
     register,
@@ -14,11 +15,20 @@ export default function Signin({ onToggleMode }) {
     mode: "onChange",
   });
 
-  const onLoginSubmit = (data) => {
-    login({ email: data.email }); 
-    alert("Login successful!");
-    navigate("/dashboard");
+ const [loginError, setLoginError] = useState("");
+
+const onLoginSubmit = (data) => {
+  const validUsers = {
+    'a@gmail.com': '123456789',
   };
+
+  if (validUsers[data.email] === data.password) {
+    login({ email: data.email });
+    navigate("/dashboard");
+  } else {
+    alert("Invalid email or password");
+  }
+};
 
   return (
     <div className="w-full max-w-md">
