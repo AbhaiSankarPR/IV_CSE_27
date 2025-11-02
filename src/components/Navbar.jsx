@@ -46,6 +46,13 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/schedule">
             Schedule
           </NavLink>
+          <NavLink
+          className={getNavLinkClass}
+          to="/map"
+          onClick={() => setMenuOpen(false)}
+        >
+          LiveMap
+        </NavLink>
           <NavLink className={getNavLinkClass} to="/images">
             Images
           </NavLink>
@@ -82,6 +89,13 @@ function Navbar() {
           onClick={() => setMenuOpen(false)}
         >
           Schedule
+        </NavLink>
+        <NavLink
+          className={getNavLinkClass}
+          to="/map"
+          onClick={() => setMenuOpen(false)}
+        >
+          LiveMap
         </NavLink>
         <NavLink
           className={getNavLinkClass}

@@ -33,11 +33,11 @@ export const router = createBrowserRouter([
       {
         path: "/schedule",
         element: <Schedule/>,
-      }
-      // {
-      //   path: "/schedule",
-      //   element: <div>Schedule Page Coming Soon...</div>,
-      // },
+      },
+      {
+        path: "/map",
+        element: <div>Map Page Coming Soon...</div>,
+      },
     ],
   },
 ]);
