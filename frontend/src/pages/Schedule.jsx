@@ -401,8 +401,11 @@ export default function Schedule() {
             <p className="text-gray-400 mt-2">
               Departure: {selectedTrain.dep}
             </p>
-            <p className="text-gray-400">
+            <p className="text-gray-400 mt-2">
               Arrival: {selectedTrain.arr}
+            </p>
+            <p className="text-gray-400">
+              Class: {selectedTrain.class}
             </p>
           </div>
         </div>
