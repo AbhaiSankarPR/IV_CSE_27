@@ -396,13 +396,13 @@ export default function Schedule() {
             </h2>
             <p className="text-gray-300">Train No: {selectedTrain.number}</p>
             <p className="text-gray-400">
-              {selectedTrain.source} → {selectedTrain.destination}
+              {selectedTrain.from} → {selectedTrain.to}
             </p>
             <p className="text-gray-400 mt-2">
-              Departure: {selectedTrain.departure}
+              Departure: {selectedTrain.dep}
             </p>
             <p className="text-gray-400">
-              Arrival: {selectedTrain.arrival}
+              Arrival: {selectedTrain.arr}
             </p>
           </div>
         </div>
