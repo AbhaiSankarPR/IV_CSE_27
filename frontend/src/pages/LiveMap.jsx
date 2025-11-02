@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useAuth } from "./AuthPage/AuthContext"; // ✅ import login context
 
-// Fix Leaflet marker icon paths
+// Fix Leaflet marker paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -20,10 +21,13 @@ const redIcon = new L.Icon({
 });
 
 export default function JourneyMap() {
+  const { user } = useAuth(); // ✅ check if logged in
   const [liveLocation, setLiveLocation] = useState(null);
+  const [savedLocation, setSavedLocation] = useState(
+    JSON.parse(localStorage.getItem("savedLocation")) || null
+  );
   const [error, setError] = useState(null);
 
-  // Static journey route
   const routePoints = [
     { city: "Trivandrum", lat: 8.5241, lon: 76.9366 },
     { city: "Ahmedabad", lat: 23.0225, lon: 72.5714 },
@@ -50,7 +54,7 @@ export default function JourneyMap() {
 
   const route = routePoints.map((p) => [p.lat, p.lon]);
 
-  // Watch live user location
+  // Watch user's live position
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation not supported by this browser.");
@@ -64,14 +68,23 @@ export default function JourneyMap() {
           lon: pos.coords.longitude,
         });
       },
-      (err) => {
-        setError(err.message);
-      },
+      (err) => setError(err.message),
       { enableHighAccuracy: true }
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
+
+  // Save location (only visible for logged-in user)
+  const handleSaveLocation = () => {
+    if (liveLocation) {
+      localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
+      setSavedLocation(liveLocation);
+      alert("📍 Current location saved as meeting point!");
+    } else {
+      alert("Live location not detected yet.");
+    }
+  };
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
@@ -100,19 +113,35 @@ export default function JourneyMap() {
             </Marker>
           ))}
 
-          {/* Line connecting all cities */}
+          {/* Route line */}
           <Polyline positions={route} color="deepskyblue" weight={4} />
 
-          {/* Live location marker */}
+          {/* Live location marker (red) */}
           {liveLocation && (
-            <Marker
-              position={[liveLocation.lat, liveLocation.lon]}
-              icon={redIcon}
-            >
+            <Marker position={[liveLocation.lat, liveLocation.lon]} icon={redIcon}>
               <Popup>
                 <div className="font-semibold">You’re here</div>
                 <p className="text-sm text-gray-700 mt-1">
-                  Live location updated in real-time.
+                  Live location updating...
+                </p>
+              </Popup>
+            </Marker>
+          )}
+
+          {/* Saved location marker (green) */}
+          {savedLocation && (
+            <Marker
+              position={[savedLocation.lat, savedLocation.lon]}
+              icon={L.icon({
+                iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+              })}
+            >
+              <Popup>
+                <div className="font-semibold">Meeting Point</div>
+                <p className="text-sm text-gray-700 mt-1">
+                  Updated by class rep.
                 </p>
               </Popup>
             </Marker>
@@ -121,10 +150,21 @@ export default function JourneyMap() {
       </div>
 
       <p className="text-gray-400 mt-4 text-center text-sm">
-        Blue line shows your planned route. Red marker tracks your live position.
+        Blue line shows your planned route.
+        <br />Red = your live location | Green = class rep’s saved point.
       </p>
 
       {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}
+
+      {/* Show update button only if logged in */}
+      {user && (
+        <button
+          onClick={handleSaveLocation}
+          className="mt-6 px-6 py-3 bg-green-500 hover:bg-green-400 text-black rounded-lg font-semibold transition"
+        >
+          Update Location
+        </button>
+      )}
     </div>
   );
 }

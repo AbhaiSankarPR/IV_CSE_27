@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom"; 
 
 export default function Signin({ onToggleMode }) {
+  const { login } = useAuth();
+  const navigate = useNavigate(); 
+
   const {
     register,
     handleSubmit,
@@ -10,8 +15,9 @@ export default function Signin({ onToggleMode }) {
   });
 
   const onLoginSubmit = (data) => {
-    console.log("Login Data:", data);
+    login({ email: data.email }); 
     alert("Login successful!");
+    navigate("/dashboard");
   };
 
   return (

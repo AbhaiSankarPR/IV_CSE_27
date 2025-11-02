@@ -8,6 +8,7 @@ import ErrorPage from "../pages/ErrorPage";
 import AuthPage from "../pages/AuthPage";
 import Schedule from "../pages/Schedule";
 import Map from "../pages/LiveMap";
+import Dashboard from "../pages/admin/dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "/map",
         element: <Map/>,
+      },
+      {
+        path:"/dashboard",
+        element:<Dashboard/>
       }
       // {
       //   path: "/map",
