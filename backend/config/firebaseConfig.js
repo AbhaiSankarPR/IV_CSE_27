@@ -1,6 +1,6 @@
 const { initializeApp } = require("firebase/app");
 const { getFirestore } = require("firebase/firestore");
-
+require("dotenv").config();
 const {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -21,16 +21,7 @@ const firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-let app, firestoreDb;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export const initializeFirebaseApp = () => {
-  try {
-    app = initializeApp(firebaseConfig);
-    firestoreDb = getFirestore();
-    return app;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getFirebaseApp = () => app;
+module.exports = { db };
