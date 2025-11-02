@@ -7,6 +7,7 @@ import Images from "../pages/Images";
 import ErrorPage from "../pages/ErrorPage";
 import AuthPage from "../pages/AuthPage";
 import Schedule from "../pages/Schedule";
+import Map from "../pages/LiveMap";
 
 export const router = createBrowserRouter([
   {
@@ -36,8 +37,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/map",
-        element: <div>Map Page Coming Soon...</div>,
-      },
+        element: <Map/>,
+      }
+      // {
+      //   path: "/map",
+      //   element: <div>Map Page Coming Soon...</div>,
+      // },
     ],
   },
 ]);
