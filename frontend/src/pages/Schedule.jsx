@@ -355,10 +355,10 @@ export default function Schedule() {
                         <p className="font-semibold text-blue-400">{event.train.name}</p>
                         <p>Train No: {event.train.number}</p>
                         <p>
-                          {event.train.source} → {event.train.destination}
+                          {event.train.from } → {event.train.to}
                         </p>
                         <p>
-                          Departure: {event.train.departure} | Arrival: {event.train.arrival}
+                          Departure: {event.train.dep} | Arrival: {event.train.arr}
                         </p>
                       </div>
                     )}
