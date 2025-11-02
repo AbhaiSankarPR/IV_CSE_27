@@ -23,19 +23,16 @@ function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span
-            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${
-              menuOpen ? "rotate-45 translate-y-[6px]" : ""
-            }`}
+            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""
+              }`}
           ></span>
           <span
-            className={`block w-6 h-[2px] bg-white rounded my-[4px] transition-all duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
+            className={`block w-6 h-[2px] bg-white rounded my-[4px] transition-all duration-300 ${menuOpen ? "opacity-0" : ""
+              }`}
           ></span>
           <span
-            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-[6px]" : ""
-            }`}
+            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""
+              }`}
           ></span>
         </button>
 
@@ -47,12 +44,12 @@ function Navbar() {
             Schedule
           </NavLink>
           <NavLink
-          className={getNavLinkClass}
-          to="/map"
-          onClick={() => setMenuOpen(false)}
-        >
-          LiveMap
-        </NavLink>
+            className={getNavLinkClass}
+            to="/map"
+            onClick={() => setMenuOpen(false)}
+          >
+            LiveMap
+          </NavLink>
           <NavLink className={getNavLinkClass} to="/images">
             Images
           </NavLink>
@@ -72,9 +69,8 @@ function Navbar() {
       </div>
 
       <div
-        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${
-          menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <NavLink
           className={getNavLinkClass}
