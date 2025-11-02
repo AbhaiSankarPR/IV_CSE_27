@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 
 export default function Schedule() {
-  const [schedule, setSchedule] = useState([]);
+  const [scheduled, setSchedule] = useState([]);
+const [query, setQuery] = useState("");
 
   useEffect(() => {
     const data = [
@@ -214,8 +215,19 @@ export default function Schedule() {
       return <Plane className="w-5 h-5 text-cyan-400" />;
     return <Calendar className="w-5 h-5 text-gray-400" />;
   };
+const filteredSchedule = scheduled
+    .map((day) => ({
+      ...day,
+      events: day.events.filter(
+        (e) =>
+          e.title.toLowerCase().includes(query.toLowerCase()) ||
+          e.desc.toLowerCase().includes(query.toLowerCase()) ||
+          day.day.toLowerCase().includes(query.toLowerCase())
+      ),
+    }))
+    .filter((day) => day.events.length > 0);
 
- return (
+return (
   <div className="min-h-screen bg-[#0d0d0d] text-gray-200 px-6 md:px-16 py-16 font-[Poppins]">
     <div className="max-w-4xl mx-auto">
       <motion.h1
@@ -231,12 +243,23 @@ export default function Schedule() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="text-gray-400 mb-10"
+        className="text-gray-400 mb-6"
       >
         View the itinerary for the industrial visit.
       </motion.p>
 
-      {schedule.map((day, i) => (
+      {/* Search Bar */}
+      <div className="relative mb-10">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search city, event, or keyword..."
+          className="w-full bg-gray-800 border border-gray-700 rounded-xl pl-4 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      {(query ? filteredSchedule : scheduled).map((day, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, y: 30 }}
@@ -275,7 +298,12 @@ export default function Schedule() {
           </div>
         </motion.div>
       ))}
+
+      {query && (filteredSchedule.length === 0) && (
+        <p className="text-center text-gray-500 mt-10">No results found.</p>
+      )}
     </div>
   </div>
 );
+
 }
