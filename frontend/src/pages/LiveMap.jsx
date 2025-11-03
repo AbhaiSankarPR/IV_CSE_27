@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,8 +14,7 @@ import { useAuth } from "./AuthPage/AuthContext";
 // Fix Leaflet marker paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
@@ -34,10 +33,9 @@ const greenIcon = new L.Icon({
   popupAnchor: [0, -28],
 });
 
-// Component to fly to live location when button clicked
+// Smooth fly to live location
 function FlyToLocation({ liveLocation, trigger }) {
   const map = useMap();
-
   useEffect(() => {
     if (liveLocation && trigger) {
       map.flyTo([liveLocation.lat, liveLocation.lon], 13, {
@@ -46,7 +44,6 @@ function FlyToLocation({ liveLocation, trigger }) {
       });
     }
   }, [trigger]);
-
   return null;
 }
 
@@ -56,6 +53,7 @@ export default function JourneyMap() {
   const [savedLocation, setSavedLocation] = useState(
     JSON.parse(localStorage.getItem("savedLocation")) || null
   );
+  const [routeToSaved, setRouteToSaved] = useState(null);
   const [error, setError] = useState(null);
   const [flyTrigger, setFlyTrigger] = useState(false);
 
@@ -83,8 +81,9 @@ export default function JourneyMap() {
     "Delhi sightseeing and trip end.",
   ];
 
-  const route = routePoints.map((p) => [p.lat, p.lon]);
+  const mainRoute = routePoints.map((p) => [p.lat, p.lon]);
 
+  // Watch precise user location
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation not supported by this browser.");
@@ -109,6 +108,7 @@ export default function JourneyMap() {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
+  // Save location (for rep)
   const handleSaveLocation = () => {
     if (liveLocation) {
       localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
@@ -120,10 +120,32 @@ export default function JourneyMap() {
   };
 
   const handleZoomToMe = () => {
-    if (liveLocation) {
-      setFlyTrigger((prev) => !prev); // trigger the map flyTo
-    } else {
-      alert("Live location not detected yet.");
+    if (liveLocation) setFlyTrigger((p) => !p);
+    else alert("Live location not detected yet.");
+  };
+
+  // Fetch route from live → saved
+  const handleGetDirections = async () => {
+    if (!liveLocation || !savedLocation) {
+      alert("Both your live and saved locations are required.");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${import.meta.env.VITE_ORS_KEY
+        }&start=${liveLocation.lon},${liveLocation.lat}&end=${savedLocation.lon
+        },${savedLocation.lat}`
+      );
+      const data = await res.json();
+      const coords = data.features[0].geometry.coordinates.map(([lon, lat]) => [
+        lat,
+        lon,
+      ]);
+      setRouteToSaved(coords);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fetch route. Check your API key or network.");
     }
   };
 
@@ -140,13 +162,14 @@ export default function JourneyMap() {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY}`}
+            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY
+              }`}
             detectRetina={true}
             attribution='&copy; MapTiler &copy; OpenStreetMap contributors'
           />
 
-
-          <Polyline positions={route} color="deepskyblue" weight={4} />
+          {/* Main trip route */}
+          <Polyline positions={mainRoute} color="deepskyblue" weight={4} />
 
           {routePoints.map((point, i) => (
             <Marker key={i} position={[point.lat, point.lon]}>
@@ -180,21 +203,34 @@ export default function JourneyMap() {
             </Marker>
           )}
 
+          {/* Show route to saved location */}
+          {routeToSaved && (
+            <Polyline positions={routeToSaved} color="orange" weight={4} />
+          )}
+
           <FlyToLocation liveLocation={liveLocation} trigger={flyTrigger} />
         </MapContainer>
 
-        {/* Floating "Zoom to me" button */}
-        <button
-          onClick={handleZoomToMe}
-          className="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md text-sm z-[1000]"
-        >
-          🎯 My Location
-        </button>
+        {/* Floating buttons */}
+        <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-[1000]">
+          <button
+            onClick={handleZoomToMe}
+            className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
+          >
+            🎯 My Location
+          </button>
 
+          <button
+            onClick={handleGetDirections}
+            className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
+          >
+            🧭 Get Directions
+          </button>
+        </div>
       </div>
 
       <p className="text-gray-400 mt-4 text-center text-sm">
-        Blue line = route | Red = you | Green = meeting point
+        Blue = trip route | Red = you | Green = meeting point | Orange = driving path
       </p>
 
       {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}
@@ -210,4 +246,3 @@ export default function JourneyMap() {
     </div>
   );
 }
-
