@@ -1,4 +1,4 @@
-const { db } = require("../config/firebaseConfig.js");
+const { db } = require("../config/firebase");
 
 async function getItineraries() {
   try {

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const passport = require("./config/passport");
+
 const itineraryRoutes = require("./routes/itineraryRoutes");
 const userRoutes = require("./routes/userRoutes");
 

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { logout as reqLogout } from "../../utils/api";
 
 const AuthContext = createContext();
 
@@ -12,13 +13,14 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (data) => {
-    setUser(data);
-    localStorage.setItem("user", JSON.stringify(data));
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.accessToken);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
-    localStorage.removeItem("user");
+    await reqLogout();
   };
 
   return (

@@ -19,7 +19,7 @@ export default function Signin({ onToggleMode }) {
   const onLoginSubmit = async (data) => {
     try {
       const response = await fetch(
-        `https://${import.meta.env.VITE_BACKEND_URL}/api/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/login`,
         {
           method: "POST",
           headers: {
@@ -29,13 +29,14 @@ export default function Signin({ onToggleMode }) {
             email: data.email,
             password: data.password,
           }),
+          credentials: "include",
         }
       );
 
       const result = await response.json();
 
       if (response.ok) {
-        login({ email: data.email, token: result.token });
+        login(result);
         navigate("/dashboard");
       } else {
         setLoginError(result.error || "Invalid email or password");

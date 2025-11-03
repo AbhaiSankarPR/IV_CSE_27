@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useAuth } from "./AuthContext";
 
 export default function Signup({ onToggleMode }) {
   const {
@@ -10,35 +11,41 @@ export default function Signup({ onToggleMode }) {
     mode: "onChange",
   });
 
+  const { login } = useAuth();
+
   const onSignupSubmit = async (data) => {
-  try {
-    const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}.com/api/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        passkey: data.passkey,
-      }),
-    });
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/user/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `ADMIN ${data.passkey}`,
+          },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+          }),
+          credentials: "include",
+        }
+      );
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (response.ok) {
-      alert(result.message || "Profile created successfully!");
-      console.log("User created:", result);
-    } else {
-      alert(result.error || "Signup failed. Check your passkey or details.");
+      if (response.ok) {
+        alert(result.message || "Profile created successfully!");
+        login(result);
+        console.log("User created:", result);
+      } else {
+        alert(result.error || "Signup failed. Check your passkey or details.");
+      }
+    } catch (err) {
+      console.error("Error creating profile:", err);
+      alert("Server error. Please try again later.");
     }
-  } catch (err) {
-    console.error("Error creating profile:", err);
-    alert("Server error. Please try again later.");
-  }
-};
-
+  };
 
   return (
     <div className="w-full max-w-md">

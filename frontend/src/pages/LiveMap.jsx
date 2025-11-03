@@ -10,11 +10,13 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useAuth } from "./AuthPage/AuthContext";
+import api from "../utils/api";
 
 // Fix Leaflet marker paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
@@ -111,26 +113,22 @@ export default function JourneyMap() {
   // Save location (for rep)
   const handleSaveLocation = async () => {
     if (liveLocation) {
-      // Save locally
-      localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
-      setSavedLocation(liveLocation);
-      alert(" Current location saved as meeting point!");
-
-      // Send to backend
       try {
-        const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}.com/api/save-location`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            latitude: liveLocation.lat,
-            longitude: liveLocation.lng,
-            timestamp: new Date().toISOString(),
-          }),
-        });
+        const locationData = {
+          latitude: liveLocation.lat,
+          longitude: liveLocation.lon,
+          timestamp: new Date().toISOString(),
+        };
+        const url = `${import.meta.env.VITE_BACKEND_URL}/api/save-location`;
+        const response = await api.post(locationData, url);
 
-        if (!response.ok) throw new Error("Failed to save location");
+        if (!response.ok) {
+          throw new Error("Failed to save location to backend");
+        }
+
+        localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
+        setSavedLocation(liveLocation);
+        alert("Current location saved as meeting point!");
         console.log("Location saved to backend!");
       } catch (error) {
         console.error("Error saving location:", error);
@@ -140,7 +138,6 @@ export default function JourneyMap() {
       alert("Live location not detected yet.");
     }
   };
-
 
   const handleZoomToMe = () => {
     if (liveLocation) setFlyTrigger((p) => !p);
@@ -156,8 +153,10 @@ export default function JourneyMap() {
 
     try {
       const res = await fetch(
-        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${import.meta.env.VITE_ORS_KEY
-        }&start=${liveLocation.lon},${liveLocation.lat}&end=${savedLocation.lon
+        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
+          import.meta.env.VITE_ORS_KEY
+        }&start=${liveLocation.lon},${liveLocation.lat}&end=${
+          savedLocation.lon
         },${savedLocation.lat}`
       );
       const data = await res.json();
@@ -174,7 +173,9 @@ export default function JourneyMap() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
-      <h1 className="text-3xl font-semibold mb-6 text-center">IV Journey Map</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-center">
+        IV Journey Map
+      </h1>
 
       <div className="relative w-[90%] md:w-[80%] h-[75vh] rounded-2xl overflow-hidden shadow-lg border border-gray-700">
         <MapContainer
@@ -185,10 +186,11 @@ export default function JourneyMap() {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY
-              }`}
+            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${
+              import.meta.env.VITE_MAPTILER_KEY
+            }`}
             detectRetina={true}
-            attribution='&copy; MapTiler &copy; OpenStreetMap contributors'
+            attribution="&copy; MapTiler &copy; OpenStreetMap contributors"
           />
 
           {/* Main trip route */}
@@ -204,10 +206,15 @@ export default function JourneyMap() {
           ))}
 
           {liveLocation && (
-            <Marker position={[liveLocation.lat, liveLocation.lon]} icon={redIcon}>
+            <Marker
+              position={[liveLocation.lat, liveLocation.lon]}
+              icon={redIcon}
+            >
               <Popup>
                 <div className="font-semibold">You’re here</div>
-                <p className="text-sm text-gray-700 mt-1">Live location updating...</p>
+                <p className="text-sm text-gray-700 mt-1">
+                  Live location updating...
+                </p>
               </Popup>
             </Marker>
           )}
@@ -253,7 +260,8 @@ export default function JourneyMap() {
       </div>
 
       <p className="text-gray-400 mt-4 text-center text-sm">
-        Blue = trip route | Red = you | Green = meeting point | Orange = driving path
+        Blue = trip route | Red = you | Green = meeting point | Orange = driving
+        path
       </p>
 
       {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}

@@ -34,20 +34,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/schedule",
-        element: <Schedule/>,
+        element: <Schedule />,
       },
       {
         path: "/map",
-        element: <Map/>,
+        element: <Map />,
       },
       {
-        path:"/dashboard",
-        element:<Dashboard/>
-      }
-      // {
-      //   path: "/map",
-      //   element: <div>Map Page Coming Soon...</div>,
-      // },
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
     ],
   },
 ]);

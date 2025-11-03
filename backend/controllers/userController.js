@@ -1,4 +1,4 @@
-const { db } = require("../config/firebaseConfig");
+const { db } = require("../config/firebase");
 
 async function getUser(email) {
   const usersRef = db.collection("users");
