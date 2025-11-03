@@ -109,15 +109,38 @@ export default function JourneyMap() {
   }, []);
 
   // Save location (for rep)
-  const handleSaveLocation = () => {
+  const handleSaveLocation = async () => {
     if (liveLocation) {
+      // Save locally
       localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
       setSavedLocation(liveLocation);
       alert("📍 Current location saved as meeting point!");
+
+      // Send to backend
+      try {
+        const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}.com/api/save-location`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            latitude: liveLocation.lat,
+            longitude: liveLocation.lng,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+
+        if (!response.ok) throw new Error("Failed to save location");
+        console.log("Location saved to backend!");
+      } catch (error) {
+        console.error("Error saving location:", error);
+        alert("Couldn't save location to backend.");
+      }
     } else {
       alert("Live location not detected yet.");
     }
   };
+
 
   const handleZoomToMe = () => {
     if (liveLocation) setFlyTrigger((p) => !p);

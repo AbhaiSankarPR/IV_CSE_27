@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function Signin({ onToggleMode }) {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
 
   const {
     register,
@@ -15,20 +16,35 @@ export default function Signin({ onToggleMode }) {
     mode: "onChange",
   });
 
- const [loginError, setLoginError] = useState("");
+  const onLoginSubmit = async (data) => {
+    try {
+      const response = await fetch(
+        `https://${import.meta.env.VITE_BACKEND_URL}/api/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        }
+      );
 
-const onLoginSubmit = (data) => {
-  const validUsers = {
-    'a@gmail.com': '123456789',
+      const result = await response.json();
+
+      if (response.ok) {
+        login({ email: data.email, token: result.token });
+        navigate("/dashboard");
+      } else {
+        setLoginError(result.error || "Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setLoginError("Server error. Please try again later.");
+    }
   };
-
-  if (validUsers[data.email] === data.password) {
-    login({ email: data.email });
-    navigate("/dashboard");
-  } else {
-    alert("Invalid email or password");
-  }
-};
 
   return (
     <div className="w-full max-w-md">
@@ -64,6 +80,8 @@ const onLoginSubmit = (data) => {
         {errors.password && (
           <p className="text-red-400 text-sm">{errors.password.message}</p>
         )}
+
+        {loginError && <p className="text-red-400 text-sm">{loginError}</p>}
 
         <button
           type="submit"
