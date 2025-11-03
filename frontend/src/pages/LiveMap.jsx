@@ -114,7 +114,7 @@ export default function JourneyMap() {
       // Save locally
       localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
       setSavedLocation(liveLocation);
-      alert("📍 Current location saved as meeting point!");
+      alert(" Current location saved as meeting point!");
 
       // Send to backend
       try {
