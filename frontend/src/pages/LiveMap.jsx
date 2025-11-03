@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import { useEffect, useRef, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useAuth } from "./AuthPage/AuthContext"; // ✅ import login context
+import { useAuth } from "./AuthPage/AuthContext";
 
 // Fix Leaflet marker paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// Custom red icon for live location
 const redIcon = new L.Icon({
   iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
   iconSize: [32, 32],
@@ -20,13 +27,37 @@ const redIcon = new L.Icon({
   popupAnchor: [0, -28],
 });
 
+const greenIcon = new L.Icon({
+  iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -28],
+});
+
+// Component to fly to live location when button clicked
+function FlyToLocation({ liveLocation, trigger }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (liveLocation && trigger) {
+      map.flyTo([liveLocation.lat, liveLocation.lon], 13, {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+  }, [trigger]);
+
+  return null;
+}
+
 export default function JourneyMap() {
-  const { user } = useAuth(); // ✅ check if logged in
+  const { user } = useAuth();
   const [liveLocation, setLiveLocation] = useState(null);
   const [savedLocation, setSavedLocation] = useState(
     JSON.parse(localStorage.getItem("savedLocation")) || null
   );
   const [error, setError] = useState(null);
+  const [flyTrigger, setFlyTrigger] = useState(false);
 
   const routePoints = [
     { city: "Trivandrum", lat: 8.5241, lon: 76.9366 },
@@ -54,7 +85,6 @@ export default function JourneyMap() {
 
   const route = routePoints.map((p) => [p.lat, p.lon]);
 
-  // Watch user's live position
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation not supported by this browser.");
@@ -69,13 +99,16 @@ export default function JourneyMap() {
         });
       },
       (err) => setError(err.message),
-      { enableHighAccuracy: true }
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 15000,
+      }
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  // Save location (only visible for logged-in user)
   const handleSaveLocation = () => {
     if (liveLocation) {
       localStorage.setItem("savedLocation", JSON.stringify(liveLocation));
@@ -86,57 +119,57 @@ export default function JourneyMap() {
     }
   };
 
+  const handleZoomToMe = () => {
+    if (liveLocation) {
+      setFlyTrigger((prev) => !prev); // trigger the map flyTo
+    } else {
+      alert("Live location not detected yet.");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
       <h1 className="text-3xl font-semibold mb-6 text-center">IV Journey Map</h1>
 
-      <div className="w-[90%] md:w-[80%] h-[75vh] rounded-2xl overflow-hidden shadow-lg border border-gray-700">
+      <div className="relative w-[90%] md:w-[80%] h-[75vh] rounded-2xl overflow-hidden shadow-lg border border-gray-700">
         <MapContainer
           center={[23.5, 78.5]}
           zoom={5}
           scrollWheelZoom={true}
+          zoomControl={true}
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY}`}
+            detectRetina={true}
+            attribution='&copy; MapTiler &copy; OpenStreetMap contributors'
           />
 
-          {routePoints.map((point, index) => (
-            <Marker key={index} position={[point.lat, point.lon]}>
+
+          <Polyline positions={route} color="deepskyblue" weight={4} />
+
+          {routePoints.map((point, i) => (
+            <Marker key={i} position={[point.lat, point.lon]}>
               <Popup>
                 <div className="font-semibold text-lg">{point.city}</div>
-                <p className="text-sm text-gray-700 mt-1">
-                  {cityEvents[index]}
-                </p>
+                <p className="text-sm text-gray-700 mt-1">{cityEvents[i]}</p>
               </Popup>
             </Marker>
           ))}
 
-          {/* Route line */}
-          <Polyline positions={route} color="deepskyblue" weight={4} />
-
-          {/* Live location marker (red) */}
           {liveLocation && (
             <Marker position={[liveLocation.lat, liveLocation.lon]} icon={redIcon}>
               <Popup>
                 <div className="font-semibold">You’re here</div>
-                <p className="text-sm text-gray-700 mt-1">
-                  Live location updating...
-                </p>
+                <p className="text-sm text-gray-700 mt-1">Live location updating...</p>
               </Popup>
             </Marker>
           )}
 
-          {/* Saved location marker (green) */}
           {savedLocation && (
             <Marker
               position={[savedLocation.lat, savedLocation.lon]}
-              icon={L.icon({
-                iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                iconSize: [32, 32],
-                iconAnchor: [16, 32],
-              })}
+              icon={greenIcon}
             >
               <Popup>
                 <div className="font-semibold">Meeting Point</div>
@@ -146,17 +179,26 @@ export default function JourneyMap() {
               </Popup>
             </Marker>
           )}
+
+          <FlyToLocation liveLocation={liveLocation} trigger={flyTrigger} />
         </MapContainer>
+
+        {/* Floating "Zoom to me" button */}
+        <button
+          onClick={handleZoomToMe}
+          className="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md text-sm z-[1000]"
+        >
+          🎯 My Location
+        </button>
+
       </div>
 
       <p className="text-gray-400 mt-4 text-center text-sm">
-        Blue line shows your planned route.
-        <br />Red = your live location | Green = class rep’s saved point.
+        Blue line = route | Red = you | Green = meeting point
       </p>
 
       {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}
 
-      {/* Show update button only if logged in */}
       {user && (
         <button
           onClick={handleSaveLocation}
@@ -168,3 +210,4 @@ export default function JourneyMap() {
     </div>
   );
 }
+
