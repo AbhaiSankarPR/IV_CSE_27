@@ -28,10 +28,10 @@ export default function Signup({ onToggleMode }) {
     const result = await response.json();
 
     if (response.ok) {
-      alert(result.message || "✅ Profile created successfully!");
+      alert(result.message || "Profile created successfully!");
       console.log("User created:", result);
     } else {
-      alert(result.error || "⚠️ Signup failed. Check your passkey or details.");
+      alert(result.error || "Signup failed. Check your passkey or details.");
     }
   } catch (err) {
     console.error("Error creating profile:", err);
@@ -105,22 +105,6 @@ export default function Signup({ onToggleMode }) {
             {errors.confirmPassword.message}
           </p>
         )}
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Invalid email address",
-            },
-          })}
-        />
-        {errors.email && (
-          <p className="text-red-400 text-sm">{errors.email.message}</p>
-        )}
-
         <input
           type="password"
           placeholder="Passkey"
