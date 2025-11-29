@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
-const passport = require("../config/passport");
 const { getUser, createUser } = require("../controllers/userController");
 const { generateTokens } = require("../utils/tokens");
 require("dotenv").config();
@@ -36,7 +35,7 @@ router.post("/signup", async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "Strict",
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -73,7 +72,7 @@ router.post("/login", async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "Strict",
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -126,7 +125,7 @@ router.post("/logout", (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true,
-      sameSite: "Strict",
+      sameSite: "none",
     };
 
     res.cookie("refreshToken", "", {
