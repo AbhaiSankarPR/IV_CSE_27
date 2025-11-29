@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const xss = require("xss");
 
 const { getUser, createUser } = require("../controllers/userController");
 const { generateTokens } = require("../utils/tokens");
@@ -12,7 +13,10 @@ router.use(cookieParser());
 
 router.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const name = xss(req.body.name);
+    const email = xss(req.body.email);
+    const { password } = req.body;
+
     const authHeader = req.headers["authorization"];
     const { ADMIN_PASSKEY } = process.env;
 
@@ -56,9 +60,10 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await getUser(email);
+    const email = xss(req.body.email);
+    const { password } = req.body;
 
+    const user = await getUser(email);
     if (!user) {
       return res.status(404).json({ message: "Invalid credentials" });
     }
