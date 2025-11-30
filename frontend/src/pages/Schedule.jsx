@@ -19,7 +19,7 @@ export default function Schedule() {
   const [selectedTrain, setSelectedTrain] = useState(null);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/itineraries`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/itinerary`)
       .then((res) => res.json())
       .then((data) => {
         setSchedule(data.itineraries);
