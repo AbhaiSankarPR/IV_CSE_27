@@ -22,7 +22,7 @@ export default function Schedule() {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/itinerary`)
       .then((res) => res.json())
       .then((data) => {
-        setSchedule(data.itineraries);
+        setSchedule(data.itinerary);
       })
       .catch((err) => console.error(err));
   }, []);
