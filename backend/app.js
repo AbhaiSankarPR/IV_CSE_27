@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
 
 const itineraryRoutes = require("./routes/itineraryRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -17,6 +18,14 @@ app.use(cors({
   credentials: true
 }));
 
+
+app.use(
+  helmet({
+    xssFilter: true,
+    noSniff: true,
+    hidePoweredBy: true,
+  })
+);
 
 app.use("/user", userRoutes);
 app.use("/itinerary", itineraryRoutes);
