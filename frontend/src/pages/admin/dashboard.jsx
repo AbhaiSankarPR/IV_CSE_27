@@ -22,7 +22,7 @@ export default function Dashboard() {
 
       <button
         onClick={logout}
-        className="px-6 py-3 bg-red-500 hover:bg-red-400 text-white rounded-lg font-semibold transition"
+        className="px-6 py-3 bg-red-500 hover:bg-red-400 text-white rounded-lg font-semibold transition cursor-pointer "
       >
         Logout
       </button>

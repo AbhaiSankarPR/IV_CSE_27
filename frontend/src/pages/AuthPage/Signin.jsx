@@ -86,7 +86,7 @@ export default function Signin({ onToggleMode }) {
 
         <button
           type="submit"
-          className="w-full py-3 bg-green-500 text-black rounded font-semibold hover:bg-green-400 transition"
+          className="w-full py-3 bg-green-500 text-black rounded font-semibold hover:bg-green-400 transition cursor-pointer "
         >
           Login
         </button>

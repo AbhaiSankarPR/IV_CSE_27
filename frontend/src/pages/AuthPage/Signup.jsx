@@ -123,7 +123,7 @@ export default function Signup({ onToggleMode }) {
         <button
           type="submit"
           disabled={!isValid}
-          className={`w-full py-3 rounded font-semibold transition ${
+          className={`w-full py-3 rounded cursor-pointer font-semibold transition ${
             !isValid
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-green-500 text-black hover:bg-green-400"
