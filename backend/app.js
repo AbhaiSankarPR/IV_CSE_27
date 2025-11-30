@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const passport = require("./config/passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -8,7 +7,6 @@ const itineraryRoutes = require("./routes/itineraryRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 app.use(express.json());
-app.use(passport.initialize());
 app.use(cookieParser());
 
 app.use(
