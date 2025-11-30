@@ -54,7 +54,6 @@ export default function Coordinators() {
         </div>
       </div>
 
-      {/* Other teams */}
       <div className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform">
         <h3 className="text-brand-blue mb-2 text-xl font-semibold">
           Medical Team
