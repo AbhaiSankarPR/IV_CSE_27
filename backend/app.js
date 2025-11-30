@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const passport = require("./config/passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
@@ -9,15 +8,16 @@ const itineraryRoutes = require("./routes/itineraryRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 app.use(express.json());
-app.use(passport.initialize());
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: "https://iv-cse-27.vercel.app",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://iv-cse-27.vercel.app"
+  ],
+  credentials: true
+}));
+
 
 app.use(
   helmet({

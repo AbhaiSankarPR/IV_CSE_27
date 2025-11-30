@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
     const { ADMIN_PASSKEY } = process.env;
 
     const [scheme, passkey] = authHeader.split(" ");
-    if (scheme !== "AdminKey" || passkey !== ADMIN_PASSKEY) {
+    if (scheme !== "ADMIN" || passkey !== ADMIN_PASSKEY) {
       return res
         .status(403)
         .json({ message: "User doesn't have admin privilege" });

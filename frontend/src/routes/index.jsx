@@ -9,6 +9,7 @@ import AuthPage from "../pages/AuthPage";
 import Schedule from "../pages/Schedule";
 import Map from "../pages/LiveMap";
 import Dashboard from "../pages/admin/dashboard";
+import Memories from "../pages/Memories";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
       },
+      {
+        path:"/memories",
+        element:<Memories/>,
+      }
     ],
   },
 ]);
