@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import loginface from "../assets/loginface.svg";
+import { useAuth } from "../pages/AuthPage/AuthContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   const getNavLinkClass = ({ isActive }) => {
     return isActive
@@ -36,6 +38,7 @@ function Navbar() {
           ></span>
         </button>
 
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6">
           <NavLink className={getNavLinkClass} to="/">
             Overview
@@ -43,11 +46,7 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/schedule">
             Schedule
           </NavLink>
-          <NavLink
-            className={getNavLinkClass}
-            to="/map"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink className={getNavLinkClass} to="/map">
             LiveMap
           </NavLink>
           <NavLink className={getNavLinkClass} to="/images">
@@ -56,6 +55,15 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/coordinators">
             Co-ordinators
           </NavLink>
+
+          {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
+          {user && (
+            <NavLink className={getNavLinkClass} to="/memories">
+              Memories
+            </NavLink>
+          )}
+
+          {/* Login Icon */}
           <NavLink to="/auth">
             <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
               <img
@@ -68,6 +76,7 @@ function Navbar() {
         </div>
       </div>
 
+      {/* MOBILE MENU */}
       <div
         className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
           }`}
@@ -79,6 +88,7 @@ function Navbar() {
         >
           Overview
         </NavLink>
+
         <NavLink
           className={getNavLinkClass}
           to="/schedule"
@@ -86,6 +96,7 @@ function Navbar() {
         >
           Schedule
         </NavLink>
+
         <NavLink
           className={getNavLinkClass}
           to="/map"
@@ -93,6 +104,7 @@ function Navbar() {
         >
           LiveMap
         </NavLink>
+
         <NavLink
           className={getNavLinkClass}
           to="/images"
@@ -100,6 +112,7 @@ function Navbar() {
         >
           Images
         </NavLink>
+
         <NavLink
           className={getNavLinkClass}
           to="/coordinators"
@@ -107,6 +120,18 @@ function Navbar() {
         >
           Co-ordinators
         </NavLink>
+
+        {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
+        {user && (
+          <NavLink
+            className={getNavLinkClass}
+            to="/memories"
+            onClick={() => setMenuOpen(false)}
+          >
+            Memories
+          </NavLink>
+        )}
+
         <NavLink to="/auth" onClick={() => setMenuOpen(false)}>
           <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
             <img
