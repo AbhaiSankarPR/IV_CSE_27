@@ -52,16 +52,17 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/images">
             Images
           </NavLink>
-          <NavLink className={getNavLinkClass} to="/coordinators">
-            Co-ordinators
-          </NavLink>
-
           {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
           {user && (
             <NavLink className={getNavLinkClass} to="/memories">
               Memories
             </NavLink>
           )}
+          <NavLink className={getNavLinkClass} to="/coordinators">
+            Co-ordinators
+          </NavLink>
+
+
 
           {/* Login Icon */}
           <NavLink to="/auth">
@@ -112,15 +113,6 @@ function Navbar() {
         >
           Images
         </NavLink>
-
-        <NavLink
-          className={getNavLinkClass}
-          to="/coordinators"
-          onClick={() => setMenuOpen(false)}
-        >
-          Co-ordinators
-        </NavLink>
-
         {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
         {user && (
           <NavLink
@@ -131,6 +123,15 @@ function Navbar() {
             Memories
           </NavLink>
         )}
+
+        <NavLink
+          className={getNavLinkClass}
+          to="/coordinators"
+          onClick={() => setMenuOpen(false)}
+        >
+          Co-ordinators
+        </NavLink>
+
 
         <NavLink to="/auth" onClick={() => setMenuOpen(false)}>
           <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
