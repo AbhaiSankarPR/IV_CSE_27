@@ -79,7 +79,7 @@ function Navbar() {
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
           }`}
       >
         <NavLink
