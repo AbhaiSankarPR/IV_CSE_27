@@ -54,6 +54,8 @@ A modern, responsive dashboard web app for managing **Industrial Visit (IV)** es
 - **Optional:** Google Maps API for map and directions
 
 ---
+## Route
+Ahmedabad → Jaisalmer → Jaipur → Shimla → Delhi
 
 ## Installation
 
