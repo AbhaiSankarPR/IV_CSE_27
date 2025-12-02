@@ -54,5 +54,5 @@ A modern, responsive dashboard web app for managing **Industrial Visit (IV)** es
 
 ---
 ## Route
-Ahmedabad → Jaisalmer → Jaipur → Shimla → Delhi
+Ahmedabad → Jaisalmer → Jaipur → Shimla→ Agra → Delhi
 
