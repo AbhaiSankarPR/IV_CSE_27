@@ -5,9 +5,14 @@ export default function Memories() {
 
   if (!user) {
     return (
-      <div className="text-center mt-10">
-        <p className="text-white text-lg">You need to login to view Memories.</p>
-      </div>
+      <div className="flex justify-center mt-10">
+  <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl shadow-md max-w-md text-center">
+    <p className="text-white text-lg font-medium">
+      You need to login to view Memories
+    </p>
+  </div>
+</div>
+
     );
   }
 

@@ -87,7 +87,6 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
-      {/* SIDEBAR */}
       <div className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${sidebarOpen ? "max-h-screen" : "h-auto"}`}>
         <div
           onClick={() => setActiveTab("profile")}
@@ -125,22 +124,20 @@ export default function Dashboard() {
           Logout
         </button>
       </div>
-
-      {/* RIGHT PANEL */}
       <div className="flex-1 p-6 md:p-10 overflow-y-auto">
         {activeTab === "profile" && (
-  <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
-    <h1 className="text-3xl md:text-4xl font-bold mb-3">
-      Welcome, <span className="text-green-400">{user?.name || "User"}</span>
-    </h1>
-    <p className="text-gray-300 mb-2 text-base md:text-lg">
-      You are successfully logged in.
-    </p>
-    <p className="text-base md:text-lg font-semibold text-green-300">
-      Enjoy the journey!
-    </p>
-  </div>
-)}
+          <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Welcome, <span className="text-green-400">{user?.name || "User"}</span>
+            </h1>
+            <p className="text-gray-300 mb-2 text-base md:text-lg">
+              You are successfully logged in.
+            </p>
+            <p className="text-base md:text-lg font-semibold text-green-300">
+              Enjoy the journey!
+            </p>
+          </div>
+        )}
 
 
         {activeTab === "essentials" && (
