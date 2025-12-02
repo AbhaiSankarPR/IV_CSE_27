@@ -3,6 +3,14 @@ import hridi from "../assets/HridhikeshSPremnath.jpg";
 import jk from "../assets/devanand.jpg";
 import sura from "../assets/Adithyasuresh.png";
 import placeholder from "../assets/loginface.svg";
+import ap from "../assets/abhiramap.jpg"
+import sreenandan from "../assets/sreenandan.jpg"
+import vinayak from "../assets/vinayak.png"
+import nandanav from "../assets/nandanav.png"
+import sneha from "../assets/sneha.png"
+import akshay from "../assets/akshaymnair.png"
+import negha from "../assets/negha.jpg"
+
 const mainCoordinators = [
   {
     name: "Adithyan Pramad",
@@ -19,23 +27,23 @@ const mainCoordinators = [
 const teams = {
   finance: [
     { name: "Aditya Narayanan", img: placeholder },
-    { name: "Abhiram A P", img: placeholder, link: "https://www.instagram.com/abhii0305/" },
+    { name: "Abhiram A P", img: ap, link: "https://www.instagram.com/abhii0305/" },
   ],
   media: [
-    { name: "Akshay M Nair", img: placeholder, link: "https://www.instagram.com/4ksheeyy/" },
-    { name: "Sreenandan", img: placeholder },
-    { name: "Sneha", img: placeholder},
-    { name: " Hridhikesh S Premnath", img: hridi, link: "https://www.instagram.com/the_hridhikesh/"  },
+    { name: "Akshay M Nair", img: akshay, link: "https://www.instagram.com/4ksheeyy/" },
+    { name: "Sreenandan", img: sreenandan },
+    { name: "Sneha", img: sneha },
+    { name: " Hridhikesh S Premnath", img: hridi, link: "https://www.instagram.com/the_hridhikesh/" },
     { name: "Devanand", img: jk, link: "https://www.instagram.com/the_xiphoss/" },
-    { name: "Abhiram A P", img: placeholder, link: "https://www.instagram.com/abhii0305/" },
+    { name: "Abhiram A P", img: ap, link: "https://www.instagram.com/abhii0305/" },
   ],
   medical: [
-    { name: "Nandana V", img: placeholder },
-    { name: "Negha", img: placeholder },
+    { name: "Nandana V", img: nandanav },
+    { name: "Negha", img: negha },
     { name: "Kevin", img: placeholder },
     { name: "Sidharth S", img: placeholder },
     { name: "Daniel", img: placeholder },
-    { name: "Vinayak", img: placeholder, link: "https://www.instagram.com/winayak._/" },
+    { name: "Vinayak", img: vinayak, link: "https://www.instagram.com/winayak._/" },
   ],
   document: [
     { name: "Abhin Anoop", img: placeholder },
