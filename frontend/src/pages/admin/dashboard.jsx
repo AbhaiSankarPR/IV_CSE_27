@@ -1,31 +1,198 @@
+import { useState } from "react";
 import { useAuth } from "../AuthPage/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState("profile");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
-  // redirect if not logged in
-  useEffect(() => {
-    if (!user) navigate("/");
-  }, [user, navigate]);
-
-  if (!user) return null; // prevent flicker
+  const sections = [
+    {
+      title: "Clothing",
+      items: [
+        "1 Heavy Puffer Jacket (waterproof preferred)",
+        "2 Light sweaters/fleece",
+        "Thermal inners (top + bottom)",
+        "2 pairs Woolen socks (min 1 required)",
+        "Hoodies/Jackets for travel",
+        "Sneakers / Shoes",
+        "Muffler",
+        "Gloves, Woolen cap / Ear muffs",
+        "Scarf / Stole",
+        "Sunglasses, Caps",
+        "Swimwear / Flip-flops (optional)",
+        "Jeans/Thick trousers + Casual tops",
+      ],
+    },
+    {
+      title: "Toiletries & Grooming",
+      items: [
+        "Sunscreen SPF 50",
+        "Lip balm",
+        "Travel-size grooming items",
+        "Wet wipes",
+        "Travel towel (small)",
+        "Hand sanitizer",
+        "Carry bags (wet / dirty clothes)",
+        "Bath towel",
+        "Brush, paste, soap",
+      ],
+    },
+    {
+      title: "Medicines / Health",
+      items: [
+        "Painkillers – Dolo / Ibuprofen",
+        "Antacid – Gelusil / Digene",
+        "Motion sickness tablets – Emset / Avomin",
+        "Allergy tablets – Levocetirizine / Avil",
+        "Band-aids",
+        "ORS packets",
+        "Loperamide (emergency only)",
+        "Your regular medications",
+      ],
+    },
+    {
+      title: "Other Essentials",
+      items: [
+        "Valid ID (Aadhar / License / Passport)",
+        "Cash (ATMs may be unavailable)",
+        "N95 Mask",
+        "Water bottle / Flask",
+        "Mobile charger",
+        "Power bank",
+        "Small backpack",
+        "Snacks",
+      ],
+    },
+    {
+      title: "General Guidelines",
+      items: [
+        "Pack for 4–5 cold days",
+        "Buy winter clothes beforehand",
+        "Nights are cold in Jaisalmer & Udaipur",
+        "Train sleeper coach will be cold",
+        "Avoid rented winter items",
+        "Travel in groups in Delhi",
+        "Avoid oily food during trip",
+        "Carry 2 bags: trolley + backpack",
+        "Flight limit: 7kg cabin, 15kg check-in",
+        "Avoid seafood during the trip",
+        "Drink only mineral water",
+        "Carry snacks + refillable bottles",
+        "Avoid gold ornaments",
+        "No liquids >100ml in cabin bag",
+      ],
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white flex flex-col items-center justify-center font-[Poppins]">
-      <h1 className="text-4xl font-bold mb-4">
-        Welcome, <span className="text-green-400">{user.email}</span>
-      </h1>
-      <p className="text-gray-400 mb-8 text-lg">You’re successfully logged in.</p>
+    <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
+      {/* SIDEBAR */}
+      <div className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${sidebarOpen ? "max-h-screen" : "h-auto"}`}>
+        <div
+          onClick={() => setActiveTab("profile")}
+          className="bg-white/10 rounded-lg p-4 text-sm cursor-pointer hover:bg-white/20 transition flex justify-between items-center"
+        >
+          <div>
+            <p className="font-semibold text-lg">{user?.name || "User"}</p>
+            <p className="text-gray-300">{user?.email}</p>
+          </div>
+          <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {sidebarOpen ? "✖" : "☰"}
+          </button>
+        </div>
 
-      <button
-        onClick={logout}
-        className="px-6 py-3 bg-red-500 hover:bg-red-400 text-white rounded-lg font-semibold transition cursor-pointer "
-      >
-        Logout
-      </button>
+        <div className={`flex flex-col gap-2 ${sidebarOpen ? "block" : "hidden md:block"}`}>
+          <button
+            onClick={() => setActiveTab("essentials")}
+            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"}`}
+          >
+            IV Essentials
+          </button>
+
+          <button
+            onClick={() => setActiveTab("upload")}
+            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"}`}
+          >
+            Upload Image
+          </button>
+        </div>
+
+        <button
+          onClick={logout}
+          className="mt-4 px-5 py-2 bg-red-500 hover:bg-red-400 rounded-lg font-semibold text-sm transition"
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* RIGHT PANEL */}
+      <div className="flex-1 p-6 md:p-10 overflow-y-auto">
+        {activeTab === "profile" && (
+  <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
+    <h1 className="text-3xl md:text-4xl font-bold mb-3">
+      Welcome, <span className="text-green-400">{user?.name || "User"}</span>
+    </h1>
+    <p className="text-gray-300 mb-2 text-base md:text-lg">
+      You are successfully logged in.
+    </p>
+    <p className="text-base md:text-lg font-semibold text-green-300">
+      Enjoy the journey!
+    </p>
+  </div>
+)}
+
+
+        {activeTab === "essentials" && (
+          <>
+            <h1 className="text-3xl font-bold mb-8 text-center md:text-left">IV Essentials Checklist</h1>
+            <div className="space-y-6">
+              {sections.map((section, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-xl shadow-lg"
+                >
+                  <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
+                  <ul className="space-y-2 text-gray-200 text-sm">
+                    {section.items.map((item, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span className="text-green-400 font-bold">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {activeTab === "upload" && (
+          <div className="max-w-xl mx-auto space-y-10">
+            <h1 className="text-2xl font-bold mb-6 text-center md:text-left">Upload Images</h1>
+
+            <div>
+              <h2 className="text-lg font-semibold mb-3 text-green-300">Personal Uploads</h2>
+              <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
+                <input type="file" accept="image/*" multiple className="block w-full text-white" />
+                <button className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm">
+                  Upload Personal
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-semibold mb-3 text-green-300">Public Uploads</h2>
+              <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
+                <input type="file" accept="image/*" multiple className="block w-full text-white" />
+                <button className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm">
+                  Upload Public
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

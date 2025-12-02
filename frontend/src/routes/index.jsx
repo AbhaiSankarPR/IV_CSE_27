@@ -46,9 +46,10 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path:"/memories",
-        element:<Memories/>,
-      }
+        path: "/memories",
+        element: <Memories />,
+      },
+      
     ],
   },
 ]);

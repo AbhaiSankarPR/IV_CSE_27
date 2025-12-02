@@ -2,8 +2,7 @@ import pramad from "../assets/pramad.jpg";
 import hridi from "../assets/HridhikeshSPremnath.jpg";
 import jk from "../assets/devanand.jpg";
 import sura from "../assets/Adithyasuresh.png";
-import placeholder from "../assets/loginface.svg"; // use for other members
-
+import placeholder from "../assets/loginface.svg";
 const mainCoordinators = [
   {
     name: "Adithyan Pramad",
