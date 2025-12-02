@@ -51,7 +51,6 @@ A modern, responsive dashboard web app for managing **Industrial Visit (IV)** es
 - **React.js** – Frontend UI  
 - **Tailwind CSS** – Styling  
 - **Context API** – Authentication management  
-- **Optional:** Google Maps API for map and directions
 
 ---
 ## Route
