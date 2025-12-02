@@ -57,10 +57,3 @@ A modern, responsive dashboard web app for managing **Industrial Visit (IV)** es
 ## Route
 Ahmedabad → Jaisalmer → Jaipur → Shimla → Delhi
 
-## Installation
-
-1. Clone the repository:  
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
-
