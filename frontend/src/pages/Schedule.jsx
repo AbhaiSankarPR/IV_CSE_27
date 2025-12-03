@@ -19,7 +19,7 @@ export default function Schedule() {
   const [selectedTrain, setSelectedTrain] = useState(null);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/itinerary`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/static/itinerary`)
       .then((res) => res.json())
       .then((data) => {
         setSchedule(data);
@@ -59,17 +59,16 @@ export default function Schedule() {
   };
 
   const filteredSchedule = scheduled
-  .map(day => ({
-    ...day,
-    events: (day.events || []).filter(
-      e =>
-        e.title.toLowerCase().includes(query.toLowerCase()) ||
-        e.desc.toLowerCase().includes(query.toLowerCase()) ||
-        day.day.toLowerCase().includes(query.toLowerCase())
-    ),
-  }))
-  .filter(day => day.events.length > 0);
-
+    .map((day) => ({
+      ...day,
+      events: (day.events || []).filter(
+        (e) =>
+          e.title.toLowerCase().includes(query.toLowerCase()) ||
+          e.desc.toLowerCase().includes(query.toLowerCase()) ||
+          day.day.toLowerCase().includes(query.toLowerCase())
+      ),
+    }))
+    .filter((day) => day.events.length > 0);
 
   return (
     <div className="min-h-screen bg-[#0d0d0d] text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">

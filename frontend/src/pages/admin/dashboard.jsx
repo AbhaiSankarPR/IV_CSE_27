@@ -9,7 +9,7 @@ export default function Dashboard() {
   const [sections, setSections] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/utensils`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/static/utensils`)
       .then((res) => res.json())
       .then((data) => {
         setSections(data);
