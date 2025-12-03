@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../AuthPage/AuthContext";
 
 export default function Dashboard() {
@@ -6,15 +6,18 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
 
-  let sections = [];
-  fetch(`${import.meta.env.VITE_BACKEND_URL}/utensils`)
-    .then((res) => res.json())
-    .then((data) => {
-      sections = data;
-    })
-    .catch((err) => {
-      console.error("Error fetching utensils:", err);
-    });
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/utensils`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSections(data);
+      })
+      .catch((err) => console.error("Error fetching utensils:", err));
+  }, []);
+
+  console.log(sections);
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
