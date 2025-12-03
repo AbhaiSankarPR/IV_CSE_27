@@ -10,6 +10,7 @@ import Schedule from "../pages/Schedule";
 import Map from "../pages/LiveMap";
 import Dashboard from "../pages/admin/dashboard";
 import Memories from "../pages/Memories";
+import Credit from "../pages/credit/CreditsRoll"
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +50,10 @@ export const router = createBrowserRouter([
         path: "/memories",
         element: <Memories />,
       },
-      
+      {
+        path: "/credits",
+        element: <Credit />,
+      },
     ],
   },
 ]);

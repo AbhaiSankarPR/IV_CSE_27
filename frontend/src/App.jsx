@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 
 function App() {
-
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}`)
       .then((res) => res.text())
@@ -12,9 +11,9 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-dark-primary text-white min-h-screen font-sans">
+    <div className="bg-dark-primary text-white h-screen w-screen overflow-x-hidden font-sans flex flex-col">
       <Navbar />
-      <main>
+      <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
     </div>
