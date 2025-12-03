@@ -12,7 +12,6 @@ import L from "leaflet";
 import { useAuth } from "./AuthPage/AuthContext";
 import api from "../utils/api";
 
-// Fix Leaflet marker paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -35,7 +34,6 @@ const greenIcon = new L.Icon({
   popupAnchor: [0, -28],
 });
 
-// Smooth fly to live location
 function FlyToLocation({ liveLocation, trigger }) {
   const map = useMap();
   useEffect(() => {
@@ -45,7 +43,7 @@ function FlyToLocation({ liveLocation, trigger }) {
         duration: 1.5,
       });
     }
-  }, [trigger]);
+  }, [trigger, liveLocation]);
   return null;
 }
 
@@ -85,7 +83,6 @@ export default function JourneyMap() {
 
   const mainRoute = routePoints.map((p) => [p.lat, p.lon]);
 
-  // Watch precise user location
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation not supported by this browser.");
@@ -110,7 +107,6 @@ export default function JourneyMap() {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  // Save location (for rep)
   const handleSaveLocation = async () => {
     if (liveLocation) {
       try {
@@ -144,7 +140,6 @@ export default function JourneyMap() {
     else alert("Live location not detected yet.");
   };
 
-  // Fetch route from live → saved
   const handleGetDirections = async () => {
     if (!liveLocation || !savedLocation) {
       alert("Both your live and saved locations are required.");
@@ -153,10 +148,8 @@ export default function JourneyMap() {
 
     try {
       const res = await fetch(
-        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
-          import.meta.env.VITE_ORS_KEY
-        }&start=${liveLocation.lon},${liveLocation.lat}&end=${
-          savedLocation.lon
+        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${import.meta.env.VITE_ORS_KEY
+        }&start=${liveLocation.lon},${liveLocation.lat}&end=${savedLocation.lon
         },${savedLocation.lat}`
       );
       const data = await res.json();
@@ -186,14 +179,12 @@ export default function JourneyMap() {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${
-              import.meta.env.VITE_MAPTILER_KEY
-            }`}
+            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY
+              }`}
             detectRetina={true}
             attribution="&copy; MapTiler &copy; OpenStreetMap contributors"
           />
 
-          {/* Main trip route */}
           <Polyline positions={mainRoute} color="deepskyblue" weight={4} />
 
           {routePoints.map((point, i) => (
@@ -233,7 +224,6 @@ export default function JourneyMap() {
             </Marker>
           )}
 
-          {/* Show route to saved location */}
           {routeToSaved && (
             <Polyline positions={routeToSaved} color="orange" weight={4} />
           )}
@@ -241,7 +231,6 @@ export default function JourneyMap() {
           <FlyToLocation liveLocation={liveLocation} trigger={flyTrigger} />
         </MapContainer>
 
-        {/* Floating buttons */}
         <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-[1000]">
           <button
             onClick={handleZoomToMe}
@@ -250,12 +239,15 @@ export default function JourneyMap() {
             🎯 My Location
           </button>
 
-          <button
-            onClick={handleGetDirections}
-            className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
-          >
-            🧭 Get Directions
-          </button>
+          {(user?.role === "admin" || user?.role === "student") && (
+            <button
+              onClick={handleGetDirections}
+              className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
+            >
+              🧭 Get Directions
+            </button>
+          )}
+
         </div>
       </div>
 
@@ -266,7 +258,7 @@ export default function JourneyMap() {
 
       {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}
 
-      {user && (
+      {user?.role === "admin" && (
         <button
           onClick={handleSaveLocation}
           className="mt-6 px-6 py-3 bg-green-500 hover:bg-green-400 text-black rounded-lg font-semibold transition"
@@ -274,6 +266,7 @@ export default function JourneyMap() {
           Update Location
         </button>
       )}
+
     </div>
   );
 }
