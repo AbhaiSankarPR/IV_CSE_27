@@ -17,8 +17,6 @@ export default function Dashboard() {
       .catch((err) => console.error("Error fetching utensils:", err));
   }, []);
 
-  console.log(sections);
-
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
       <div
