@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-
 export default function CreditsPage() {
   const credits = [
     { title: "Frontend", lines: ["Abhai Sankar P R"] },
@@ -21,7 +20,6 @@ export default function CreditsPage() {
   useEffect(() => {
     const vp = viewportRef.current;
     const ct = contentRef.current;
-
     if (!vp || !ct) return;
 
     const vpHeight = vp.clientHeight;
@@ -30,7 +28,6 @@ export default function CreditsPage() {
     setTranslateY(vpHeight);
 
     let last = null;
-
     function animate(ts) {
       if (!last) last = ts;
       const dt = (ts - last) / 1000;
@@ -44,7 +41,6 @@ export default function CreditsPage() {
 
       animRef.current = requestAnimationFrame(animate);
     }
-
     animRef.current = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(animRef.current);
@@ -57,6 +53,7 @@ export default function CreditsPage() {
           <div
             key={i}
             className="text-center text-2xl md:text-3xl py-4 font-light tracking-wider uppercase"
+            style={{ fontFamily: "Poppins, sans-serif" }}
           >
             {item}
           </div>
@@ -64,13 +61,17 @@ export default function CreditsPage() {
       }
       return (
         <div key={i} className="text-center mb-12">
-          <div className="text-4xl md:text-5xl font-bold mb-4 tracking-widest uppercase">
+          <div
+            className="text-4xl md:text-3xl mb-4 tracking-widest uppercase"
+            style={{ fontFamily: "Playfair Display, serif", fontWeight: 700 }}
+          >
             {item.title}
           </div>
           {item.lines.map((line, j) => (
             <div
               key={j}
-              className="text-2xl md:text-3xl font-light leading-[50px] tracking-wide"
+              className="text-2xl md:text-2xl leading-[50px] tracking-wide"
+              style={{ fontFamily: "Poppins, sans-serif", fontWeight: 300 }}
             >
               {line}
             </div>
@@ -88,7 +89,7 @@ export default function CreditsPage() {
           style={{ transform: `translateY(${translateY}px)` }}
         >
           {renderCredits()}
-          <div className="h-48" /> 
+          <div className="h-48" />
         </div>
 
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-black to-transparent" />
