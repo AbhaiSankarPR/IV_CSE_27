@@ -4,9 +4,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 
-const itineraryRoutes = require("./routes/itineraryRoutes");
 const userRoutes = require("./routes/userRoutes");
-const utensilRoutes = require("./routes/utensilRoutes");
+const staticRoutes = require("./routes/staticRoutes");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -31,7 +30,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoutes);
-app.use("/itinerary", itineraryRoutes);
-app.use("/utensils", utensilRoutes);
+app.use("/static", staticRoutes);
 
 module.exports = app;
