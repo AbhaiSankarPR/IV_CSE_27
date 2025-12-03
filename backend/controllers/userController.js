@@ -13,11 +13,12 @@ async function getUser(email) {
   return user;
 }
 
-async function createUser(name, email, passwordHash) {
+async function createUser(name, email, passwordHash, role) {
   const newUser = {
     name,
     email,
     password: passwordHash,
+    role,
     createdAt: new Date(),
   };
   const userRef = await db.collection("users").add(newUser);

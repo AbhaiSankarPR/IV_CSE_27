@@ -18,13 +18,16 @@ router.post("/signup", async (req, res) => {
     const { password } = req.body;
 
     const authHeader = req.headers["authorization"];
-    const { ADMIN_PASSKEY } = process.env;
+    const { ADMIN_PASSKEY, STUDENT_PASSKEY } = process.env;
 
     const [scheme, passkey] = authHeader.split(" ");
-    if (scheme !== "ADMIN" || passkey !== ADMIN_PASSKEY) {
+    if (
+      scheme !== "ADMIN" ||
+      (passkey !== ADMIN_PASSKEY && passkey !== STUDENT_PASSKEY)
+    ) {
       return res
         .status(403)
-        .json({ message: "User doesn't have admin privilege" });
+        .json({ message: "User doesn't have account privilege" });
     }
 
     const existingUser = await getUser(email);
@@ -33,7 +36,8 @@ router.post("/signup", async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await createUser(name, email, hashedPassword);
+    role = passkey.includes("admin") ? "admin" : "student";
+    const newUser = await createUser(name, email, hashedPassword, role);
 
     const { accessToken, refreshToken } = generateTokens(newUser);
     res.cookie("refreshToken", refreshToken, {
@@ -50,6 +54,7 @@ router.post("/signup", async (req, res) => {
         id: newUser.id,
         name: newUser.name,
         email: newUser.email,
+        role: newUser.role,
       },
     });
   } catch (error) {
@@ -88,6 +93,7 @@ router.post("/login", async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
