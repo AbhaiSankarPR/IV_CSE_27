@@ -7,6 +7,7 @@ export default function Signin({ onToggleMode }) {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -17,18 +18,15 @@ export default function Signin({ onToggleMode }) {
   });
 
   const onLoginSubmit = async (data) => {
+    setLoading(true);
+    setLoginError("");
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/user/login`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: data.email, password: data.password }),
           credentials: "include",
         }
       );
@@ -44,6 +42,8 @@ export default function Signin({ onToggleMode }) {
     } catch (error) {
       console.error("Login error:", error);
       setLoginError("Server error. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,11 +60,9 @@ export default function Signin({ onToggleMode }) {
           className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
           {...register("email", {
             required: "Email is required",
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Invalid email address",
-            },
+            pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email address" },
           })}
+          disabled={loading}
         />
         {errors.email && (
           <p className="text-red-400 text-sm">{errors.email.message}</p>
@@ -74,9 +72,8 @@ export default function Signin({ onToggleMode }) {
           type="password"
           placeholder="Password"
           className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
-          {...register("password", {
-            required: "Password is required",
-          })}
+          {...register("password", { required: "Password is required" })}
+          disabled={loading}
         />
         {errors.password && (
           <p className="text-red-400 text-sm">{errors.password.message}</p>
@@ -86,9 +83,11 @@ export default function Signin({ onToggleMode }) {
 
         <button
           type="submit"
-          className="w-full py-3 bg-green-500 text-black rounded font-semibold hover:bg-green-400 transition cursor-pointer "
+          className={`w-full py-3 rounded font-semibold transition cursor-pointer 
+            ${loading ? "bg-gray-600 text-gray-300" : "bg-green-500 text-black hover:bg-green-400"}`}
+          disabled={loading}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 
@@ -97,6 +96,7 @@ export default function Signin({ onToggleMode }) {
         <button
           onClick={onToggleMode}
           className="text-green-400 hover:underline cursor-pointer"
+          disabled={loading}
         >
           Sign up
         </button>
