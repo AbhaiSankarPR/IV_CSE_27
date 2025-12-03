@@ -16,7 +16,7 @@ function Navbar() {
   return (
     <nav className="bg-dark-primary text-white border-b border-[rgba(50,50,50,0.838)]">
       <div className="flex items-center justify-between py-4 px-6 md:px-8">
-        <Link className="text-white font-semibold text-xl no-underline" to="/">
+        <Link className="text-white font-semibold text-xl no-underline" to="/credits">
           IV Live
         </Link>
 
