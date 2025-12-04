@@ -74,7 +74,6 @@ export default function CreditsPage() {
           {duplicatedCredits.map((item, index) => {
             if (item.spacer) return <div key={index} style={{ height: "25vh" }} />;
 
-            // Standard role + name
             if (item.name) {
               return (
                 <div
@@ -89,8 +88,7 @@ export default function CreditsPage() {
                         fontFamily: "sans-serif",
                         fontWeight: 300,
                         width: "18vw",
-                            fontSize: "1.9vh",       // role text smaller
- // fixed width for perfect right alignment
+                        fontSize: "1.9vh",
                       }}
                     >
                       {item.role}
@@ -103,7 +101,7 @@ export default function CreditsPage() {
                       fontWeight: 400,
                       fontSize: "1.9vh",
                       letterSpacing: "0.05em",
-                      width: "18vw", // fixed width for left-aligned names
+                      width: "18vw",
                     }}
                   >
                     {item.name}
@@ -112,14 +110,13 @@ export default function CreditsPage() {
               );
             }
 
-            // Special thanks / list
             if (item.list) {
               return (
                 <div key={index} className="text-center mb-[3vh]">
                   <div style={{ height: "2vh" }} />
                   <div
                     className="mb-[1.9vh] opacity-70 uppercase tracking-widest"
-                    style={{ fontFamily: "sans-serif", fontWeight: 300,fontSize: "1.9vh" }}
+                    style={{ fontFamily: "sans-serif", fontWeight: 300, fontSize: "1.9vh" }}
                   >
                     {item.role}
                   </div>
@@ -146,9 +143,7 @@ export default function CreditsPage() {
           <div style={{ height: "10vh" }} />
         </div>
 
-        {/* Top fade */}
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-[15vh] bg-gradient-to-b from-black to-transparent" />
-        {/* Bottom fade */}
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[15vh] bg-gradient-to-t from-black to-transparent" />
       </div>
     </div>
