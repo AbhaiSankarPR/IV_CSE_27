@@ -17,6 +17,7 @@ export default function CreditsPage() {
         "Sreenandan",
         "Adityan Manoj",
         "Adithya Suresh",
+        "Kevin"
       ],
     },
     { role: "", name: "Special thanks to SCTCE administration" },
@@ -51,7 +52,7 @@ export default function CreditsPage() {
 
       setTranslateY((prev) => {
         const next = prev - speed * delta * vpHeight * 0.01;
-        if (next < -contentHeight) return 0;
+        if (next < -contentHeight) return vpHeight;
         return next;
       });
 
@@ -68,7 +69,7 @@ export default function CreditsPage() {
       <div ref={viewportRef} className="absolute inset-0 overflow-hidden">
         <div
           ref={contentRef}
-          className="absolute left-1/2 -translate-x-1/2 px-4"
+          className="absolute left-1/2 -translate-x-1/2 px-4 max-w-[90vw]"
           style={{ transform: `translateY(${translateY}px)` }}
         >
           {duplicatedCredits.map((item, index) => {
@@ -78,30 +79,44 @@ export default function CreditsPage() {
               return (
                 <div
                   key={index}
-                  className="flex justify-center mb-[2vh] items-center"
-                  style={{ width: "max-content", margin: "0 auto" }}
+                  className="
+                    flex flex-col sm:flex-row 
+                    justify-center items-center 
+                    mb-[2vh]
+                    w-full
+                    text-center sm:text-left
+                  "
                 >
                   {item.role && (
                     <div
-                      className="text-right opacity-70 uppercase tracking-widest"
+                      className="
+                        opacity-70 uppercase tracking-widest
+                        text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                      "
                       style={{
                         fontFamily: "sans-serif",
                         fontWeight: 300,
-                        width: "18vw",
-                        fontSize: "1.9vh",
+                        width: "100%",
+                        maxWidth: "110px",
                       }}
                     >
                       {item.role}
                     </div>
                   )}
+
                   <div
-                    className="ml-[2vw] text-left"
+                    className="
+                      sm:ml-[3vw]
+                      mt-1 sm:mt-0
+                      text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                      break-words
+                    "
                     style={{
                       fontFamily: "sans-serif",
                       fontWeight: 400,
-                      fontSize: "1.9vh",
                       letterSpacing: "0.05em",
-                      width: "18vw",
+                      width: "100%",
+                      maxWidth: "300px",
                     }}
                   >
                     {item.name}
@@ -112,21 +127,29 @@ export default function CreditsPage() {
 
             if (item.list) {
               return (
-                <div key={index} className="text-center mb-[3vh]">
+                <div key={index} className="text-center mb-[3vh] max-w-[90vw] mx-auto">
                   <div style={{ height: "2vh" }} />
+
                   <div
-                    className="mb-[1.9vh] opacity-70 uppercase tracking-widest"
-                    style={{ fontFamily: "sans-serif", fontWeight: 300, fontSize: "1.9vh" }}
+                    className="
+                      mb-[1.9vh] opacity-70 uppercase tracking-widest
+                      text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                    "
+                    style={{ fontFamily: "sans-serif", fontWeight: 300 }}
                   >
                     {item.role}
                   </div>
+
                   {item.list.map((name, i) => (
                     <div
                       key={i}
+                      className="
+                        text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                        break-words
+                      "
                       style={{
                         fontFamily: "sans-serif",
                         fontWeight: 400,
-                        fontSize: "1.9vh",
                         marginBottom: "0.8vh",
                       }}
                     >
