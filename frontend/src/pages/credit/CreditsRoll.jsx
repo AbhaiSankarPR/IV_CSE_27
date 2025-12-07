@@ -32,7 +32,7 @@ export default function CreditsPage() {
   const animRef = useRef(null);
 
   const [translateY, setTranslateY] = useState(0);
-  const speed = 5;
+  const speed = 10;
 
   useEffect(() => {
     const vp = viewportRef.current;
