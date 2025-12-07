@@ -11,7 +11,7 @@ export default function CreditsPage() {
     {
       role: "Special thanks / mention to",
       list: [
-        "Abhiram AR",
+        "Abhiram AR ",
         "Aadityan Pramad",
         "Abhin Anoop",
         "Abhiram AP",

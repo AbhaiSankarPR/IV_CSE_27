@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../AuthPage/AuthContext";
-import Loading from "../../components/Loading"; 
-
+import Loading from "../../components/Loading";
+// import TeaButton from "../../components/TeaButton ";
+import teaImg from "../../assets/tea.svg";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
 
   const [sections, setSections] = useState([]);
-  const [loadingSections, setLoadingSections] = useState(false); 
+  const [loadingSections, setLoadingSections] = useState(false);
   useEffect(() => {
     if (activeTab === "essentials") {
       setLoadingSections(true);
@@ -78,18 +79,58 @@ export default function Dashboard() {
 
       <div className="flex-1 p-6 md:p-10 overflow-y-auto">
         {activeTab === "profile" && (
-          <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">
-              Welcome, <span className="text-green-400">{user?.name || "User"}</span>
-            </h1>
-            <p className="text-gray-300 mb-2 text-base md:text-lg">
-              You are successfully logged in.
-            </p>
-            <p className="text-base md:text-lg font-semibold text-green-300">
-              Enjoy the journey!
-            </p>
-          </div>
+          <>
+            <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
+              <h1 className="text-3xl md:text-4xl font-bold mb-3">
+                Welcome, <span className="text-green-400">{user?.name || "User"}</span>
+              </h1>
+              <p className="text-gray-300 mb-2 text-base md:text-lg">
+                You are successfully logged in.
+              </p>
+              <p className="text-base md:text-lg font-semibold text-green-300">
+                Enjoy the journey!
+              </p>
+            </div>
+
+            <div className="max-w-xl mx-auto mt-4 bg-white/10 backdrop-blur-xl p-4 rounded-xl shadow-lg flex justify-center items-center">
+              <a
+                href={`upi://pay?pa=abhaisankarpr@upi&pn=${encodeURIComponent(
+                  "Abhai Sankar P R"
+                )}&tn=${encodeURIComponent("Buy me a tea ☕")}&am=1&cu=INR`}
+              >
+                <button
+                  className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 
+                     hover:scale-105 active:scale-95"
+                  style={{
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                    letterSpacing: "0.03em",
+                    background: "transparent",
+                    // border: "1px solid white",
+                  }}
+                >
+                  <div className="w-[40px] h-[40px] flex justify-center items-center">
+                    <img
+                      src={teaImg}
+                      alt="Buy me a tea"
+                      className="w-[36px] h-[36px] object-contain"
+                      style={{
+                        filter: "invert(1) brightness(2)",
+                      }}
+                    />
+                  </div>
+
+                  <span className="text-lg sm:text-xl font-semibold">
+                    Buy me a tea ☕
+                  </span>
+                </button>
+              </a>
+            </div>
+          </>
         )}
+
+
 
         {activeTab === "essentials" && (
           <>
@@ -150,6 +191,7 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+      {/* <TeaButton /> */}
     </div>
   );
 }
