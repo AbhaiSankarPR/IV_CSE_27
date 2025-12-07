@@ -40,7 +40,7 @@ export default function CreditsPage() {
     if (!vp || !ct) return;
 
     const vpHeight = vp.clientHeight;
-    const contentHeight = ct.scrollHeight / 2;
+    const contentHeight = ct.scrollHeight;
 
     setTranslateY(vpHeight);
 
@@ -53,7 +53,7 @@ export default function CreditsPage() {
 
       setTranslateY((prev) => {
         const next = prev - speed * delta * vpHeight * 0.01;
-        if (next < -contentHeight) return vpHeight;
+        if (next < -contentHeight / 2) return vpHeight;
         return next;
       });
 
