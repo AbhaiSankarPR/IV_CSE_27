@@ -25,8 +25,6 @@ export default function CreditsPage() {
     { role: "", name: "Thanks for travelling with us!" },
   ];
 
-  const duplicatedCredits = [...credits, { spacer: true }, ...credits];
-
   const viewportRef = useRef(null);
   const contentRef = useRef(null);
   const animRef = useRef(null);
@@ -42,7 +40,7 @@ export default function CreditsPage() {
     const vpHeight = vp.clientHeight;
     const contentHeight = ct.scrollHeight;
 
-    setTranslateY(vpHeight);
+    setTranslateY(vpHeight); // start from bottom
 
     let lastTime = null;
 
@@ -51,13 +49,11 @@ export default function CreditsPage() {
       const delta = (ts - lastTime) / 1000;
       lastTime = ts;
 
-      setTranslateY(prev => {
+      setTranslateY((prev) => {
         const next = prev - speed * delta * vpHeight * 0.01;
 
-        if (next <= -contentHeight + vpHeight) {
-          return vpHeight;
-        }
-
+        // when content is fully above the viewport, restart from bottom
+        if (next + contentHeight < 0) return vpHeight;
         return next;
       });
 
@@ -85,10 +81,7 @@ export default function CreditsPage() {
             />
           </div>
 
-          {duplicatedCredits.map((item, index) => {
-            if (item.spacer)
-              return <div key={index} style={{ height: "25vh" }} />;
-
+          {credits.map((item, index) => {
             if (item.name) {
               return (
                 <div
@@ -131,23 +124,13 @@ export default function CreditsPage() {
               return (
                 <div key={index} className="text-center mb-[4vh] max-w-[90vw] mx-auto">
                   <div style={{ height: "2vh" }} />
-                  <div
-                    className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
-                    style={{ fontFamily: "sans-serif", fontWeight: 300 }}
-                  >
+                  <div className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
+                       style={{ fontFamily: "sans-serif", fontWeight: 300 }}>
                     {item.role}
                   </div>
-
                   {item.list.map((name, i) => (
-                    <div
-                      key={i}
-                      className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
-                      style={{
-                        fontFamily: "sans-serif",
-                        fontWeight: 400,
-                        marginBottom: "1vh",
-                      }}
-                    >
+                    <div key={i} className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
+                         style={{ fontFamily: "sans-serif", fontWeight: 400, marginBottom: "1vh" }}>
                       {name}
                     </div>
                   ))}
