@@ -100,7 +100,7 @@ export default function Dashboard() {
                     window.location.href = `upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`;
                   }
                   else {
-                    alert("Can't pay on Desktop.Please make use of the below QR Code to Pay us..Thank You!!")
+                    alert("Can't pay on Desktop. Please use the QR Code below to pay. Thank you!");
                   }
                 }}
                 className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 hover:scale-105 active:scale-95"
