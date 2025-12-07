@@ -1,15 +1,27 @@
-import pramad from "../assets/pramad.jpg";
-import hridi from "../assets/HridhikeshSPremnath.jpg";
-import jk from "../assets/devanand.jpg";
-import sura from "../assets/Adithyasuresh.png";
 import placeholder from "../assets/loginface.svg";
-import ap from "../assets/abhiramap.jpg"
-import sreenandan from "../assets/sreenandan.jpg"
-import vinayak from "../assets/vinayak.png"
-import nandanav from "../assets/nandanav.png"
-import sneha from "../assets/sneha.png"
-import akshay from "../assets/akshaymnair.png"
-import negha from "../assets/negha.jpg"
+
+const pramad =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/pramad.jpg";
+const preman =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/HridhikeshSPremnath.jpg";
+const jk =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/devanand.jpg";
+const sura =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Adithyasuresh.png";
+const ap =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/abhiramap.jpg";
+const sreenandan =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/sreenandan.jpg";
+const vinayak =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/vinayak.png";
+const nandanav =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/nandanav.png";
+const sneha =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/sneha.png";
+const akshay =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/akshaymnair.png";
+const negha =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/negha.jpg";
 
 const mainCoordinators = [
   {
@@ -27,15 +39,35 @@ const mainCoordinators = [
 const teams = {
   finance: [
     { name: "Aditya Narayanan", img: placeholder },
-    { name: "Abhiram A P", img: ap, link: "https://www.instagram.com/abhii0305/" },
+    {
+      name: "Abhiram A P",
+      img: ap,
+      link: "https://www.instagram.com/abhii0305/",
+    },
   ],
   media: [
-    { name: "Akshay M Nair", img: akshay, link: "https://www.instagram.com/4ksheeyy/" },
+    {
+      name: "Akshay M Nair",
+      img: akshay,
+      link: "https://www.instagram.com/4ksheeyy/",
+    },
     { name: "Sreenandan", img: sreenandan },
     { name: "Sneha", img: sneha },
-    { name: " Hridhikesh S Premnath", img: hridi, link: "https://www.instagram.com/the_hridhikesh/" },
-    { name: "Devanand", img: jk, link: "https://www.instagram.com/the_xiphoss/" },
-    { name: "Abhiram A P", img: ap, link: "https://www.instagram.com/abhii0305/" },
+    {
+      name: " Hridhikesh S Premnath",
+      img: preman,
+      link: "https://www.instagram.com/the_hridhikesh/",
+    },
+    {
+      name: "Devanand",
+      img: jk,
+      link: "https://www.instagram.com/the_xiphoss/",
+    },
+    {
+      name: "Abhiram A P",
+      img: ap,
+      link: "https://www.instagram.com/abhii0305/",
+    },
   ],
   medical: [
     { name: "Nandana V", img: nandanav },
@@ -43,7 +75,11 @@ const teams = {
     { name: "Kevin", img: placeholder },
     { name: "Sidharth S", img: placeholder },
     { name: "Daniel", img: placeholder },
-    { name: "Vinayak", img: vinayak, link: "https://www.instagram.com/winayak._/" },
+    {
+      name: "Vinayak",
+      img: vinayak,
+      link: "https://www.instagram.com/winayak._/",
+    },
   ],
   document: [
     { name: "Abhin Anoop", img: placeholder },
@@ -75,11 +111,10 @@ function PersonCard({ name, img, link }) {
 export default function Coordinators() {
   return (
     <div className="bg-dark-primary text-white min-h-screen py-16 px-8 max-w-6xl mx-auto">
-      <h2 className="text-center mb-8 text-3xl font-semibold">
-        Our IV Team
-      </h2>
+      <h2 className="text-center mb-8 text-3xl font-semibold">Our IV Team</h2>
       <p className="text-center text-text-mid mb-12">
-        Meet the teams that keep the IV running smoothly — from logistics to creativity.
+        Meet the teams that keep the IV running smoothly — from logistics to
+        creativity.
       </p>
 
       {/* Main Coordinators */}
