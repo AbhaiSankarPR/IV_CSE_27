@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import FaviconSetter from "./FaviconSetter.jsx";
 import Navbar from "./components/Navbar.jsx";
 
 function App() {
@@ -11,12 +12,15 @@ function App() {
   }, []);
 
   return (
+    <>
+    <FaviconSetter />
     <div className="bg-dark-primary text-white h-screen w-screen overflow-x-hidden font-sans flex flex-col">
       <Navbar />
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
     </div>
+    </>
   );
 }
 

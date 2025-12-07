@@ -26,7 +26,6 @@ export default function Memories() {
     "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8",
   ];
 
-  // Show loading page until all images are loaded
   if (loadedImages < imageUrls.length) {
     return (
       <>
