@@ -7,6 +7,8 @@ import teaImg from "../../assets/tea.svg";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [showQRCode, setShowQRCode] = useState(false);
+
   const { user, logout } = useAuth();
 
   const [sections, setSections] = useState([]);
@@ -101,6 +103,7 @@ export default function Dashboard() {
                   }
                   else {
                     alert("Can't pay on Desktop. Please use the QR Code below to pay. Thank you!");
+                          setShowQRCode(true);
                   }
                 }}
                 className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 hover:scale-105 active:scale-95"
@@ -122,21 +125,16 @@ export default function Dashboard() {
                 </div>
                 <span className="text-lg sm:text-xl font-semibold">Buy me a tea ☕</span>
               </button>
-
-              {!/android|iphone|ipad|ipod/i.test(navigator.userAgent) && (
-                <div className="mt-2">
-                  <QRCode
-                    value={`upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`}
-                    size={180}
-                    bgColor="transparent"
-                    fgColor="white"
-                  />
-                  <p className="text-sm text-gray-300 mt-1 text-center">
-                    Scan to pay via UPI
-                  </p>
-                </div>
-              )}
+               {showQRCode && (
+          <div className="mt-4 flex flex-col items-center">
+            <QRCode value="upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu" size={180} bgColor="transparent" fgColor="white" />
+            <p className="text-sm text-gray-300 mt-2 text-center">
+              Scan to pay via UPI
+            </p>
+          </div>
+        )}
             </div>
+            
           </>
         )}
 
