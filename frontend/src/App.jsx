@@ -13,13 +13,14 @@ function App() {
 
   return (
     <>
-    <FaviconSetter />
-    <div className="bg-dark-primary text-white h-screen w-screen overflow-x-hidden font-sans flex flex-col">
-      <Navbar />
-      <main className="flex-1 overflow-y-auto">
-        <Outlet />
-      </main>
-    </div>
+      <FaviconSetter />
+      <div className="bg-dark-primary text-white w-screen h-screen overflow-x-hidden font-sans flex flex-col">
+        <Navbar />
+        <main className="flex-1 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
+
     </>
   );
 }

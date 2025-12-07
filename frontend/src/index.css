@@ -7,3 +7,10 @@
   --color-text-light: #ccc;
   --color-text-mid: #bbb;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: sans-serif;
+}
