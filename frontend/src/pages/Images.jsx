@@ -20,7 +20,6 @@ export default function Images() {
   const handleImageLoad = () => {
     setLoadedCount((prev) => {
       const nextCount = prev + 1;
-      console.log("Images loaded:", nextCount);
       return nextCount;
     });
   };
@@ -29,7 +28,6 @@ export default function Images() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Loader overlay */}
       {!allLoaded && (
           <Loading message="Loading images..." />
       )}
