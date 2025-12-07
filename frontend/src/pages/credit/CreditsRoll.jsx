@@ -25,125 +25,10 @@ export default function CreditsPage() {
     { role: "", name: "Thanks for travelling with us!" },
   ];
 
-  // ---------------------------------------
-  // Component for ONE credits block
-  // ---------------------------------------
-  function CreditsBlock({ credits }) {
-    return (
-      <div>
-        {/* Logo */}
-        <div className="flex justify-center items-center mb-[6vh] mt-[6vh]">
-          <img
-            src={ivLogo}
-            alt="IV Logo"
-            className="w-[22vw] max-w-[160px] min-w-[90px] object-contain opacity-90"
-          />
-        </div>
+  const duplicatedCredits = [...credits, { spacer: true }, ...credits];
 
-        {credits.map((item, index) => {
-          if (item.name) {
-            return (
-              <div
-                key={index}
-                className="
-                  flex flex-col sm:flex-row 
-                  justify-center items-center 
-                  mb-[2.2vh]
-                  w-full text-center sm:text-left
-                "
-              >
-                {item.role && (
-                  <div
-                    className="
-                      opacity-70 uppercase tracking-widest
-                      text-[1.8vh] sm:text-[1vh] md:text-[2vh]
-                    "
-                    style={{
-                      fontFamily: "sans-serif",
-                      fontWeight: 300,
-                      width: "100%",
-                      textAlign: "center",
-                      maxWidth: "140px",
-                    }}
-                  >
-                    {item.role}
-                  </div>
-                )}
-
-                <div
-                  className="
-                    sm:ml-[3vw]
-                    mt-1 sm:mt-0
-                    text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
-                    break-words
-                  "
-                  style={{
-                    fontFamily: "sans-serif",
-                    fontWeight: 400,
-                    letterSpacing: "0.05em",
-                    width: "100%",
-                    textAlign: "center",
-                    maxWidth: "350px",
-                  }}
-                >
-                  {item.name}
-                </div>
-              </div>
-            );
-          }
-
-          if (item.list) {
-            return (
-              <div
-                key={index}
-                className="text-center mb-[4vh] max-w-[90vw] mx-auto"
-              >
-                <div style={{ height: "2vh" }} />
-
-                <div
-                  className="
-                    mb-[2vh] opacity-70 uppercase tracking-widest
-                    text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
-                  "
-                  style={{ fontFamily: "sans-serif", fontWeight: 300 }}
-                >
-                  {item.role}
-                </div>
-
-                {item.list.map((name, i) => (
-                  <div
-                    key={i}
-                    className="
-                      text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
-                      break-words
-                    "
-                    style={{
-                      fontFamily: "sans-serif",
-                      fontWeight: 400,
-                      marginBottom: "1vh",
-                    }}
-                  >
-                    {name}
-                  </div>
-                ))}
-              </div>
-            );
-          }
-
-          return null;
-        })}
-
-        <div style={{ height: "15vh" }} />
-      </div>
-    );
-  }
-
-  // ---------------------------------------
-  // Infinite Scroll Logic
-  // ---------------------------------------
   const viewportRef = useRef(null);
   const contentRef = useRef(null);
-  const singleRef = useRef(null);
   const animRef = useRef(null);
 
   const [translateY, setTranslateY] = useState(0);
@@ -152,11 +37,10 @@ export default function CreditsPage() {
   useEffect(() => {
     const vp = viewportRef.current;
     const ct = contentRef.current;
-    const single = singleRef.current;
-    if (!vp || !ct || !single) return;
+    if (!vp || !ct) return;
 
     const vpHeight = vp.clientHeight;
-    const singleHeight = single.scrollHeight;
+    const contentHeight = ct.scrollHeight;
 
     setTranslateY(vpHeight);
 
@@ -167,9 +51,13 @@ export default function CreditsPage() {
       const delta = (ts - lastTime) / 1000;
       lastTime = ts;
 
-      setTranslateY((prev) => {
+      setTranslateY(prev => {
         const next = prev - speed * delta * vpHeight * 0.01;
-        if (next <= -singleHeight) return vpHeight; // Perfect reset
+
+        if (next <= -contentHeight + vpHeight) {
+          return vpHeight;
+        }
+
         return next;
       });
 
@@ -181,9 +69,6 @@ export default function CreditsPage() {
     return () => cancelAnimationFrame(animRef.current);
   }, []);
 
-  // ---------------------------------------
-  // Render
-  // ---------------------------------------
   return (
     <div className="w-screen h-screen overflow-hidden bg-black text-white relative flex items-center justify-center">
       <div ref={viewportRef} className="absolute inset-0 overflow-hidden">
@@ -192,16 +77,90 @@ export default function CreditsPage() {
           className="absolute left-1/2 -translate-x-1/2 px-4 max-w-[95vw]"
           style={{ transform: `translateY(${translateY}px)` }}
         >
-          {/* First Block (measured) */}
-          <div ref={singleRef}>
-            <CreditsBlock credits={credits} />
+          <div className="flex justify-center items-center mb-[6vh] mt-[6vh]">
+            <img
+              src={ivLogo}
+              alt="IV Logo"
+              className="w-[22vw] max-w-[160px] min-w-[90px] object-contain opacity-90"
+            />
           </div>
 
-          {/* Duplicate Block for infinite scroll */}
-          <CreditsBlock credits={credits} />
+          {duplicatedCredits.map((item, index) => {
+            if (item.spacer)
+              return <div key={index} style={{ height: "25vh" }} />;
+
+            if (item.name) {
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col sm:flex-row justify-center items-center mb-[2.2vh] w-full text-center sm:text-left"
+                >
+                  {item.role && (
+                    <div
+                      className="opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[1vh] md:text-[2vh]"
+                      style={{
+                        fontFamily: "sans-serif",
+                        fontWeight: 300,
+                        width: "100%",
+                        textAlign: "center",
+                        maxWidth: "140px",
+                      }}
+                    >
+                      {item.role}
+                    </div>
+                  )}
+
+                  <div
+                    className="sm:ml-[3vw] mt-1 sm:mt-0 text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
+                    style={{
+                      fontFamily: "sans-serif",
+                      fontWeight: 400,
+                      letterSpacing: "0.05em",
+                      width: "100%",
+                      textAlign: "center",
+                      maxWidth: "350px",
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                </div>
+              );
+            }
+
+            if (item.list) {
+              return (
+                <div key={index} className="text-center mb-[4vh] max-w-[90vw] mx-auto">
+                  <div style={{ height: "2vh" }} />
+                  <div
+                    className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
+                    style={{ fontFamily: "sans-serif", fontWeight: 300 }}
+                  >
+                    {item.role}
+                  </div>
+
+                  {item.list.map((name, i) => (
+                    <div
+                      key={i}
+                      className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
+                      style={{
+                        fontFamily: "sans-serif",
+                        fontWeight: 400,
+                        marginBottom: "1vh",
+                      }}
+                    >
+                      {name}
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+
+            return null;
+          })}
+
+          <div style={{ height: "15vh" }} />
         </div>
 
-        {/* Top & Bottom Gradient Fades */}
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-[20vh] bg-gradient-to-b from-black to-transparent" />
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-black to-transparent" />
       </div>
