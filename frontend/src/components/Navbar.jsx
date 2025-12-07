@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import loginface from "../assets/loginface.svg";
 import { useAuth } from "../pages/AuthPage/AuthContext";
+import ivLogo from "../assets/logo/Odyssey.png";
+
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,10 +18,9 @@ function Navbar() {
   return (
     <nav className="bg-dark-primary text-white border-b border-[rgba(50,50,50,0.838)]">
       <div className="flex items-center justify-between py-4 px-6 md:px-8">
-        <Link className="text-white font-semibold text-xl no-underline" to="/credits">
-          IV Live
+        <Link to="/credits">
+          <img src={ivLogo} alt="IV Live" className="w-13 h-10 pl-3 scale-300" />
         </Link>
-
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -52,7 +53,6 @@ function Navbar() {
           <NavLink className={getNavLinkClass} to="/images">
             Images
           </NavLink>
-          {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
           {user && (
             <NavLink className={getNavLinkClass} to="/memories">
               Memories
@@ -113,7 +113,6 @@ function Navbar() {
         >
           Images
         </NavLink>
-        {/* ---- SHOW ONLY WHEN LOGGED IN ---- */}
         {user && (
           <NavLink
             className={getNavLinkClass}

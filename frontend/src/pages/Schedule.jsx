@@ -12,23 +12,25 @@ import {
   X,
 } from "lucide-react";
 
+import Loading from "../components/Loading";
+
 export default function Schedule() {
   const [scheduled, setSchedule] = useState([]);
   const [query, setQuery] = useState("");
   const [hoverInfo, setHoverInfo] = useState(null);
   const [selectedTrain, setSelectedTrain] = useState(null);
-  const [loading, setLoading] = useState(true); // <-- loader state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/static/itinerary`)
       .then((res) => res.json())
       .then((data) => {
         setSchedule(data);
-        setLoading(false); // hide loader after data fetched
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false); // hide loader even on error
+        setLoading(false);
       });
   }, []);
 
@@ -61,15 +63,7 @@ export default function Schedule() {
     }))
     .filter((day) => day.events.length > 0);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-[#0d0d0d] text-white">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white-500 mb-4"></div>
-        <p className="text-lg font-medium">Loading itinerary...</p>
-      </div>
-
-    );
-  }
+  if (loading) return <Loading message="Loading Schedule..."  />;
 
   return (
     <div className="min-h-screen bg-[#0d0d0d] text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">
@@ -131,8 +125,9 @@ export default function Schedule() {
 
                   <div className="ml-6">
                     <p
-                      className={`text-lg font-medium leading-tight ${event.train ? "cursor-pointer hover:text-blue-400" : ""
-                        }`}
+                      className={`text-lg font-medium leading-tight ${
+                        event.train ? "cursor-pointer hover:text-blue-400" : ""
+                      }`}
                       onClick={() => event.train && setSelectedTrain(event.train)}
                       onMouseEnter={() => event.train && setHoverInfo(event.train)}
                       onMouseLeave={() => setHoverInfo(null)}
@@ -181,7 +176,9 @@ export default function Schedule() {
             >
               <X />
             </button>
-            <h2 className="text-xl font-semibold text-blue-400 mb-2">{selectedTrain.name}</h2>
+            <h2 className="text-xl font-semibold text-blue-400 mb-2">
+              {selectedTrain.name}
+            </h2>
             <p className="text-gray-300">Train No: {selectedTrain.number}</p>
             <p className="text-gray-400">
               {selectedTrain.from} → {selectedTrain.to}

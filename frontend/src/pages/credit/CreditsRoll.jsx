@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ivLogo from "../../assets/logo/Odyssey.png";
 
 export default function CreditsPage() {
   const credits = [
@@ -17,7 +18,7 @@ export default function CreditsPage() {
         "Sreenandan",
         "Adityan Manoj",
         "Adithya Suresh",
-        "Kevin"
+        "Kevin",
       ],
     },
     { role: "", name: "Special thanks to SCTCE administration" },
@@ -67,13 +68,24 @@ export default function CreditsPage() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-black text-white relative flex items-center justify-center">
       <div ref={viewportRef} className="absolute inset-0 overflow-hidden">
+
+        {/* LOGO BEFORE SCROLL STARTS */}
         <div
           ref={contentRef}
-          className="absolute left-1/2 -translate-x-1/2 px-4 max-w-[90vw]"
+          className="absolute left-1/2 -translate-x-1/2 px-4 max-w-[95vw]"
           style={{ transform: `translateY(${translateY}px)` }}
         >
+          <div className="flex justify-center items-center mb-[6vh] mt-[6vh]">
+            <img
+              src={ivLogo}
+              alt="IV Logo"
+              className="w-[22vw] max-w-[160px] min-w-[90px] object-contain opacity-90"
+            />
+          </div>
+
           {duplicatedCredits.map((item, index) => {
-            if (item.spacer) return <div key={index} style={{ height: "25vh" }} />;
+            if (item.spacer)
+              return <div key={index} style={{ height: "25vh" }} />;
 
             if (item.name) {
               return (
@@ -82,7 +94,7 @@ export default function CreditsPage() {
                   className="
                     flex flex-col sm:flex-row 
                     justify-center items-center 
-                    mb-[2vh]
+                    mb-[2.2vh]
                     w-full
                     text-center sm:text-left
                   "
@@ -91,14 +103,16 @@ export default function CreditsPage() {
                     <div
                       className="
                         opacity-70 uppercase tracking-widest
-                        text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                        text-[1.8vh] sm:text-[1vh] md:text-[2vh]
                       "
                       style={{
                         fontFamily: "sans-serif",
                         fontWeight: 300,
                         width: "100%",
-                        maxWidth: "110px",
+                        textAlign: "center",
+                        maxWidth: "140px",
                       }}
+
                     >
                       {item.role}
                     </div>
@@ -108,7 +122,7 @@ export default function CreditsPage() {
                     className="
                       sm:ml-[3vw]
                       mt-1 sm:mt-0
-                      text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                      text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
                       break-words
                     "
                     style={{
@@ -116,8 +130,10 @@ export default function CreditsPage() {
                       fontWeight: 400,
                       letterSpacing: "0.05em",
                       width: "100%",
-                      maxWidth: "300px",
+                      textAlign: "center",
+                      maxWidth: "350px",
                     }}
+
                   >
                     {item.name}
                   </div>
@@ -127,13 +143,16 @@ export default function CreditsPage() {
 
             if (item.list) {
               return (
-                <div key={index} className="text-center mb-[3vh] max-w-[90vw] mx-auto">
+                <div
+                  key={index}
+                  className="text-center mb-[4vh] max-w-[90vw] mx-auto"
+                >
                   <div style={{ height: "2vh" }} />
 
                   <div
                     className="
-                      mb-[1.9vh] opacity-70 uppercase tracking-widest
-                      text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                      mb-[2vh] opacity-70 uppercase tracking-widest
+                      text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
                     "
                     style={{ fontFamily: "sans-serif", fontWeight: 300 }}
                   >
@@ -144,13 +163,13 @@ export default function CreditsPage() {
                     <div
                       key={i}
                       className="
-                        text-[1.5vh] sm:text-[1.8vh] md:text-[2vh]
+                        text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]
                         break-words
                       "
                       style={{
                         fontFamily: "sans-serif",
                         fontWeight: 400,
-                        marginBottom: "0.8vh",
+                        marginBottom: "1vh",
                       }}
                     >
                       {name}
@@ -163,11 +182,12 @@ export default function CreditsPage() {
             return null;
           })}
 
-          <div style={{ height: "10vh" }} />
+          <div style={{ height: "15vh" }} />
         </div>
 
-        <div className="pointer-events-none absolute top-0 left-0 right-0 h-[15vh] bg-gradient-to-b from-black to-transparent" />
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[15vh] bg-gradient-to-t from-black to-transparent" />
+        {/* GRADIENT FADES */}
+        <div className="pointer-events-none absolute top-0 left-0 right-0 h-[20vh] bg-gradient-to-b from-black to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-black to-transparent" />
       </div>
     </div>
   );
