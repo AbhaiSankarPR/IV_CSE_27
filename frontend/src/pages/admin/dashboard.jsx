@@ -94,9 +94,7 @@ export default function Dashboard() {
 
             <div className="max-w-xl mx-auto mt-4 bg-white/10 backdrop-blur-xl p-4 rounded-xl shadow-lg flex justify-center items-center">
               <a
-                href={`upi://pay?pa=abhaisankarpr@upi&pn=${encodeURIComponent(
-                  "Abhai Sankar P R"
-                )}&tn=${encodeURIComponent("Buy me a tea ☕")}&am=1&cu=INR`}
+                href={`upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`}
               >
                 <button
                   className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 
