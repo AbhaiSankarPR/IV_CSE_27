@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../AuthPage/AuthContext";
 import Loading from "../../components/Loading";
+import QRCode from "react-qr-code";
 // import TeaButton from "../../components/TeaButton ";
 import teaImg from "../../assets/tea.svg";
 export default function Dashboard() {
@@ -92,38 +93,49 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="max-w-xl mx-auto mt-4 bg-white/10 backdrop-blur-xl p-4 rounded-xl shadow-lg flex justify-center items-center">
-              <a
-                href={`upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`}
+            <div className="max-w-xl mx-auto mt-4 bg-white/10 backdrop-blur-xl p-4 rounded-xl shadow-lg flex flex-col justify-center items-center gap-3">
+              <button
+                onClick={() => {
+                  if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+                    window.location.href = `upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`;
+                  }
+                  else {
+                    alert("Can't pay on Desktop.Please make use of the below QR Code to Pay us..Thank You!!")
+                  }
+                }}
+                className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 hover:scale-105 active:scale-95"
+                style={{
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: 600,
+                  letterSpacing: "0.03em",
+                  background: "transparent",
+                }}
               >
-                <button
-                  className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 
-                     hover:scale-105 active:scale-95"
-                  style={{
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 600,
-                    letterSpacing: "0.03em",
-                    background: "transparent",
-                    // border: "1px solid white",
-                  }}
-                >
-                  <div className="w-[40px] h-[40px] flex justify-center items-center">
-                    <img
-                      src={teaImg}
-                      alt="Buy me a tea"
-                      className="w-[36px] h-[36px] object-contain"
-                      style={{
-                        filter: "invert(1) brightness(2)",
-                      }}
-                    />
-                  </div>
+                <div className="w-[40px] h-[40px] flex justify-center items-center">
+                  <img
+                    src={teaImg}
+                    alt="Buy me a tea"
+                    className="w-[36px] h-[36px] object-contain"
+                    style={{ filter: "invert(1) brightness(2)" }}
+                  />
+                </div>
+                <span className="text-lg sm:text-xl font-semibold">Buy me a tea ☕</span>
+              </button>
 
-                  <span className="text-lg sm:text-xl font-semibold">
-                    Buy me a tea ☕
-                  </span>
-                </button>
-              </a>
+              {!/android|iphone|ipad|ipod/i.test(navigator.userAgent) && (
+                <div className="mt-2">
+                  <QRCode
+                    value={`upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`}
+                    size={180}
+                    bgColor="transparent"
+                    fgColor="white"
+                  />
+                  <p className="text-sm text-gray-300 mt-1 text-center">
+                    Scan to pay via UPI
+                  </p>
+                </div>
+              )}
             </div>
           </>
         )}
