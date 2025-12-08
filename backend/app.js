@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://iv-cse-27.vercel.app"],
+    origin: "https://iv-cse-27.vercel.app",
     credentials: true,
   })
 );
