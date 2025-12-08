@@ -40,14 +40,17 @@ async function refreshToken() {
   }
 }
 
-export const fetchWithAuth = async (url, options = {}) => {
+export const fetchWithAuth = async (url, options = {}, isFormData = false) => {
   let token = localStorage.getItem("token");
 
   options.headers = options.headers || {};
   if (token) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
-  options.headers["Content-Type"] = "application/json";
+
+  if (!isFormData) {
+    options.headers["Content-Type"] = "application/json";
+  }
   options.credentials = "include";
 
   let response = await fetch(url, options);
@@ -70,17 +73,16 @@ const api = {
   post: (body, url, options = {}) => {
     const isFormData = body instanceof FormData;
     const requestBody = isFormData ? body : JSON.stringify(body);
-    const headers = isFormData ? {} : { "Content-Type": "application/json" };
 
-    return fetchWithAuth(url, {
-      ...options,
-      method: "POST",
-      headers: {
-        ...headers,
-        ...options.headers,
+    return fetchWithAuth(
+      url,
+      {
+        ...options,
+        method: "POST",
+        body: requestBody,
       },
-      body: requestBody,
-    });
+      isFormData
+    );
   },
   put: (body, url, options = {}) =>
     fetchWithAuth(url, {
