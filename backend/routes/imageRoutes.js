@@ -17,4 +17,6 @@ router.get("/private", verifyAccessToken, async (req, res) => {
   res.json({ urls });
 });
 
+router.post("/upload", verifyAccessToken, async (req, res) => {});
+
 module.exports = router;
