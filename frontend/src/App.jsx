@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <Snowfalls style={{ zIndex: 4}} numFlakes={40} wind={0.1} />
+      <Snowfalls style={{ zIndex: 0}} numFlakes={40} wind={0.1} />
 
       <FaviconSetter />
       <div className="bg-dark-primary text-white w-screen h-screen overflow-x-hidden font-sans flex flex-col">
