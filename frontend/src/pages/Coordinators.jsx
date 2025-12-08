@@ -118,7 +118,7 @@ export default function Coordinators() {
       </p>
 
       {/* Main Coordinators */}
-      <div className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform">
+      <div className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform relative z-50">
         <h3 className="text-brand-blue mb-2 text-xl font-semibold">
           Main Coordinators
         </h3>
@@ -133,7 +133,7 @@ export default function Coordinators() {
       {Object.entries(teams).map(([teamName, members]) => (
         <div
           key={teamName}
-          className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform"
+          className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform relative z-50"
         >
           <h3 className="text-brand-blue mb-2 text-xl font-semibold capitalize">
             {teamName} Team
