@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "./AuthPage/AuthContext";
 import Loading from "../components/Loading";
+import ImageGallery from "../components/ImageGallery";
 
 export default function Memories() {
   const { user } = useAuth();
   const [loadedImages, setLoadedImages] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   if (!user) {
     return (
@@ -44,16 +46,25 @@ export default function Memories() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5">
-      {imageUrls.map((img, i) => (
-        <div className="w-full h-64" key={i}>
-          <img
-            src={img}
-            alt={`Memory ${i + 1}`}
-            className="w-full h-full object-cover rounded-xl shadow-lg shadow-black/30 transition-transform duration-300 ease-in-out hover:scale-105"
-          />
-        </div>
-      ))}
+    <div className="relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5">
+        {imageUrls.map((img, i) => (
+          <div className="w-full h-64" key={i}>
+            <img
+              src={img}
+              alt={`Memory ${i + 1}`}
+              onClick={() => setSelectedIndex(i)}
+              className="w-full h-full object-cover rounded-xl shadow-lg shadow-black/30 transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
+            />
+          </div>
+        ))}
+      </div>
+
+      <ImageGallery
+        images={imageUrls}
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+      />
     </div>
   );
 }
