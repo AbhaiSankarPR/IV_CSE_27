@@ -9,7 +9,7 @@ const supabase = createClient(
 
 router.get("/public", async (req, res) => {
   try {
-    const { data, error } = await supabase.storage.from("Avatars").list("", {
+    const { data, error } = await supabase.storage.from("Images").list("", {
       limit: 1000,
     });
 
@@ -17,7 +17,7 @@ router.get("/public", async (req, res) => {
 
     const urls = data.map(
       (item) =>
-        supabase.storage.from("Avatars").getPublicUrl(item.name).data.publicUrl
+        supabase.storage.from("Images").getPublicUrl(item.name).data.publicUrl
     );
 
     res.json({ urls });

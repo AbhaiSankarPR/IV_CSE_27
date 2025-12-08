@@ -1,26 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
 
 export default function Images() {
-  const imageUrls = [
-    "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
-    "https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/gettyimages-586890581.jpg?crop=0.668xw:1.00xh;0.219xw,0",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/gettyimages-586890581.jpg?crop=0.668xw:1.00xh;0.219xw,0",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/gettyimages-586890581.jpg?crop=0.668xw:1.00xh;0.219xw,0",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
-  ];
-
+  const [imageUrls, setImageUrls] = useState([]);
   const [loadedCount, setLoadedCount] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const handleImageLoad = () => setLoadedCount(prev => prev + 1);
+  const handleImageLoad = () => setLoadedCount((prev) => prev + 1);
   const allLoaded = loadedCount === imageUrls.length;
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/images/public`)
+      .then((res) => res.json())
+      .then((data) => {
+        setImageUrls(data.urls);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="relative min-h-screen">
