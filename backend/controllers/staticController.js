@@ -1,7 +1,6 @@
 const { google } = require("googleapis");
 const { db } = require("../config/firebase");
 const credentials = require("../credentials.json");
-require("dotenv").config();
 
 async function getItineraries() {
   try {

@@ -7,7 +7,6 @@ const xss = require("xss");
 
 const { getUser, createUser } = require("../controllers/userController");
 const { generateTokens } = require("../utils/tokens");
-require("dotenv").config();
 
 router.use(cookieParser());
 
