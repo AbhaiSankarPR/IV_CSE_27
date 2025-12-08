@@ -35,7 +35,6 @@ export default function Dashboard() {
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     setFiles(selectedFiles);
-    console.log(selectedFiles);
   };
 
   const handleUpload = async (bucket) => {
@@ -54,9 +53,7 @@ export default function Dashboard() {
         formData,
         `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
       );
-
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         alert("Images uploaded successfully");
