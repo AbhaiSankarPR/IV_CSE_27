@@ -123,7 +123,7 @@ export default function Dashboard() {
                     style={{ filter: "invert(1) brightness(2)" }}
                   />
                 </div>
-                <span className="text-lg sm:text-xl font-semibold">Buy me a tea ☕</span>
+                <span className="text-lg sm:text-xl font-semibold cursor-pointer">Buy me a tea ☕</span>
               </button>
                {showQRCode && (
           <div className="mt-4 flex flex-col items-center">
