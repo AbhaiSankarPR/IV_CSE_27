@@ -4,10 +4,13 @@ import Loading from "../../components/Loading";
 import QRCode from "react-qr-code";
 // import TeaButton from "../../components/TeaButton ";
 import teaImg from "../../assets/tea.svg";
+import api from "../../utils/api";
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("profile");
+  const [files, setFiles] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [showQRCode, setShowQRCode] = useState(false);
+  const [showQRCode, setShowQRCode] = useState(false);
 
   const { user, logout } = useAuth();
 
@@ -29,11 +32,49 @@ export default function Dashboard() {
     }
   }, [activeTab]);
 
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+    console.log(selectedFiles);
+  };
+
+  const handleUpload = async (bucket) => {
+    if (!files.length) {
+      alert("Please select images");
+      return;
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    try {
+      const res = await api.post(
+        formData,
+        `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
+      );
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        alert("Images uploaded successfully");
+      } else {
+        alert(data.error || "Upload failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
       <div
-        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${sidebarOpen ? "max-h-screen" : "h-auto"
-          }`}
+        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${
+          sidebarOpen ? "max-h-screen" : "h-auto"
+        }`}
       >
         <div
           onClick={() => setActiveTab("profile")}
@@ -52,21 +93,24 @@ export default function Dashboard() {
         </div>
 
         <div
-          className={`flex flex-col gap-2 ${sidebarOpen ? "block" : "hidden md:block"
-            }`}
+          className={`flex flex-col gap-2 ${
+            sidebarOpen ? "block" : "hidden md:block"
+          }`}
         >
           <button
             onClick={() => setActiveTab("essentials")}
-            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
-              }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${
+              activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
+            }`}
           >
             IV Essentials
           </button>
 
           <button
             onClick={() => setActiveTab("upload")}
-            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
-              }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${
+              activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
+            }`}
           >
             Upload Image
           </button>
@@ -85,7 +129,8 @@ export default function Dashboard() {
           <>
             <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
               <h1 className="text-3xl md:text-4xl font-bold mb-3">
-                Welcome, <span className="text-green-400">{user?.name || "User"}</span>
+                Welcome,{" "}
+                <span className="text-green-400">{user?.name || "User"}</span>
               </h1>
               <p className="text-gray-300 mb-2 text-base md:text-lg">
                 You are successfully logged in.
@@ -100,10 +145,11 @@ export default function Dashboard() {
                 onClick={() => {
                   if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
                     window.location.href = `upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`;
-                  }
-                  else {
-                    alert("Can't pay on Desktop. Please use the QR Code below to pay. Thank you!");
-                          setShowQRCode(true);
+                  } else {
+                    alert(
+                      "Can't pay on Desktop. Please use the QR Code below to pay. Thank you!"
+                    );
+                    setShowQRCode(true);
                   }
                 }}
                 className="flex items-center gap-3 px-4 py-2 rounded-2xl transition-transform duration-200 hover:scale-105 active:scale-95"
@@ -123,22 +169,26 @@ export default function Dashboard() {
                     style={{ filter: "invert(1) brightness(2)" }}
                   />
                 </div>
-                <span className="text-lg sm:text-xl font-semibold cursor-pointer">Buy me a tea ☕</span>
+                <span className="text-lg sm:text-xl font-semibold cursor-pointer">
+                  Buy me a tea ☕
+                </span>
               </button>
-               {showQRCode && (
-          <div className="mt-4 flex flex-col items-center">
-            <QRCode value="upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu" size={180} bgColor="transparent" fgColor="white" />
-            <p className="text-sm text-gray-300 mt-2 text-center">
-              Scan to pay via UPI
-            </p>
-          </div>
-        )}
+              {showQRCode && (
+                <div className="mt-4 flex flex-col items-center">
+                  <QRCode
+                    value="upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu"
+                    size={180}
+                    bgColor="transparent"
+                    fgColor="white"
+                  />
+                  <p className="text-sm text-gray-300 mt-2 text-center">
+                    Scan to pay via UPI
+                  </p>
+                </div>
+              )}
             </div>
-            
           </>
         )}
-
-
 
         {activeTab === "essentials" && (
           <>
@@ -155,7 +205,9 @@ export default function Dashboard() {
                     key={idx}
                     className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-xl shadow-lg"
                   >
-                    <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
+                    <h2 className="text-xl font-semibold mb-4">
+                      {section.title}
+                    </h2>
                     <ul className="space-y-2 text-gray-200 text-sm">
                       {section.items.map((item, i) => (
                         <li key={i} className="flex gap-2">
@@ -178,20 +230,42 @@ export default function Dashboard() {
             </h1>
 
             <div>
-              <h2 className="text-lg font-semibold mb-3 text-green-300">Personal Uploads</h2>
+              <h2 className="text-lg font-semibold mb-3 text-green-300">
+                Personal Uploads
+              </h2>
               <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
-                <input type="file" accept="image/*" multiple className="block w-full text-white" />
-                <button className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleFileChange}
+                  className="block w-full text-white"
+                />
+                <button
+                  onClick={() => handleUpload("Memories")}
+                  className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm"
+                >
                   Upload Personal
                 </button>
               </div>
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold mb-3 text-green-300">Public Uploads</h2>
+              <h2 className="text-lg font-semibold mb-3 text-green-300">
+                Public Uploads
+              </h2>
               <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
-                <input type="file" accept="image/*" multiple className="block w-full text-white" />
-                <button className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="block w-full text-white"
+                  onChange={handleFileChange}
+                />
+                <button
+                  onClick={() => handleUpload("Images")}
+                  className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm"
+                >
                   Upload Public
                 </button>
               </div>

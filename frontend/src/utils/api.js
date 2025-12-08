@@ -67,12 +67,21 @@ export const fetchWithAuth = async (url, options = {}) => {
 
 const api = {
   get: (url, options = {}) => fetchWithAuth(url, { ...options, method: "GET" }),
-  post: (body, url, options = {}) =>
-    fetchWithAuth(url, {
+  post: (body, url, options = {}) => {
+    const isFormData = body instanceof FormData;
+    const requestBody = isFormData ? body : JSON.stringify(body);
+    const headers = isFormData ? {} : { "Content-Type": "application/json" };
+
+    return fetchWithAuth(url, {
       ...options,
       method: "POST",
-      body: JSON.stringify(body),
-    }),
+      headers: {
+        ...headers,
+        ...options.headers,
+      },
+      body: requestBody,
+    });
+  },
   put: (body, url, options = {}) =>
     fetchWithAuth(url, {
       ...options,
