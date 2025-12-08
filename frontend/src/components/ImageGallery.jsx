@@ -5,6 +5,7 @@ export default function ImageGallery({
   images,
   selectedIndex,
   setSelectedIndex,
+  refreshImages,
 }) {
   const showPrev = useCallback(() => {
     setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -29,6 +30,12 @@ export default function ImageGallery({
 
   if (selectedIndex === null) return null;
 
+  const handleError = async () => {
+    if (refreshImages) {
+      await refreshImages();
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-10"
@@ -48,6 +55,7 @@ export default function ImageGallery({
         src={images[selectedIndex]}
         className="max-w-full max-h-full rounded-xl shadow-2xl transition-transform duration-300"
         onClick={(e) => e.stopPropagation()}
+        onError={handleError}
       />
 
       <button

@@ -1,12 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "./AuthPage/AuthContext";
 import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
+import api from "../utils/api";
 
 export default function Memories() {
   const { user } = useAuth();
+
+  const [imageUrls, setImageUrls] = useState([]);
   const [loadedImages, setLoadedImages] = useState(0);
+  const [overallLoading, setOverallLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(null);
+
+  async function fetchPrivateImages() {
+    setOverallLoading(true);
+    setLoadedImages(0);
+
+    try {
+      const res = await api.get(
+        `${import.meta.env.VITE_BACKEND_URL}/images/private`
+      );
+      const data = await res.json();
+      setImageUrls(data.urls);
+    } catch (err) {
+      console.error("Error loading images", err);
+      setOverallLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchPrivateImages();
+    const interval = setInterval(fetchPrivateImages, 55 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (imageUrls.length === 0) {
+      setOverallLoading(false);
+      return;
+    }
+
+    let loaded = 0;
+    let cancelled = false;
+
+    imageUrls.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        if (cancelled) return;
+
+        loaded++;
+        setLoadedImages(loaded);
+
+        if (loaded === imageUrls.length) {
+          setOverallLoading(false);
+        }
+      };
+
+      img.onerror = () => {
+        if (cancelled) return;
+        console.error("Image load error — refreshing...");
+        fetchPrivateImages();
+      };
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [imageUrls]);
 
   if (!user) {
     return (
@@ -20,29 +82,11 @@ export default function Memories() {
     );
   }
 
-  const imageUrls = [
-    "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
-    "https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/gettyimages-586890581.jpg?crop=0.668xw:1.00xh;0.219xw,0",
-    "https://cdn.shopify.com/s/files/1/0086/0795/7054/files/Golden-Retriever.jpg?v=1645179525",
-    "https://images.unsplash.com/photo-1558788353-f76d92427f16",
-    "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8",
-  ];
+  const allImagesPreloaded =
+    imageUrls.length > 0 && loadedImages === imageUrls.length;
 
-  if (loadedImages < imageUrls.length) {
-    return (
-      <>
-        <Loading message="Loading Memories..." />
-        {imageUrls.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt=""
-            className="hidden"
-            onLoad={() => setLoadedImages(prev => prev + 1)}
-          />
-        ))}
-      </>
-    );
+  if (overallLoading || (imageUrls.length > 0 && !allImagesPreloaded)) {
+    return <Loading message="Loading Memories..." />;
   }
 
   return (
@@ -64,6 +108,7 @@ export default function Memories() {
         images={imageUrls}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        refreshImages={fetchPrivateImages}
       />
     </div>
   );
