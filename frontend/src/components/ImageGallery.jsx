@@ -1,20 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Download } from "lucide-react";
 
-export default function ImageGallery({ images, selectedIndex, setSelectedIndex }) {
-  if (selectedIndex === null) return null;
+export default function ImageGallery({
+  images,
+  selectedIndex,
+  setSelectedIndex,
+}) {
+  const showPrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length, setSelectedIndex]);
 
-  const showPrev = () => {
-    setSelectedIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const showNext = () => {
-    setSelectedIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  const showNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length, setSelectedIndex]);
 
   useEffect(() => {
+    if (selectedIndex === null) return;
+
     const handleKeys = (e) => {
-      if (selectedIndex === null) return;
       if (e.key === "Escape") setSelectedIndex(null);
       if (e.key === "ArrowLeft") showPrev();
       if (e.key === "ArrowRight") showNext();
@@ -22,7 +25,9 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
 
     window.addEventListener("keydown", handleKeys);
     return () => window.removeEventListener("keydown", handleKeys);
-  }, [selectedIndex]);
+  }, [selectedIndex, showPrev, showNext, setSelectedIndex]);
+
+  if (selectedIndex === null) return null;
 
   return (
     <div
@@ -31,7 +36,10 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
     >
       <button
         className="absolute left-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
-        onClick={(e) => { e.stopPropagation(); showPrev(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          showPrev();
+        }}
       >
         <ChevronLeft className="text-white w-6 h-6" />
       </button>
@@ -44,7 +52,10 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
 
       <button
         className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
-        onClick={(e) => { e.stopPropagation(); showNext(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          showNext();
+        }}
       >
         <ChevronRight className="text-white w-6 h-6" />
       </button>
@@ -72,7 +83,6 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
       >
         <Download className="w-5 h-5 text-white" />
       </a>
-
     </div>
   );
 }
