@@ -66,7 +66,7 @@ export default function Schedule() {
   if (loading) return <Loading message="Loading Schedule..."  />;
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">
+    <div className="min-h-screen  text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">
       <div className="max-w-4xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
