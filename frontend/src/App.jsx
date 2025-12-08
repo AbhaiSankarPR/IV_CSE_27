@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import FaviconSetter from "./FaviconSetter.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Snowfalls from "./components/Snowfall.jsx";
 
 function App() {
   useEffect(() => {
@@ -13,6 +14,8 @@ function App() {
 
   return (
     <>
+      <Snowfalls style={{ zIndex: 0 }} numFlakes={40} wind={0.1} />
+
       <FaviconSetter />
       <div className="bg-dark-primary text-white w-screen h-screen overflow-x-hidden font-sans flex flex-col">
         <Navbar />
