@@ -29,7 +29,6 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
       className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-10"
       onClick={() => setSelectedIndex(null)}
     >
-      {/* Left arrow */}
       <button
         className="absolute left-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
         onClick={(e) => { e.stopPropagation(); showPrev(); }}
@@ -37,14 +36,12 @@ export default function ImageGallery({ images, selectedIndex, setSelectedIndex }
         <ChevronLeft className="text-white w-6 h-6" />
       </button>
 
-      {/* Image */}
       <img
         src={images[selectedIndex]}
         className="max-w-full max-h-full rounded-xl shadow-2xl transition-transform duration-300"
         onClick={(e) => e.stopPropagation()}
       />
 
-      {/* Right arrow */}
       <button
         className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
         onClick={(e) => { e.stopPropagation(); showNext(); }}
