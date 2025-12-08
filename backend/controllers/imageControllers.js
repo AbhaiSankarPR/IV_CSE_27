@@ -49,4 +49,22 @@ async function getSignedUrls(bucket) {
   }
 }
 
-module.exports = { getPublicUrls, getSignedUrls };
+async function uploadImages(files, bucket) {
+  for (const file of files) {
+    const fileName = `${Date.now()}_${file.originalname}`;
+
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file.buffer, {
+        contentType: file.mimetype,
+      });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  return true;
+}
+
+module.exports = { getPublicUrls, getSignedUrls, uploadImages };
