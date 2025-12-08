@@ -6,6 +6,7 @@ const helmet = require("helmet");
 
 const userRoutes = require("./routes/userRoutes");
 const staticRoutes = require("./routes/staticRoutes");
+const imageRoutes = require("./routes/imageRoutes");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -31,5 +32,6 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRoutes);
 app.use("/static", staticRoutes);
+app.use("/images", imageRoutes);
 
 module.exports = app;
