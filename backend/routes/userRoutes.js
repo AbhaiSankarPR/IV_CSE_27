@@ -118,7 +118,7 @@ router.post("/refresh", async (req, res) => {
           return res.status(403).json({ message: "Invalid refresh token" });
 
         const accessToken = jwt.sign(
-          { email: decoded.email, id: decoded.id },
+          { email: decoded.email, id: decoded.id, role: decoded.role },
           process.env.JWT_SECRET,
           { expiresIn: process.env.JWT_EXPIRES_IN }
         );

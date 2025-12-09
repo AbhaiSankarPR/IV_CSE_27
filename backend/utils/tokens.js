@@ -8,12 +8,16 @@ const {
 } = process.env;
 
 function generateTokens(user) {
-  const accessToken = jwt.sign({ email: user.email, id: user.id }, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
-  });
+  const accessToken = jwt.sign(
+    { email: user.email, id: user.id, role: user.role },
+    JWT_SECRET,
+    {
+      expiresIn: JWT_EXPIRES_IN,
+    }
+  );
 
   const refreshToken = jwt.sign(
-    { email: user.email, id: user.id },
+    { email: user.email, id: user.id, role: user.role },
     REFRESH_TOKEN_SECRET,
     { expiresIn: REFRESH_TOKEN_EXPIRES_IN }
   );
@@ -47,4 +51,16 @@ function verifyAccessToken(req, res, next) {
   });
 }
 
-module.exports = { generateTokens, verifyAccessToken };
+async function verifyAdmin(req, res, next) {
+  if (!req.user?.role) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Forbidden: Admins only" });
+  }
+
+  next();
+}
+
+module.exports = { generateTokens, verifyAccessToken, verifyAdmin };
