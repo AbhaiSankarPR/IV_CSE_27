@@ -69,9 +69,8 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
       <div
-        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${
-          sidebarOpen ? "max-h-screen" : "h-auto"
-        }`}
+        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${sidebarOpen ? "max-h-screen" : "h-auto"
+          }`}
       >
         <div
           onClick={() => setActiveTab("profile")}
@@ -90,24 +89,21 @@ export default function Dashboard() {
         </div>
 
         <div
-          className={`flex flex-col gap-2 ${
-            sidebarOpen ? "block" : "hidden md:block"
-          }`}
+          className={`flex flex-col gap-2 ${sidebarOpen ? "block" : "hidden md:block"
+            }`}
         >
           <button
             onClick={() => setActiveTab("essentials")}
-            className={`p-3 rounded-lg text-left transition text-sm ${
-              activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
-            }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
+              }`}
           >
             IV Essentials
           </button>
 
           <button
             onClick={() => setActiveTab("upload")}
-            className={`p-3 rounded-lg text-left transition text-sm ${
-              activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
-            }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
+              }`}
           >
             Upload Image
           </button>
@@ -231,12 +227,19 @@ export default function Dashboard() {
                 Personal Uploads
               </h2>
               <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
+                <label
+                  htmlFor="personalUpload"
+                  className="block w-full cursor-pointer px-4 py-2 border border-white/40 rounded-lg text-center text-white hover:bg-white/10 transition"
+                >
+                  Choose Files
+                </label>
                 <input
+                  id="personalUpload"
                   type="file"
                   accept="image/*"
                   multiple
                   onChange={handleFileChange}
-                  className="block w-full text-white"
+                  className="hidden"
                 />
                 <button
                   onClick={() => handleUpload("Memories")}
@@ -246,18 +249,24 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
-
             <div>
               <h2 className="text-lg font-semibold mb-3 text-green-300">
                 Public Uploads
               </h2>
               <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
+                <label
+                  htmlFor="publicUpload"
+                  className="block w-full cursor-pointer px-4 py-2 border border-white/40 rounded-lg text-center text-white hover:bg-white/10 transition"
+                >
+                  Choose Files
+                </label>
                 <input
+                  id="publicUpload"
                   type="file"
                   accept="image/*"
                   multiple
-                  className="block w-full text-white"
                   onChange={handleFileChange}
+                  className="hidden"
                 />
                 <button
                   onClick={() => handleUpload("Images")}
