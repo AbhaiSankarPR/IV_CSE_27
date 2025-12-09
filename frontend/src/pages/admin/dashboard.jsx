@@ -9,7 +9,9 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const [files, setFiles] = useState([]);
   const [fileNames, setFileNames] = useState([]);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingprivate, setIsUploadingprivate] = useState(false);
+  const [isUploadingpublic, setIsUploadingpublic] = useState(false);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
 
@@ -37,40 +39,43 @@ export default function Dashboard() {
     setFileNames(selectedFiles.map((f) => f.name));
   };
 
-  const handleUpload = async (bucket) => {
-    if (!files.length) {
-      alert("Please select images");
-      return;
+ const handleUpload = async (bucket) => {
+  if (!files.length) {
+    alert("Please select images");
+    return;
+  }
+
+  if (bucket === "Memories") setIsUploadingprivate(true);
+  if (bucket === "Images") setIsUploadingpublic(true);
+
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append("images", file);
+  });
+
+  try {
+    const res = await api.post(
+      formData,
+      `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Images uploaded successfully");
+      setFiles([]);
+      setFileNames([]);
+    } else {
+      alert(data.error || "Upload failed");
     }
+  } catch {
+    alert("Something went wrong");
+  }
 
-    setIsUploading(true);
+  if (bucket === "Memories") setIsUploadingprivate(false);
+  if (bucket === "Images") setIsUploadingpublic(false);
+};
 
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("images", file);
-    });
-
-    try {
-      const res = await api.post(
-        formData,
-        `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
-      );
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Images uploaded successfully");
-        setFiles([]);
-        setFileNames([]);
-      } else {
-        alert(data.error || "Upload failed");
-      }
-    } catch {
-      alert("Something went wrong");
-    }
-
-    setIsUploading(false);
-  };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
@@ -263,14 +268,14 @@ export default function Dashboard() {
 
                 <button
                   onClick={() => handleUpload("Memories")}
-                  disabled={isUploading}
+                  disabled={isUploadingprivate}
                   className={`mt-5 px-5 py-2 rounded-lg font-semibold text-sm ${
-                    isUploading
+                    isUploadingprivate
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-blue-600 hover:bg-blue-700"
                   }`}
                 >
-                  {isUploading ? "Uploading..." : "Upload Personal"}
+                  {isUploadingprivate ? "Uploading..." : "Upload Personal"}
                 </button>
               </div>
             </div>
@@ -305,14 +310,14 @@ export default function Dashboard() {
 
                 <button
                   onClick={() => handleUpload("Images")}
-                  disabled={isUploading}
+                  disabled={isUploadingpublic}
                   className={`mt-5 px-5 py-2 rounded-lg font-semibold text-sm ${
-                    isUploading
+                    isUploadingpublic
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-blue-600 hover:bg-blue-700"
                   }`}
                 >
-                  {isUploading ? "Uploading..." : "Upload Public"}
+                  {isUploadingpublic ? "Uploading..." : "Upload Public"}
                 </button>
               </div>
             </div>
