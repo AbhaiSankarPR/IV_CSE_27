@@ -35,47 +35,55 @@ export default function Dashboard() {
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
+
+    const imageFiles = selectedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
+    if (imageFiles.length !== selectedFiles.length) {
+      alert("Only image files are allowed.");
+      return;
+    }
+
     setFiles(selectedFiles);
     setFileNames(selectedFiles.map((f) => f.name));
   };
 
- const handleUpload = async (bucket) => {
-  if (!files.length) {
-    alert("Please select images");
-    return;
-  }
-
-  if (bucket === "Memories") setIsUploadingprivate(true);
-  if (bucket === "Images") setIsUploadingpublic(true);
-
-  const formData = new FormData();
-  files.forEach((file) => {
-    formData.append("images", file);
-  });
-
-  try {
-    const res = await api.post(
-      formData,
-      `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
-    );
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Images uploaded successfully");
-      setFiles([]);
-      setFileNames([]);
-    } else {
-      alert(data.error || "Upload failed");
+  const handleUpload = async (bucket) => {
+    if (!files.length) {
+      alert("Please select images");
+      return;
     }
-  } catch {
-    alert("Something went wrong");
-  }
 
-  if (bucket === "Memories") setIsUploadingprivate(false);
-  if (bucket === "Images") setIsUploadingpublic(false);
-};
+    if (bucket === "Memories") setIsUploadingprivate(true);
+    if (bucket === "Images") setIsUploadingpublic(true);
 
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    try {
+      const res = await api.post(
+        formData,
+        `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Images uploaded successfully");
+        setFiles([]);
+        setFileNames([]);
+      } else {
+        alert(data.error || "Upload failed");
+      }
+    } catch {
+      alert("Something went wrong");
+    }
+
+    if (bucket === "Memories") setIsUploadingprivate(false);
+    if (bucket === "Images") setIsUploadingpublic(false);
+  };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
@@ -138,9 +146,7 @@ export default function Dashboard() {
             <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
               <h1 className="text-3xl md:text-4xl font-bold mb-3">
                 Welcome,{" "}
-                <span className="text-green-400">
-                  {user?.name || "User"}
-                </span>
+                <span className="text-green-400">{user?.name || "User"}</span>
               </h1>
               <p className="text-gray-300 mb-2 text-base md:text-lg">
                 You are successfully logged in.
@@ -156,7 +162,9 @@ export default function Dashboard() {
                   if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
                     window.location.href = `upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`;
                   } else {
-                    alert("Can't pay on Desktop. Please use the QR Code below to pay. Thank you!");
+                    alert(
+                      "Can't pay on Desktop. Please use the QR Code below to pay. Thank you!"
+                    );
                     setShowQRCode(true);
                   }
                 }}
