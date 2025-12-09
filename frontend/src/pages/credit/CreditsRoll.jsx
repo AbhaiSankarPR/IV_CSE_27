@@ -19,11 +19,29 @@ export default function CreditsPage() {
         "Adityan Manoj",
         "Adithya Suresh",
         "Kevin",
-        "Hridikesh S Premnath"
+        "Hridikesh S Premnath",
+        "Sonal Santhosh"
       ],
     },
+    {
+      role: "IV Staffs",
+      list: [
+        "",
+        "",
+        "",
+      ],
+    },
+    { role: "Batch", list: ["CSE 2023–2027"] },
     { role: "", name: "Special thanks to SCTCE administration" },
     { role: "", name: "Thanks for travelling with us!" },
+    {
+      role: "Powered By",
+      list: [
+        "React + Vite",
+        "Tailwind CSS",
+        "Firebase / Supabase / Render",
+      ],
+    },
   ];
 
   const viewportRef = useRef(null);
@@ -126,12 +144,12 @@ export default function CreditsPage() {
                 <div key={index} className="text-center mb-[4vh] max-w-[90vw] mx-auto">
                   <div style={{ height: "2vh" }} />
                   <div className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
-                       style={{ fontFamily: "sans-serif", fontWeight: 300 }}>
+                    style={{ fontFamily: "sans-serif", fontWeight: 300 }}>
                     {item.role}
                   </div>
                   {item.list.map((name, i) => (
                     <div key={i} className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
-                         style={{ fontFamily: "sans-serif", fontWeight: 400, marginBottom: "1vh" }}>
+                      style={{ fontFamily: "sans-serif", fontWeight: 400, marginBottom: "1vh" }}>
                       {name}
                     </div>
                   ))}
