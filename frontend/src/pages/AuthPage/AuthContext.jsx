@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { logout as reqLogout } from "../../utils/api";
-import jwtDecode from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -14,11 +13,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (data) => {
-    const decoded = jwtDecode(data.accessToken);
-    const updatedUser = { ...data.user, role: decoded.role };
-
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.accessToken);
   };
 
