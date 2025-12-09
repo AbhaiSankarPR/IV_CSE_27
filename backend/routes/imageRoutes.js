@@ -12,12 +12,18 @@ const {
 const { verifyAccessToken } = require("../utils/tokens");
 
 router.get("/public", async (req, res) => {
-  const urls = await getPublicUrls("Images");
+  const offset = Number(req.query.offset) || 0;
+  const limit = Number(req.query.limit) || 20;
+
+  const urls = await getPublicUrls("Images", offset, limit);
   res.json({ urls });
 });
 
 router.get("/private", verifyAccessToken, async (req, res) => {
-  const urls = await getSignedUrls("Memories");
+  const offset = Number(req.query.offset) || 0;
+  const limit = Number(req.query.limit) || 20;
+
+  const urls = await getSignedUrls("Memories", offset, limit);
   res.json({ urls });
 });
 
