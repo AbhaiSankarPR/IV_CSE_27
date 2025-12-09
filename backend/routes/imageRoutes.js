@@ -7,6 +7,7 @@ const {
   getPublicUrls,
   getSignedUrls,
   uploadImages,
+  deleteImage,
 } = require("../controllers/imageControllers");
 const { verifyAccessToken } = require("../utils/tokens");
 
@@ -42,5 +43,24 @@ router.post(
     }
   }
 );
+
+router.delete("/delete", verifyAccessToken, async (req, res) => {
+  try {
+    const { bucket, file } = req.query;
+
+    if (!bucket) return res.status(400).json({ error: "Bucket is required" });
+    if (!file) return res.status(400).json({ error: "File name is required" });
+
+    const result = await deleteImage(bucket, file);
+
+    if (result.error) {
+      return res.status(400).json({ error: result.error.message });
+    }
+
+    return res.status(200).json({ message: "Image deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;

@@ -67,4 +67,13 @@ async function uploadImages(files, bucket) {
   return true;
 }
 
-module.exports = { getPublicUrls, getSignedUrls, uploadImages };
+async function deleteImage(bucket, fileName) {
+  const { data, error } = await supabase.storage
+    .from(bucket)
+    .remove([fileName]);
+
+  if (error) return { error };
+  return { data };
+}
+
+module.exports = { getPublicUrls, getSignedUrls, uploadImages, deleteImage };
