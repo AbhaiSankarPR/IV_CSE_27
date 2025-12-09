@@ -19,6 +19,7 @@ export default function CreditsPage() {
         "Adityan Manoj",
         "Adithya Suresh",
         "Kevin",
+        "Hridikesh S Premnath"
       ],
     },
     { role: "", name: "Special thanks to SCTCE administration" },

@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../AuthPage/AuthContext";
 import Loading from "../../components/Loading";
 import QRCode from "react-qr-code";
-// import TeaButton from "../../components/TeaButton ";
 import teaImg from "../../assets/tea.svg";
 import api from "../../utils/api";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const [files, setFiles] = useState([]);
+  const [fileNames, setFileNames] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
 
@@ -16,6 +17,7 @@ export default function Dashboard() {
 
   const [sections, setSections] = useState([]);
   const [loadingSections, setLoadingSections] = useState(false);
+
   useEffect(() => {
     if (activeTab === "essentials") {
       setLoadingSections(true);
@@ -25,16 +27,14 @@ export default function Dashboard() {
           setSections(data);
           setLoadingSections(false);
         })
-        .catch((err) => {
-          console.error("Error fetching utensils:", err);
-          setLoadingSections(false);
-        });
+        .catch(() => setLoadingSections(false));
     }
   }, [activeTab]);
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     setFiles(selectedFiles);
+    setFileNames(selectedFiles.map((f) => f.name));
   };
 
   const handleUpload = async (bucket) => {
@@ -42,6 +42,8 @@ export default function Dashboard() {
       alert("Please select images");
       return;
     }
+
+    setIsUploading(true);
 
     const formData = new FormData();
     files.forEach((file) => {
@@ -53,24 +55,29 @@ export default function Dashboard() {
         formData,
         `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
       );
+
       const data = await res.json();
 
       if (res.ok) {
         alert("Images uploaded successfully");
+        setFiles([]);
+        setFileNames([]);
       } else {
         alert(data.error || "Upload failed");
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert("Something went wrong");
     }
+
+    setIsUploading(false);
   };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full text-white font-[Poppins]">
       <div
-        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${sidebarOpen ? "max-h-screen" : "h-auto"
-          }`}
+        className={`bg-black/30 backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${
+          sidebarOpen ? "max-h-screen" : "h-auto"
+        }`}
       >
         <div
           onClick={() => setActiveTab("profile")}
@@ -89,21 +96,24 @@ export default function Dashboard() {
         </div>
 
         <div
-          className={`flex flex-col gap-2 ${sidebarOpen ? "block" : "hidden md:block"
-            }`}
+          className={`flex flex-col gap-2 ${
+            sidebarOpen ? "block" : "hidden md:block"
+          }`}
         >
           <button
             onClick={() => setActiveTab("essentials")}
-            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
-              }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${
+              activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
+            }`}
           >
             IV Essentials
           </button>
 
           <button
             onClick={() => setActiveTab("upload")}
-            className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
-              }`}
+            className={`p-3 rounded-lg text-left transition text-sm ${
+              activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
+            }`}
           >
             Upload Image
           </button>
@@ -123,7 +133,9 @@ export default function Dashboard() {
             <div className="max-w-xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
               <h1 className="text-3xl md:text-4xl font-bold mb-3">
                 Welcome,{" "}
-                <span className="text-green-400">{user?.name || "User"}</span>
+                <span className="text-green-400">
+                  {user?.name || "User"}
+                </span>
               </h1>
               <p className="text-gray-300 mb-2 text-base md:text-lg">
                 You are successfully logged in.
@@ -139,9 +151,7 @@ export default function Dashboard() {
                   if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
                     window.location.href = `upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu`;
                   } else {
-                    alert(
-                      "Can't pay on Desktop. Please use the QR Code below to pay. Thank you!"
-                    );
+                    alert("Can't pay on Desktop. Please use the QR Code below to pay. Thank you!");
                     setShowQRCode(true);
                   }
                 }}
@@ -166,6 +176,7 @@ export default function Dashboard() {
                   Buy me a tea ☕
                 </span>
               </button>
+
               {showQRCode && (
                 <div className="mt-4 flex flex-col items-center">
                   <QRCode
@@ -241,14 +252,29 @@ export default function Dashboard() {
                   onChange={handleFileChange}
                   className="hidden"
                 />
+
+                {fileNames.length > 0 && (
+                  <div className="mt-3 text-sm text-gray-300 space-y-1">
+                    {fileNames.map((name, idx) => (
+                      <p key={idx}>• {name}</p>
+                    ))}
+                  </div>
+                )}
+
                 <button
                   onClick={() => handleUpload("Memories")}
-                  className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm"
+                  disabled={isUploading}
+                  className={`mt-5 px-5 py-2 rounded-lg font-semibold text-sm ${
+                    isUploading
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  }`}
                 >
-                  Upload Personal
+                  {isUploading ? "Uploading..." : "Upload Personal"}
                 </button>
               </div>
             </div>
+
             <div>
               <h2 className="text-lg font-semibold mb-3 text-green-300">
                 Public Uploads
@@ -268,18 +294,31 @@ export default function Dashboard() {
                   onChange={handleFileChange}
                   className="hidden"
                 />
+
+                {fileNames.length > 0 && (
+                  <div className="mt-3 text-sm text-gray-300 space-y-1">
+                    {fileNames.map((name, idx) => (
+                      <p key={idx}>• {name}</p>
+                    ))}
+                  </div>
+                )}
+
                 <button
                   onClick={() => handleUpload("Images")}
-                  className="mt-5 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-sm"
+                  disabled={isUploading}
+                  className={`mt-5 px-5 py-2 rounded-lg font-semibold text-sm ${
+                    isUploading
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  }`}
                 >
-                  Upload Public
+                  {isUploading ? "Uploading..." : "Upload Public"}
                 </button>
               </div>
             </div>
           </div>
         )}
       </div>
-      {/* <TeaButton /> */}
     </div>
   );
 }
