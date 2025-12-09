@@ -1,5 +1,3 @@
-import placeholder from "../assets/loginface.svg";
-
 const pramad =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/pramad.jpg";
 const preman =
@@ -30,6 +28,8 @@ const sidharth =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Sidharth.jpg";
 const anoop =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Abhin.jpg";
+const narayanan =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Adityanarayanan.jpg";
 
 const mainCoordinators = [
   {
@@ -48,7 +48,7 @@ const teams = {
   finance: [
     {
       name: "Aditya Narayanan",
-      img: placeholder,
+      img: narayanan,
       link: "https://www.instagram.com/_.sxssy._?igsh=MWVjenNlZWxldXkxbA==",
     },
     {
