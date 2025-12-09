@@ -16,7 +16,9 @@ export default function Memories() {
     setIsLoading(true);
 
     try {
-      const res = await api.get(`${import.meta.env.VITE_BACKEND_URL}/images/private`);
+      const res = await api.get(
+        `${import.meta.env.VITE_BACKEND_URL}/images/private`
+      );
       const data = await res.json();
 
       const urls = Array.isArray(data.urls) ? data.urls : [];
@@ -25,12 +27,14 @@ export default function Memories() {
       console.error("Error fetching private images:", err);
       setImages([]);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     fetchPrivateImages();
+    const interval = setInterval(fetchPrivateImages, 55 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   if (!user) {
@@ -72,6 +76,7 @@ export default function Memories() {
         images={images}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        refreshImages={fetchPrivateImages}
       />
     </div>
   );
