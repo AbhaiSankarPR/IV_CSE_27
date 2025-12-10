@@ -137,8 +137,9 @@ router.post("/logout", (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true,
-      domain: ".iv-cse-27.vercel.app",
       sameSite: "none",
+      domain: ".iv-cse-27.vercel.app",
+      path: "/",
     };
 
     res.cookie("refreshToken", "", {
