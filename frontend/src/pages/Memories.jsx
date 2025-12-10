@@ -4,6 +4,8 @@ import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
 import api from "../utils/api";
 
+const THROTTLING_THRESHOLD_MS = 5 * 60 * 1000;
+
 export default function Memories() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
@@ -19,6 +21,7 @@ export default function Memories() {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const loadMoreRef = useRef(null);
+  const tabHiddenTime = useRef(0);
 
   async function fetchImagesChunk(offsetValue) {
     try {
@@ -90,9 +93,19 @@ export default function Memories() {
   useEffect(() => {
     const onVisible = () => {
       if (document.visibilityState === "visible") {
-        setOffset(0);
-        setHasMore(true);
-        fetchImagesChunk(0);
+        const hiddenDuration = Date.now() - tabHiddenTime.current;
+
+        if (
+          tabHiddenTime.current > 0 &&
+          hiddenDuration > THROTTLING_THRESHOLD_MS
+        ) {
+          setOffset(0);
+          setHasMore(true);
+          fetchImagesChunk(0);
+        }
+        tabHiddenTime.current = 0;
+      } else if (document.visibilityState === "hidden") {
+        tabHiddenTime.current = Date.now();
       }
     };
     document.addEventListener("visibilitychange", onVisible);
@@ -152,10 +165,8 @@ export default function Memories() {
           setOffset(0);
           setHasMore(true);
           fetchImagesChunk(0);
-        }
-      }
+        }}
         isAdmin={isAdmin} // add this
-
       />
     </div>
   );
