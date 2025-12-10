@@ -1,8 +1,36 @@
 import { useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Download, Trash2 } from "lucide-react";
+import api from "../utils/api";
+
+function extractSupabaseFilePath(url) {
+  try {
+    const withoutQuery = url.split("?")[0];
+    const afterObject = withoutQuery.split("/object/")[1];
+    if (!afterObject) return null;
+
+    const parts = afterObject.split("/");
+    parts.shift();
+
+    const bucket = parts.shift();
+    const filePath = parts.join("/");
+
+    return { bucket, filePath };
+  } catch (e) {
+    console.error("Invalid Supabase URL:", e);
+    return null;
+  }
+}
 
 async function deleteImage(url) {
-  return fetch(url, { method: "DELETE" });
+  const fullPath = extractSupabaseFilePath(url);
+  if (!fullPath) return;
+
+  const { bucket, filePath } = fullPath;
+  return await api.delete(
+    `${
+      import.meta.env.VITE_BACKEND_URL
+    }/images/delete?bucket=${bucket}&file=${filePath}`
+  );
 }
 
 export default function ImageGallery({

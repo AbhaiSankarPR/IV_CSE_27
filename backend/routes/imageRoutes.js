@@ -9,7 +9,7 @@ const {
   uploadImages,
   deleteImage,
 } = require("../controllers/imageControllers");
-const { verifyAccessToken } = require("../utils/tokens");
+const { verifyAccessToken, verifyAdmin } = require("../utils/tokens");
 
 router.get("/public", async (req, res) => {
   const offset = Number(req.query.offset) || 0;
@@ -50,7 +50,7 @@ router.post(
   }
 );
 
-router.delete("/delete", verifyAccessToken, async (req, res) => {
+router.delete("/delete", verifyAccessToken, verifyAdmin, async (req, res) => {
   try {
     const { bucket, file } = req.query;
 
