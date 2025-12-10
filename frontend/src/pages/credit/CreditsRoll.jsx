@@ -26,9 +26,9 @@ export default function CreditsPage() {
     {
       role: "IV Staffs",
       list: [
-        "",
-        "",
-        "",
+        "AMAL RAJ B",
+        "BINU RAJAN M R",
+        "KAVITHA K V",
       ],
     },
     { role: "Batch", list: ["CSE 2023–2027"] },
