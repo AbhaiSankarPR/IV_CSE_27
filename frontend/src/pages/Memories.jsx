@@ -152,7 +152,10 @@ export default function Memories() {
           setOffset(0);
           setHasMore(true);
           fetchImagesChunk(0);
-        }}
+        }
+      }
+        isAdmin={isAdmin} // add this
+
       />
     </div>
   );
