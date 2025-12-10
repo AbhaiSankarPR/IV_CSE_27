@@ -1,9 +1,11 @@
 const supabase = require("../config/supabase");
 
-async function getPublicUrls(bucket) {
+async function getPublicUrls(bucket, offset, limit) {
   try {
     const { data, error } = await supabase.storage.from(bucket).list("", {
-      limit: 1000,
+      limit,
+      offset,
+      sortBy: { column: "name", order: "asc" },
     });
 
     if (error) {
@@ -22,11 +24,13 @@ async function getPublicUrls(bucket) {
   }
 }
 
-async function getSignedUrls(bucket) {
+async function getSignedUrls(bucket, offset, limit) {
   try {
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .list("", { limit: 1000 });
+    const { data, error } = await supabase.storage.from(bucket).list("", {
+      limit,
+      offset,
+      sortBy: { column: "name", order: "asc" },
+    });
 
     if (error) throw error;
 
