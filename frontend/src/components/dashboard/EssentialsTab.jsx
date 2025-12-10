@@ -6,7 +6,7 @@ export default function EssentialsTab({ sections, loading }) {
       <h1 className="text-3xl md:text-4xl font-bold text-center md:text-left font-bodoni sticky top-6 md:top-10 bg-[#0d0d0d]/30 z-10 pb-4 md:pb-15">
         IV Essentials Checklist
       </h1>
-
+    
 
       {loading ? (
         <Loading message="Loading essentials..." />
