@@ -8,49 +8,58 @@ export default function Memories() {
   const { user } = useAuth();
 
   const [images, setImages] = useState([]);
-  const [visibleImages, setVisibleImages] = useState([]);
-  const [itemsToShow, setItemsToShow] = useState(12);
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(12);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const loadMoreRef = useRef(null);
 
-  async function fetchPrivateImages() {
-    setIsLoading(true);
+  async function fetchImagesChunk(offsetValue) {
     try {
+      if (offsetValue === 0) setIsLoading(true);
+      else setIsFetchingMore(true);
+
       const res = await api.get(
-        `${import.meta.env.VITE_BACKEND_URL}/images/private`
+        `${import.meta.env.VITE_BACKEND_URL}/images/private?offset=${offsetValue}&limit=${limit}`
       );
+
       const data = await res.json();
 
       const urls = Array.isArray(data.urls) ? data.urls : [];
-      setImages(urls);
-      setVisibleImages(urls.slice(0, itemsToShow));
+
+      if (urls.length < limit) {
+        setHasMore(false);
+      }
+
+      if (offsetValue === 0) {
+        setImages(urls);
+      } else {
+        setImages((prev) => [...prev, ...urls]);
+      }
     } catch (err) {
-      console.error("Error fetching private images:", err);
-      setImages([]);
+      console.error("Error fetching images:", err);
     } finally {
       setIsLoading(false);
+      setIsFetchingMore(false);
     }
   }
 
   useEffect(() => {
-    fetchPrivateImages();
-    const interval = setInterval(fetchPrivateImages, 55 * 60 * 1000);
-    return () => clearInterval(interval);
+    fetchImagesChunk(0);
   }, []);
 
   useEffect(() => {
-    setVisibleImages(images.slice(0, itemsToShow));
-  }, [itemsToShow, images]);
-
-  useEffect(() => {
-    if (!loadMoreRef.current) return;
+    if (!loadMoreRef.current || !hasMore) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setItemsToShow((prev) => prev + 12); // Load 12 more
+        if (entries[0].isIntersecting && !isFetchingMore) {
+          const newOffset = offset + limit;
+          setOffset(newOffset);
+          fetchImagesChunk(newOffset);
         }
       },
       { threshold: 1 }
@@ -59,7 +68,7 @@ export default function Memories() {
     observer.observe(loadMoreRef.current);
 
     return () => observer.disconnect();
-  }, [loadMoreRef.current]);
+  }, [loadMoreRef.current, offset, hasMore, isFetchingMore]);
 
   if (!user) {
     return (
@@ -84,7 +93,7 @@ export default function Memories() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5">
-            {visibleImages.map((img, i) => (
+            {images.map((img, i) => (
               <div className="w-full h-64" key={i}>
                 <img
                   src={img}
@@ -96,7 +105,11 @@ export default function Memories() {
             ))}
           </div>
 
-          <div ref={loadMoreRef} className="h-10"></div>
+          {hasMore && (
+            <div ref={loadMoreRef} className="h-16 flex justify-center items-center text-gray-400">
+              {isFetchingMore ? "Loading more..." : ""}
+            </div>
+          )}
         </>
       )}
 
@@ -104,7 +117,7 @@ export default function Memories() {
         images={images}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        refreshImages={fetchPrivateImages}
+        refreshImages={() => fetchImagesChunk(0)}
       />
     </div>
   );

@@ -128,7 +128,6 @@ function Navbar() {
           Co-ordinators
         </NavLink>
 
-
         <NavLink to="/auth" onClick={() => setMenuOpen(false)}>
           <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
             <img
