@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const userRoutes = require("./routes/userRoutes");
 const staticRoutes = require("./routes/staticRoutes");
 const imageRoutes = require("./routes/imageRoutes");
+const locRoutes = require("./routes/locRoutes");
 
 app.use(cookieParser());
 
@@ -47,6 +48,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoutes);
 app.use("/static", staticRoutes);
 app.use("/images", imageRoutes);
+app.use("/loc", locRoutes);
 
 app.get("/", (req, res) => {
   res.send("Firebase Express server is running!");

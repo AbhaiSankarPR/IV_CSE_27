@@ -115,7 +115,7 @@ export default function JourneyMap() {
           longitude: liveLocation.lon,
           timestamp: new Date().toISOString(),
         };
-        const url = `${import.meta.env.VITE_BACKEND_URL}/api/save-location`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/loc/save`;
         const response = await api.post(locationData, url);
 
         if (!response.ok) {
