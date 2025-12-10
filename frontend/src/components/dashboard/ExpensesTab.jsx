@@ -1,7 +1,7 @@
 export default function ExpensesTab() {
   return (
     <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-lg p-6 rounded-xl shadow-xl border border-white/20">
-      <h1 className="text-3xl font-bold mb-6 text-green-300">Expense Summary</h1>
+      <h1 className="text-3xl font-bold mb-6 text-green-300 bodoni-moda">Expense Summary</h1>
 
       <div className="space-y-5 text-gray-200 text-lg leading-relaxed">
         <p>Total Advance Paid to Explore World = <b>5,49,860</b></p>

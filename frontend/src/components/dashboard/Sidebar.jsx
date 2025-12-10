@@ -9,7 +9,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
                 className="bg-white/10 rounded-lg p-4 text-sm cursor-pointer hover:bg-white/20 transition flex justify-between items-center"
             >
                 <div>
-                    <p className="font-semibold text-lg">{user?.name || "User"}</p>
+                    <p className="font-semibold caveat text-3xl">{user?.name || "User"}</p>
                     <p className="text-gray-300 text-xs">{user?.email}</p>
                 </div>
                 <button className="md:hidden cursor-pointer" onClick={() => setSidebarOpen(!sidebarOpen)}>

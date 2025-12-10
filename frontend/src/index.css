@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Caveat:wght@400..700&display=swap');
 @import "tailwindcss";
 
+/* Theme colors */
 @theme {
   --color-dark-primary: #0f0f0f;
   --color-dark-secondary: #1a1a1a;
@@ -8,9 +10,26 @@
   --color-text-mid: #bbb;
 }
 
+/* Basic resets */
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   font-family: sans-serif;
+}
+
+/* Import Bodoni Moda font */
+
+/* Utility class template */
+.bodoni-moda {
+  font-family: "Bodoni Moda", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;  /* Replace <weight> with 400, 500, 700 etc. */
+  font-style: normal;
+}
+.caveat {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }

@@ -15,7 +15,6 @@ export default function ProfileTab({ user }) {
         <p className="text-base md:text-lg font-semibold text-green-300">Enjoy the journey!</p>
       </div>
 
-      {/* Tea Donation Section */}
       <div className="max-w-xl mx-auto mt-4 bg-white/10 backdrop-blur-xl p-4 rounded-xl shadow-lg flex flex-col justify-center items-center gap-3">
         <button
           onClick={() => {
