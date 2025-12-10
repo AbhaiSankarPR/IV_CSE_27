@@ -6,6 +6,7 @@ import api from "../utils/api";
 
 export default function Memories() {
   const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   const LIMIT = 12;
 
@@ -98,7 +99,7 @@ export default function Memories() {
     return () => document.removeEventListener("visibilitychange", onVisible);
   }, []);
 
-  if (!user) {
+  if (!user)
     return (
       <div className="flex justify-center mt-10 text-white">
         <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-lg">
@@ -106,7 +107,6 @@ export default function Memories() {
         </div>
       </div>
     );
-  }
 
   if (isLoading) return <Loading message="Loading Memories..." />;
 

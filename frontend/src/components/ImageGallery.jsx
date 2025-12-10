@@ -1,11 +1,16 @@
 import { useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Download } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Trash2 } from "lucide-react";
+
+async function deleteImage(url) {
+  return fetch(url, { method: "DELETE" });
+}
 
 export default function ImageGallery({
   images,
   selectedIndex,
   setSelectedIndex,
   refreshImages,
+  isAdmin,
 }) {
   const showPrev = useCallback(() => {
     setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -17,13 +22,11 @@ export default function ImageGallery({
 
   useEffect(() => {
     if (selectedIndex === null) return;
-
     const handleKeys = (e) => {
       if (e.key === "Escape") setSelectedIndex(null);
       if (e.key === "ArrowLeft") showPrev();
       if (e.key === "ArrowRight") showNext();
     };
-
     window.addEventListener("keydown", handleKeys);
     return () => window.removeEventListener("keydown", handleKeys);
   }, [selectedIndex, showPrev, showNext, setSelectedIndex]);
@@ -31,9 +34,7 @@ export default function ImageGallery({
   if (selectedIndex === null) return null;
 
   const handleError = async () => {
-    if (refreshImages) {
-      await refreshImages();
-    }
+    if (refreshImages) await refreshImages();
   };
 
   return (
@@ -42,7 +43,8 @@ export default function ImageGallery({
       onClick={() => setSelectedIndex(null)}
     >
       <button
-        className="absolute left-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
+        className="absolute left-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center
+                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
         onClick={(e) => {
           e.stopPropagation();
           showPrev();
@@ -59,7 +61,8 @@ export default function ImageGallery({
       />
 
       <button
-        className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
+        className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center 
+                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
         onClick={(e) => {
           e.stopPropagation();
           showNext();
@@ -71,7 +74,6 @@ export default function ImageGallery({
       <a
         onClick={async (e) => {
           e.stopPropagation();
-
           try {
             const res = await fetch(images[selectedIndex], { mode: "cors" });
             const blob = await res.blob();
@@ -87,10 +89,30 @@ export default function ImageGallery({
             console.error("Download failed", err);
           }
         }}
-        className="absolute top-5 right-5 bg-white/20 w-10 h-10 flex items-center justify-center rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200 cursor-pointer"
+        className="absolute top-5 right-5 bg-white/20 w-10 h-10 flex items-center justify-center 
+                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200 cursor-pointer"
       >
         <Download className="w-5 h-5 text-white" />
       </a>
+
+      {isAdmin && (
+        <button
+          onClick={async (e) => {
+            e.stopPropagation();
+            try {
+              await deleteImage(images[selectedIndex]);
+              if (refreshImages) await refreshImages();
+              setSelectedIndex(null);
+            } catch (err) {
+              console.error("Delete failed", err);
+            }
+          }}
+          className="absolute top-5 right-20 bg-red-500/70 w-10 h-10 flex items-center justify-center 
+               rounded-full shadow-lg hover:bg-red-600 transition-colors duration-200 cursor-pointer"
+        >
+          <Trash2 className="w-5 h-5 text-white" />
+        </button>
+      )}
     </div>
   );
 }
