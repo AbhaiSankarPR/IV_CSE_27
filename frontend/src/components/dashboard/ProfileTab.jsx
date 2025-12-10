@@ -15,8 +15,7 @@ export default function ProfileTab({ user }) {
   };
 
   return (
-    <div className="pl-0 md:pl-80 p-4 min-h-screen bg-[#0d0d0d]/30 flex flex-col items-center">
-      {/* Welcome Box */}
+    <div className="pl-0 pr-0 md:pl-80 p-4 min-h-screen bg-[#0d0d0d]/30 flex flex-col items-center">
       <div className="w-full max-w-3xl bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-bold mb-3">
           Welcome, <span className="text-green-400">{user?.name || "User"}</span>
