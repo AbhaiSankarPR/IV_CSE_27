@@ -18,7 +18,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, navbarH
   return (
     <>
       <button
-        className="fixed bottom-5 left-5 z-50 md:hidden text-2xl bg-black/40 p-3 rounded-xl shadow-lg hover:bg-black/60 transition"
+        className="fixed bottom-5 left-5 z-100 md:hidden text-2xl bg-black/40 p-3 rounded-xl shadow-lg hover:bg-black/60 transition"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? "✖" : "☰"}
