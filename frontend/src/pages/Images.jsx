@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
+import { useAuth } from "../pages/AuthPage/AuthContext";   
 
 export default function Images() {
+  const { user } = useAuth();
+
   const [imageUrls, setImageUrls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const isAdmin = user?.role === "admin";
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,11 +26,10 @@ export default function Images() {
         setImageUrls([]);
       })
       .finally(() => {
-        setIsLoading(false);   // 🔥 hide loader once URLs are fetched
+        setIsLoading(false);
       });
   }, []);
 
-  // 🔥 Only show loader while URLs are being fetched
   if (isLoading) {
     return <Loading message="Loading images..." />;
   }
@@ -60,6 +64,7 @@ export default function Images() {
         images={imageUrls}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        isAdmin={isAdmin}
       />
     </div>
   );

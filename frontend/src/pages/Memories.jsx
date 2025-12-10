@@ -6,6 +6,7 @@ import api from "../utils/api";
 
 export default function Memories() {
   const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   const [images, setImages] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -27,18 +28,12 @@ export default function Memories() {
       );
 
       const data = await res.json();
-
       const urls = Array.isArray(data.urls) ? data.urls : [];
 
-      if (urls.length < limit) {
-        setHasMore(false);
-      }
+      if (urls.length < limit) setHasMore(false);
 
-      if (offsetValue === 0) {
-        setImages(urls);
-      } else {
-        setImages((prev) => [...prev, ...urls]);
-      }
+      if (offsetValue === 0) setImages(urls);
+      else setImages((prev) => [...prev, ...urls]);
     } catch (err) {
       console.error("Error fetching images:", err);
     } finally {
@@ -66,11 +61,10 @@ export default function Memories() {
     );
 
     observer.observe(loadMoreRef.current);
-
     return () => observer.disconnect();
   }, [loadMoreRef.current, offset, hasMore, isFetchingMore]);
 
-  if (!user) {
+  if (!user)
     return (
       <div className="flex justify-center mt-10 text-white">
         <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-lg">
@@ -78,7 +72,6 @@ export default function Memories() {
         </div>
       </div>
     );
-  }
 
   if (isLoading) return <Loading message="Loading Memories..." />;
 
@@ -106,7 +99,10 @@ export default function Memories() {
           </div>
 
           {hasMore && (
-            <div ref={loadMoreRef} className="h-16 flex justify-center items-center text-gray-400">
+            <div
+              ref={loadMoreRef}
+              className="h-16 flex justify-center items-center text-gray-400"
+            >
               {isFetchingMore ? "Loading more..." : ""}
             </div>
           )}
@@ -118,6 +114,7 @@ export default function Memories() {
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
         refreshImages={() => fetchImagesChunk(0)}
+        isAdmin={isAdmin} 
       />
     </div>
   );
