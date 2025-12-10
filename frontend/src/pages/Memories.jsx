@@ -15,7 +15,6 @@ export default function Memories() {
 
   const loadMoreRef = useRef(null);
 
-  // Fetch URLs from backend
   async function fetchPrivateImages() {
     setIsLoading(true);
     try {
@@ -35,19 +34,16 @@ export default function Memories() {
     }
   }
 
-  // Fetch images initially + refresh every 55 mins
   useEffect(() => {
     fetchPrivateImages();
     const interval = setInterval(fetchPrivateImages, 55 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Update visible images whenever images or itemsToShow increases
   useEffect(() => {
     setVisibleImages(images.slice(0, itemsToShow));
   }, [itemsToShow, images]);
 
-  // Intersection Observer for infinite scroll
   useEffect(() => {
     if (!loadMoreRef.current) return;
 
@@ -65,7 +61,6 @@ export default function Memories() {
     return () => observer.disconnect();
   }, [loadMoreRef.current]);
 
-  // If not logged in
   if (!user) {
     return (
       <div className="flex justify-center mt-10 text-white">
@@ -101,7 +96,6 @@ export default function Memories() {
             ))}
           </div>
 
-          {/* Infinite scroll trigger point */}
           <div ref={loadMoreRef} className="h-10"></div>
         </>
       )}

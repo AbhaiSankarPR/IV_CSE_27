@@ -39,7 +39,6 @@ function Navbar() {
           ></span>
         </button>
 
-        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6">
           <NavLink className={getNavLinkClass} to="/">
             Overview
@@ -64,7 +63,6 @@ function Navbar() {
 
 
 
-          {/* Login Icon */}
           <NavLink to="/auth">
             <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
               <img
@@ -77,7 +75,6 @@ function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       <div
         className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
           }`}
