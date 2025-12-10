@@ -3,9 +3,7 @@ import Loading from "../../components/Loading";
 export default function EssentialsTab({ sections, loading }) {
   return (
     <>
-      <h1 className="text-3xl font-bold mb-8 text-center font-bodoni md:text-left ">
-        IV Essentials Checklist
-      </h1>
+      <h1 className="text-3xl font-bold mb-8 text-center bodoni-moda md:text-left ">IV Essentials Checklist</h1>
 
       {loading ? (
         <Loading message="Loading essentials..." />
