@@ -2,7 +2,7 @@ import Loading from "../../components/Loading";
 
 export default function EssentialsTab({ sections, loading }) {
   return (
-    <div className="pl-0 md:pl-80 p-4 min-h-screen bg-[#0d0d0d]/30 transition-all">
+<div className="pl-5 pr-5 md:pl-100 p-4 min-h-screen bg-[#0d0d0d]/30 transition-all">
       <h1 className="text-3xl md:text-4xl font-bold text-center md:text-left font-bodoni sticky top-6 md:top-10 bg-[#0d0d0d]/30 z-10 pb-4 md:pb-15">
         IV Essentials Checklist
       </h1>
@@ -10,7 +10,7 @@ export default function EssentialsTab({ sections, loading }) {
       {loading ? (
         <Loading message="Loading essentials..." />
       ) : (
-        <div className="flex flex-col items-center md:block space-y-6 md:px-0">
+        <div className="flex flex-col items-center md:items-start md:block space-y-6 md:px-0">
           {sections.map((section, idx) => (
             <div
               key={idx}

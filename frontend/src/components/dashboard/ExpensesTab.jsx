@@ -9,8 +9,7 @@ export default function ExpensesTab() {
   ];
 
   return (
-    <div className="pl-0 md:pl-96 p-4 min-h-screen bg-[#0d0d0d]/30 flex flex-col items-center">
-      {/* Expenses Box */}
+    <div className="pl-5 pr-5 md:pl-65 p-4 min-h-screen bg-[#0d0d0d]/30 flex flex-col items-center">
       <div className="w-full max-w-3xl bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-xl border border-white/20">
         <h1 className="text-3xl font-bold mb-6 text-green-300 font-bodoni">
           Expense Summary
