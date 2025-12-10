@@ -12,7 +12,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
                     <p className="font-semibold text-lg">{user?.name || "User"}</p>
                     <p className="text-gray-300 text-xs">{user?.email}</p>
                 </div>
-                <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                <button className="md:hidden cursor-pointer" onClick={() => setSidebarOpen(!sidebarOpen)}>
                     {sidebarOpen ? "✖" : "☰"}
                 </button>
             </div>
@@ -20,7 +20,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
             <div className={`flex flex-col gap-2 ${sidebarOpen ? "block" : "hidden md:block"}`}>
                 <button
                     onClick={() => setActiveTab("essentials")}
-                    className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
+                    className={`p-3 rounded-lg text-left cursor-pointer transition text-sm ${activeTab === "essentials" ? "bg-white/20" : "hover:bg-white/10"
                         }`}
                 >
                     IV Essentials
@@ -28,7 +28,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
 
                 <button
                     onClick={() => setActiveTab("upload")}
-                    className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
+                    className={`p-3 rounded-lg text-left cursor-pointer transition text-sm ${activeTab === "upload" ? "bg-white/20" : "hover:bg-white/10"
                         }`}
                 >
                     Upload Image
@@ -36,7 +36,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
 
                 <button
                     onClick={() => setActiveTab("expenses")}
-                    className={`p-3 rounded-lg text-left transition text-sm ${activeTab === "expenses" ? "bg-white/20" : "hover:bg-white/10"
+                    className={`p-3 rounded-lg cursor-pointer text-left transition text-sm ${activeTab === "expenses" ? "bg-white/20" : "hover:bg-white/10"
                         }`}
                 >
                     Expense Details
@@ -45,7 +45,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, sidebar
 
             <button
                 onClick={logout}
-                className="mt-4 px-5 py-2 bg-red-500 hover:bg-red-400 rounded-lg font-semibold text-sm transition"
+                className="mt-4 px-5 py-2 bg-red-500 hover:bg-red-400 rounded-lg font-semibold text-sm transition cursor-pointer"
             >
                 Logout
             </button>

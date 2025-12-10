@@ -27,7 +27,7 @@ export default function UploadTab({
           <button
             onClick={() => handleUpload("Memories")}
             disabled={isUploadingprivate}
-            className={`mt-5 px-5 py-2 rounded-lg ${
+            className={`mt-5 px-5 py-2 cursor-pointer rounded-lg ${
               isUploadingprivate ? "bg-gray-500" : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
@@ -54,7 +54,7 @@ export default function UploadTab({
           <button
             onClick={() => handleUpload("Images")}
             disabled={isUploadingpublic}
-            className={`mt-5 px-5 py-2 rounded-lg ${
+            className={`mt-5 px-5 py-2 cursor-pointer rounded-lg ${
               isUploadingpublic ? "bg-gray-500" : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
