@@ -12,10 +12,7 @@ const {
 const { verifyAccessToken, verifyAdmin } = require("../utils/tokens");
 
 router.get("/public", async (req, res) => {
-  const offset = Number(req.query.offset) || 0;
-  const limit = Number(req.query.limit) || 20;
-
-  const urls = await getPublicUrls("Images", offset, limit);
+  const urls = await getPublicUrls("Images");
   res.json({ urls });
 });
 

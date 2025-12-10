@@ -1,11 +1,9 @@
 const supabase = require("../config/supabase");
 
-async function getPublicUrls(bucket, offset, limit) {
+async function getPublicUrls(bucket) {
   try {
     const { data, error } = await supabase.storage.from(bucket).list("", {
-      limit,
-      offset,
-      sortBy: { column: "name", order: "asc" },
+      limit: 100,
     });
 
     if (error) {
