@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Caveat:wght@400..700&display=swap');
-
 @import "tailwindcss";
-@import "tailwindcss/theme" layer(theme);
-@import "tailwindcss/utilities" layer(utilities);
 
 @theme {
   --color-dark-primary: #0f0f0f;
@@ -10,6 +6,8 @@
   --color-brand-blue: #0077ff;
   --color-text-light: #ccc;
   --color-text-mid: #bbb;
+  --font-bodoni: Bodoni Moda, serif;
+  --font-caveat: Caveat, cursive;
 }
 
 html,
@@ -18,18 +16,4 @@ body {
   padding: 0;
   overflow-x: hidden;
   font-family: sans-serif;
-}
-
-.bodoni-moda {
-  font-family: "Bodoni Moda", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.caveat {
-  font-family: "Caveat", cursive;
-  font-weight: 600;
-  font-style: normal;
-  font-optical-sizing: auto;
 }
