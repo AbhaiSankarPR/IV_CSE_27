@@ -43,7 +43,6 @@ router.post("/signup", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".iv-cse-27.vercel.app",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -83,7 +82,6 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".iv-cse-27.vercel.app",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -138,7 +136,6 @@ router.post("/logout", (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".iv-cse-27.vercel.app",
       path: "/",
     };
 
