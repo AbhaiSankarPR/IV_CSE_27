@@ -7,11 +7,10 @@ export default function UploadTab({
 }) {
   return (
     <div className="max-w-xl mx-auto space-y-10">
-      <h1 className="text-2xl font-bold mb-6 text-center md:text-left">Upload Images</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center bodoni-moda md:text-left">Upload Images</h1>
 
-      {/* Personal Upload */}
       <div>
-        <h2 className="text-lg font-semibold mb-3 text-green-300">Personal Uploads</h2>
+        <h2 className="text-lg font-semibold mb-3 bodoni-moda text-green-300">Personal Uploads</h2>
         <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
           <label
             htmlFor="personalUpload"
@@ -36,9 +35,8 @@ export default function UploadTab({
         </div>
       </div>
 
-      {/* Public Upload */}
       <div>
-        <h2 className="text-lg font-semibold mb-3 text-green-300">Public Uploads</h2>
+        <h2 className="text-lg font-semibold mb-3 bodoni-moda text-green-300">Public Uploads</h2>
         <div className="p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-md">
           <label
             htmlFor="publicUpload"
