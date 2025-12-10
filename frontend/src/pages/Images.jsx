@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
-import { useAuth } from "../pages/AuthPage/AuthContext";   
+import { useAuth } from "../context/auth";
 
 export default function Images() {
   const { user } = useAuth();
