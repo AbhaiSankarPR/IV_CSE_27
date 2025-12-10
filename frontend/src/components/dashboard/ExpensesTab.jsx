@@ -25,7 +25,8 @@ export default function ExpensesTab() {
 
   return (
     <div className="pl-0 md:pl-80 p-4 min-h-screen bg-[#0d0d0d]/30 flex justify-center">
-      <div className="w-full max-w-3xl bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-xl border border-white/20">
+      {/* ADDED mx-auto HERE */}
+      <div className="w-full max-w-3xl bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-xl border border-white/20 mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-green-300 font-bodoni">Expense Summary</h1>
         <div className="space-y-4 text-gray-200 text-lg leading-relaxed">
           {expenses.map((exp, i) => (

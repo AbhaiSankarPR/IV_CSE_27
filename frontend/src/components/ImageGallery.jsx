@@ -72,7 +72,7 @@ export default function ImageGallery({
     >
       <button
         className="absolute left-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center
-                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
+                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           showPrev();
@@ -90,7 +90,7 @@ export default function ImageGallery({
 
       <button
         className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/20 w-12 h-12 flex items-center justify-center 
-                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200"
+                   rounded-full shadow-lg hover:bg-white/40 transition-colors duration-200 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           showNext();

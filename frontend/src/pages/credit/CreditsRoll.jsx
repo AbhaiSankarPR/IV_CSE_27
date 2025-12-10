@@ -26,9 +26,9 @@ export default function CreditsPage() {
     {
       role: "IV Staffs",
       list: [
-        "",
-        "",
-        "",
+        "AMAL RAJ B",
+        "BINU RAJAN M R",
+        "KAVITHA K V",
       ],
     },
     { role: "Batch", list: ["CSE 2023–2027"] },
@@ -144,7 +144,7 @@ export default function CreditsPage() {
                 <div key={index} className="text-center mb-[4vh] max-w-[90vw] mx-auto">
                   <div style={{ height: "2vh" }} />
                   <div className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
-                    style={{ fontFamily: "sans-serif", fontWeight: 300 }}>
+                    style={{ fontFamily: "sans-serif", fontWeight: 900 }}>
                     {item.role}
                   </div>
                   {item.list.map((name, i) => (
