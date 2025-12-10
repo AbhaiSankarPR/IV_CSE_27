@@ -15,9 +15,9 @@ export default function ExpensesTab() {
         <h1 className="text-3xl font-bold mb-6 text-green-300 font-bodoni">
           Expense Summary
         </h1>
-        <div className="space-y-4 text-gray-200 text-lg leading-relaxed">
+        <div className="text-gray-200 text-lg leading-relaxed">
           {expenses.map((exp, i) => (
-            <div key={i}>
+            <div key={i} className="pb-4 mb-4 border-b border-white/20 last:border-b-0 last:mb-0">
               <p className="font-bold text-white text-xl">{exp.title}</p>
               <p>
                 Amount: <b>{exp.amount.toLocaleString()}</b>
