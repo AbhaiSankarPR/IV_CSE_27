@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import FaviconSetter from "./FaviconSetter.jsx";
-import "./index.css";
 import Navbar from "./components/Navbar.jsx";
 import Snowfalls from "./components/Snowfall.jsx";
 
