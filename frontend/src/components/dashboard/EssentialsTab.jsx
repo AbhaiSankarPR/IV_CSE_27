@@ -2,8 +2,10 @@ import Loading from "../../components/Loading";
 
 export default function EssentialsTab({ sections, loading }) {
   return (
-    <>
-      <h1 className="text-3xl font-bold mb-8 text-center font-bodoni md:text-left ">
+    <div className="md:ml-64 ml-0 px-4 md:px-10"> 
+      {/* Push content to the right to avoid overlapping the sidebar */}
+
+      <h1 className="text-3xl font-bold mb-8 text-center font-bodoni md:text-left">
         IV Essentials Checklist
       </h1>
 
@@ -17,6 +19,7 @@ export default function EssentialsTab({ sections, loading }) {
               className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-xl shadow-lg"
             >
               <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
+
               <ul className="space-y-2 text-gray-200 text-sm">
                 {section.items.map((item, i) => (
                   <li key={i} className="flex gap-2">
@@ -29,6 +32,6 @@ export default function EssentialsTab({ sections, loading }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

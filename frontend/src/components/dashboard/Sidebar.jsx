@@ -7,11 +7,15 @@ export default function Sidebar({
   setSidebarOpen,
 }) {
   return (
-    <div
-      className={`bg-black/30  backdrop-blur-md border-r border-white/10 p-5 flex flex-col gap-6 md:w-64 w-full transition-all duration-300 ${
-        sidebarOpen ? "max-h-screen" : "h-auto"
-      }`}
-    >
+<div
+  className={`fixed top-top-[77px] left-0 h-screen overflow-y-auto
+              bg-black/30 backdrop-blur-md border-r border-white/10 
+              p-5 flex flex-col gap-6 md:w-64 w-full 
+              transition-all duration-300
+              ${sidebarOpen ? "max-h-screen" : "h-auto"}`}
+>
+
+
       <div
         onClick={() => setActiveTab("profile")}
         className="bg-white/10 rounded-lg p-4 text-sm cursor-pointer hover:bg-white/20 transition flex justify-between items-center"
