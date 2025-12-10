@@ -4,15 +4,20 @@ import { useState } from "react";
 
 export default function ProfileTab({ user }) {
   const [showQRCode, setShowQRCode] = useState(false);
+  const upiLink = "upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu";
 
-  // UPI link DRY variable
-  const upiLink =
-    "upi://pay?pa=abhaisankarpr@oksbi&pn=Abhai%20Sankar%20P%20R&aid=uGICAgMDuns7SVQu";
+  const handlePay = () => {
+    if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+      window.location.href = upiLink;
+    } else {
+      setShowQRCode(true);
+    }
+  };
 
   return (
-    <div className="pl-20 md:pl-64 p-4 min-h-screen bg-[#0d0d0d]/30">
+    <div className="pl-0 md:pl-80 p-4 min-h-screen bg-[#0d0d0d]/30 flex flex-col items-center">
       {/* Welcome Box */}
-      <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
+      <div className="w-full max-w-3xl bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-bold mb-3">
           Welcome, <span className="text-green-400">{user?.name || "User"}</span>
         </h1>
@@ -24,26 +29,18 @@ export default function ProfileTab({ user }) {
         </p>
       </div>
 
-      {/* Buy Me a Tea Box */}
-      <div className="max-w-3xl mx-auto mt-6 bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
+      {/* Buy Me a Tea */}
+      <div className="w-full max-w-3xl mt-6 bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg flex flex-col items-center gap-4">
         <button
-          onClick={() => {
-            if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
-              window.location.href = upiLink;
-            } else {
-              alert("Can't pay on Desktop. Please use the QR Code below.");
-              setShowQRCode(true);
-            }
-          }}
+          onClick={handlePay}
           className="flex items-center gap-3 px-6 py-3 rounded-2xl transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-white/20"
         >
           <img
             src={teaImg}
-            className="w-[36px] h-[36px] object-contain invert brightness-200"
+            className="w-9 h-9 object-contain invert brightness-200"
+            alt="Tea"
           />
-          <span className="text-lg sm:text-xl font-semibold cursor-pointer">
-            Buy me a tea ☕
-          </span>
+          <span className="text-lg sm:text-xl font-semibold">Buy me a tea ☕</span>
         </button>
 
         {showQRCode && (
