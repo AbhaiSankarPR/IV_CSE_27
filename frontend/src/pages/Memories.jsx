@@ -162,9 +162,12 @@ export default function Memories() {
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
         refreshImages={() => {
+          setImages([]);
           setOffset(0);
           setHasMore(true);
-          fetchImagesChunk(0);
+          setTimeout(() => {
+            fetchImagesChunk(0);
+          }, 50);
         }}
         isAdmin={isAdmin} // add this
       />
