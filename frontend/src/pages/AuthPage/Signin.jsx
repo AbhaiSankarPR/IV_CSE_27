@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -60,7 +60,10 @@ export default function Signin({ onToggleMode }) {
           className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
           {...register("email", {
             required: "Email is required",
-            pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email address" },
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Invalid email address",
+            },
           })}
           disabled={loading}
         />
@@ -84,7 +87,11 @@ export default function Signin({ onToggleMode }) {
         <button
           type="submit"
           className={`w-full py-3 rounded font-semibold transition cursor-pointer 
-            ${loading ? "bg-gray-600 text-gray-300" : "bg-green-500 text-black hover:bg-green-400"}`}
+            ${
+              loading
+                ? "bg-gray-600 text-gray-300"
+                : "bg-green-500 text-black hover:bg-green-400"
+            }`}
           disabled={loading}
         >
           {loading ? "Logging in..." : "Login"}

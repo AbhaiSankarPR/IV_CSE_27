@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../AuthPage/AuthContext";
+import { useAuth } from "../../context/auth";
 
 import Sidebar from "../../components/dashboard/Sidebar";
 import ProfileTab from "../../components/dashboard/ProfileTab";
@@ -52,7 +52,10 @@ export default function Dashboard() {
     if (bucket === "Images") setIsUploadingpublic(true);
 
     try {
-      await api.post(formData, `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`);
+      await api.post(
+        formData,
+        `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
+      );
       alert("Upload complete!");
     } catch {
       alert("Upload failed.");

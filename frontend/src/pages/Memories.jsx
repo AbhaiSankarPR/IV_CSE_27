@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "./AuthPage/AuthContext";
+import { useAuth } from "../context/auth";
 import Loading from "../components/Loading";
 import ImageGallery from "../components/ImageGallery";
 import api from "../utils/api";
@@ -7,9 +7,11 @@ import api from "../utils/api";
 export default function Memories() {
   const { user } = useAuth();
 
+  const LIMIT = 12;
+
   const [images, setImages] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [limit] = useState(12);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -23,33 +25,40 @@ export default function Memories() {
       else setIsFetchingMore(true);
 
       const res = await api.get(
-        `${import.meta.env.VITE_BACKEND_URL}/images/private?offset=${offsetValue}&limit=${limit}`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/images/private?offset=${offsetValue}&limit=${LIMIT}`
       );
 
       const data = await res.json();
-
       const urls = Array.isArray(data.urls) ? data.urls : [];
 
-      if (urls.length < limit) {
+      if (urls.length < LIMIT) {
         setHasMore(false);
       }
 
-      if (offsetValue === 0) {
-        setImages(urls);
-      } else {
-        setImages((prev) => [...prev, ...urls]);
-      }
+      if (offsetValue === 0) setImages(urls);
+      else setImages((prev) => [...prev, ...urls]);
     } catch (err) {
       console.error("Error fetching images:", err);
     } finally {
-      setIsLoading(false);
-      setIsFetchingMore(false);
+      if (offsetValue === 0) setIsLoading(false);
+      else setIsFetchingMore(false);
     }
   }
 
   useEffect(() => {
+    if (!user) return;
+    setOffset(0);
+    setHasMore(true);
     fetchImagesChunk(0);
-  }, []);
+  }, [user]);
+
+  useEffect(() => {
+    if (offset > 0) {
+      fetchImagesChunk(offset);
+    }
+  }, [offset]);
 
   useEffect(() => {
     if (!loadMoreRef.current || !hasMore) return;
@@ -57,18 +66,37 @@ export default function Memories() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !isFetchingMore) {
-          const newOffset = offset + limit;
-          setOffset(newOffset);
-          fetchImagesChunk(newOffset);
+          setOffset((prev) => prev + LIMIT);
         }
       },
-      { threshold: 1 }
+      { threshold: 0.1 }
     );
 
     observer.observe(loadMoreRef.current);
-
     return () => observer.disconnect();
-  }, [loadMoreRef.current, offset, hasMore, isFetchingMore]);
+  }, [hasMore, isFetchingMore, images.length]);
+
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(() => {
+      setOffset(0);
+      setHasMore(true);
+      fetchImagesChunk(0);
+    }, 55 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [user]);
+
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === "visible") {
+        setOffset(0);
+        setHasMore(true);
+        fetchImagesChunk(0);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, []);
 
   if (!user) {
     return (
@@ -106,7 +134,10 @@ export default function Memories() {
           </div>
 
           {hasMore && (
-            <div ref={loadMoreRef} className="h-16 flex justify-center items-center text-gray-400">
+            <div
+              ref={loadMoreRef}
+              className="h-16 flex justify-center items-center text-gray-400"
+            >
               {isFetchingMore ? "Loading more..." : ""}
             </div>
           )}
@@ -117,7 +148,11 @@ export default function Memories() {
         images={images}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        refreshImages={() => fetchImagesChunk(0)}
+        refreshImages={() => {
+          setOffset(0);
+          setHasMore(true);
+          fetchImagesChunk(0);
+        }}
       />
     </div>
   );

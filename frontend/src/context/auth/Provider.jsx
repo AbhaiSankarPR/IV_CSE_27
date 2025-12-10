@@ -1,12 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { logout as reqLogout } from "../../utils/api";
-
-const AuthContext = createContext();
+import { AuthContext } from ".";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // Load saved login info from localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) setUser(JSON.parse(savedUser));
@@ -29,6 +27,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-// Custom hook for easy access
-export const useAuth = () => useContext(AuthContext);

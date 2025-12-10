@@ -9,7 +9,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useAuth } from "./AuthPage/AuthContext";
+import { useAuth } from "../context/auth";
 import api from "../utils/api";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -148,8 +148,10 @@ export default function JourneyMap() {
 
     try {
       const res = await fetch(
-        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${import.meta.env.VITE_ORS_KEY
-        }&start=${liveLocation.lon},${liveLocation.lat}&end=${savedLocation.lon
+        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
+          import.meta.env.VITE_ORS_KEY
+        }&start=${liveLocation.lon},${liveLocation.lat}&end=${
+          savedLocation.lon
         },${savedLocation.lat}`
       );
       const data = await res.json();
@@ -179,8 +181,9 @@ export default function JourneyMap() {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${import.meta.env.VITE_MAPTILER_KEY
-              }`}
+            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${
+              import.meta.env.VITE_MAPTILER_KEY
+            }`}
             detectRetina={true}
             attribution="&copy; MapTiler &copy; OpenStreetMap contributors"
           />
@@ -247,7 +250,6 @@ export default function JourneyMap() {
               🧭 Get Directions
             </button>
           )}
-
         </div>
       </div>
 
@@ -266,7 +268,6 @@ export default function JourneyMap() {
           Update Location
         </button>
       )}
-
     </div>
   );
 }

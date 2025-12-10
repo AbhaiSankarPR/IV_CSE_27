@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import loginface from "../assets/loginface.svg";
-import { useAuth } from "../pages/AuthPage/AuthContext";
+import { useAuth } from "../context/auth";
 import ivLogo from "../assets/logo/Odyssey.png";
-
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,23 +18,30 @@ function Navbar() {
     <nav className="bg-dark-primary text-white border-b border-[rgba(50,50,50,0.838)]">
       <div className="flex items-center justify-between py-4 px-6 md:px-8">
         <Link to="/credits">
-          <img src={ivLogo} alt="IV Live" className="w-13 h-10 pl-3 scale-300" />
+          <img
+            src={ivLogo}
+            alt="IV Live"
+            className="w-13 h-10 pl-3 scale-300"
+          />
         </Link>
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span
-            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""
-              }`}
+            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${
+              menuOpen ? "rotate-45 translate-y-[6px]" : ""
+            }`}
           ></span>
           <span
-            className={`block w-6 h-[2px] bg-white rounded my-[4px] transition-all duration-300 ${menuOpen ? "opacity-0" : ""
-              }`}
+            className={`block w-6 h-[2px] bg-white rounded my-[4px] transition-all duration-300 ${
+              menuOpen ? "opacity-0" : ""
+            }`}
           ></span>
           <span
-            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""
-              }`}
+            className={`block w-6 h-[2px] bg-white rounded transition-all duration-300 ${
+              menuOpen ? "-rotate-45 -translate-y-[6px]" : ""
+            }`}
           ></span>
         </button>
 
@@ -61,8 +67,6 @@ function Navbar() {
             Co-ordinators
           </NavLink>
 
-
-
           <NavLink to="/auth">
             <div className="w-8 h-8 rounded-full overflow-hidden cursor-pointer">
               <img
@@ -76,8 +80,9 @@ function Navbar() {
       </div>
 
       <div
-        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${menuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`md:hidden flex flex-col items-center gap-4 pb-4 bg-dark-primary transition-all duration-500 overflow-hidden ${
+          menuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
         <NavLink
           className={getNavLinkClass}

@@ -58,8 +58,6 @@ export const fetchWithAuth = async (url, options = {}, isFormData = false) => {
     try {
       const newAccessToken = await refreshToken();
       options.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
-      console.log("Retrying request with new token...");
       response = await fetch(url, options);
     } catch (error) {
       return Promise.reject(error);

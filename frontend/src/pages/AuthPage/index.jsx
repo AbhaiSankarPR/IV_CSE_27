@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../../context/auth";
 import Signin from "./Signin";
 import Signup from "./Signup";
-import Dashboard from "../admin/dashboard"; 
+import Dashboard from "../admin/dashboard";
 
 export default function Index() {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const toggleAuthMode = () => setIsLogin((prev) => !prev);
 
