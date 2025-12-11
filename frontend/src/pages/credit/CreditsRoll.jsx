@@ -4,43 +4,35 @@ import ivLogo from "../../assets/logo/Odyssey.png";
 export default function CreditsPage() {
   const credits = [
     { role: "Frontend", name: "Abhai Sankar P R" },
-    { role: "Backend", name: "Akhileswaran" },
-    { role: "Title Design", name: "Sreenandan" },
-    { role: "Logo Design", name: "Aadityan M" },
+    { role: "Backend", name: "Akhileswaran K R" },
+    { role: "Title Design", name: "Sreenandan S" },
+    { role: "Logo Design", name: "Adithyan Manoj" },
     { role: "Finance Team", name: "Abhiram A P" },
     {
       role: "Special thanks / mention to",
       list: [
-        "Abhiram AR ",
-        "Aadityan Pramad",
+        "Abhiram A R ",
+        "Aadithyan Pramad",
         "Abhin Anoop",
-        "Abhiram AP",
-        "Sreenandan",
-        "Adityan Manoj",
+        "Abhiram A P",
+        "Sreenandan S",
+        "Adithyan Manoj",
         "Adithya Suresh",
-        "Kevin",
-        "Hridikesh S Premnath",
-        "Sonal Santhosh"
+        "Kevin L",
+        "Hridhikesh S Premnath",
+        "Sonal Santhosh",
       ],
     },
     {
       role: "IV Staffs",
-      list: [
-        "AMAL RAJ B",
-        "BINU RAJAN M R",
-        "KAVITHA K V",
-      ],
+      list: ["AMAL RAJ B", "BINU RAJAN M R", "KAVITHA K V"],
     },
     { role: "Batch", list: ["CSE 2023–2027"] },
     { role: "", name: "Special thanks to SCTCE administration" },
     { role: "", name: "Thanks for travelling with us!" },
     {
       role: "Powered By",
-      list: [
-        "React + Vite",
-        "Tailwind CSS",
-        "Firebase / Supabase / Render",
-      ],
+      list: ["React + Vite", "Tailwind CSS", "Firebase / Supabase / Render"],
     },
   ];
 
@@ -141,15 +133,27 @@ export default function CreditsPage() {
 
             if (item.list) {
               return (
-                <div key={index} className="text-center mb-[4vh] max-w-[90vw] mx-auto">
+                <div
+                  key={index}
+                  className="text-center mb-[4vh] max-w-[90vw] mx-auto"
+                >
                   <div style={{ height: "2vh" }} />
-                  <div className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
-                    style={{ fontFamily: "sans-serif", fontWeight: 900 }}>
+                  <div
+                    className="mb-[2vh] opacity-70 uppercase tracking-widest text-[1.8vh] sm:text-[2vh] md:text-[2.2vh]"
+                    style={{ fontFamily: "sans-serif", fontWeight: 900 }}
+                  >
                     {item.role}
                   </div>
                   {item.list.map((name, i) => (
-                    <div key={i} className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
-                      style={{ fontFamily: "sans-serif", fontWeight: 400, marginBottom: "1vh" }}>
+                    <div
+                      key={i}
+                      className="text-[1.8vh] sm:text-[2vh] md:text-[2.2vh] break-words"
+                      style={{
+                        fontFamily: "sans-serif",
+                        fontWeight: 400,
+                        marginBottom: "1vh",
+                      }}
+                    >
                       {name}
                     </div>
                   ))}
