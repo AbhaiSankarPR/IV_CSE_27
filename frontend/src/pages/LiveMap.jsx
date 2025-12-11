@@ -165,6 +165,34 @@ export default function JourneyMap() {
       alert("Failed to fetch route. Check your API key or network.");
     }
   };
+  useEffect(() => {
+  const fetchSavedLocation = async () => {
+    try {
+      const url = `${import.meta.env.VITE_BACKEND_URL}/loc/get`;
+      const res = await api.get(url);
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch saved location");
+      }
+
+      const data = await res.json();
+
+      const formatted = {
+        lat: data.latitude,
+        lon: data.longitude,
+      };
+
+      setSavedLocation(formatted);
+      localStorage.setItem("savedLocation", JSON.stringify(formatted));
+
+    } catch (err) {
+      console.error("Error loading saved location:", err);
+    }
+  };
+
+  fetchSavedLocation();
+}, []);
+
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
