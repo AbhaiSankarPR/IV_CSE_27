@@ -19,12 +19,12 @@ export default function Dashboard() {
   const [loadingSections, setLoadingSections] = useState(false);
 
   const [files, setFiles] = useState([]);
-  const [fileNames, setFileNames] = useState([]);
+  const [fileNamespersonal, setFileNamespersonal] = useState([]);
+  const [fileNamespublic, setFileNamespublic] = useState([]);
 
   const [isUploadingprivate, setIsUploadingprivate] = useState(false);
   const [isUploadingpublic, setIsUploadingpublic] = useState(false);
 
-  // Load essentials
   useEffect(() => {
     if (activeTab === "essentials") {
       setLoadingSections(true);
@@ -38,13 +38,34 @@ export default function Dashboard() {
     }
   }, [activeTab]);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, bucket) => {
     const selected = Array.from(e.target.files);
+    const hasNonImage = selected.some(
+      (file) => !file.type.startsWith("image/")
+    );
+
+    if (hasNonImage) {
+      alert("Only image files are allowed.");
+      e.target.value = "";
+      return;
+    }
+
+    if (bucket === "Memories") {
+      setFileNamespersonal(selected.map((f) => f.name));
+    }
+
+    if (bucket === "Images") {
+      setFileNamespublic(selected.map((f) => f.name));
+    }
+
     setFiles(selected);
-    setFileNames(selected.map((f) => f.name));
   };
 
   const handleUpload = async (bucket) => {
+    if (files.length === 0) {
+      alert("No images Selected!!");
+      return;
+    }
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
 
@@ -57,6 +78,13 @@ export default function Dashboard() {
         `${import.meta.env.VITE_BACKEND_URL}/images/upload?bucket=${bucket}`
       );
       alert("Upload complete!");
+      if (bucket === "Memories") {
+        setFileNamespersonal([]);
+      }
+
+      if (bucket === "Images") {
+        setFileNamespublic([]);
+      }
     } catch {
       alert("Upload failed.");
     }
@@ -83,7 +111,8 @@ export default function Dashboard() {
         )}
         {activeTab === "upload" && (
           <UploadTab
-            fileNames={fileNames}
+            fileNamespersonal={fileNamespersonal}
+            fileNamespublic={fileNamespublic}
             handleFileChange={handleFileChange}
             handleUpload={handleUpload}
             isUploadingprivate={isUploadingprivate}

@@ -1,5 +1,6 @@
 export default function UploadTab({
-  fileNames,
+  fileNamespersonal,
+  fileNamespublic,
   handleFileChange,
   handleUpload,
   isUploadingprivate,
@@ -27,12 +28,12 @@ export default function UploadTab({
               id="personalUpload"
               type="file"
               multiple
-              onChange={handleFileChange}
+              onChange={(e) => handleFileChange(e, "Memories")}
               className="hidden"
             />
 
-            {fileNames.length > 0 &&
-              fileNames.map((name, idx) => (
+            {fileNamespersonal.length > 0 &&
+              fileNamespersonal.map((name, idx) => (
                 <p key={idx} className="text-sm text-gray-300">
                   • {name}
                 </p>
@@ -41,7 +42,7 @@ export default function UploadTab({
             <button
               onClick={() => handleUpload("Memories")}
               disabled={isUploadingprivate}
-              className={`mt-5 px-5 py-2 cursor-pointer rounded-lg ${
+              className={`w-40 mt-5 px-5 py-2 cursor-pointer rounded-lg ${
                 isUploadingprivate
                   ? "bg-gray-500"
                   : "bg-blue-600 hover:bg-blue-700"
@@ -67,12 +68,12 @@ export default function UploadTab({
               id="publicUpload"
               type="file"
               multiple
-              onChange={handleFileChange}
+              onChange={(e) => handleFileChange(e, "Images")}
               className="hidden"
             />
 
-            {fileNames.length > 0 &&
-              fileNames.map((name, idx) => (
+            {fileNamespublic.length > 0 &&
+              fileNamespublic.map((name, idx) => (
                 <p key={idx} className="text-sm text-gray-300">
                   • {name}
                 </p>
@@ -81,7 +82,7 @@ export default function UploadTab({
             <button
               onClick={() => handleUpload("Images")}
               disabled={isUploadingpublic}
-              className={`mt-5 px-5 py-2 cursor-pointer rounded-lg ${
+              className={` w-40 mt-5 px-5 py-2 cursor-pointer rounded-lg ${
                 isUploadingpublic
                   ? "bg-gray-500"
                   : "bg-blue-600 hover:bg-blue-700"

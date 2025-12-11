@@ -28,7 +28,6 @@ export default function ProfileTab({ user }) {
         </p>
       </div>
 
-      {/* Buy Me a Tea */}
       <div className="w-full max-w-3xl mt-6 bg-white/10 backdrop-blur-xl p-6 rounded-xl shadow-lg flex flex-col items-center gap-4">
         <button
           onClick={handlePay}
@@ -39,7 +38,7 @@ export default function ProfileTab({ user }) {
             className="w-9 h-9 object-contain invert brightness-200"
             alt="Tea"
           />
-          <span className="text-lg sm:text-xl font-semibold">Buy me a tea ☕</span>
+          <span className="text-lg sm:text-xl font-semibold cursor-pointer">Buy me a tea</span>
         </button>
 
         {showQRCode && (

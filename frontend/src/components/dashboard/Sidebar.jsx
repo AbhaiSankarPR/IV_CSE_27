@@ -45,11 +45,10 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, navbarH
           </div>
         </div>
 
-        {/* Main Buttons */}
         <div className={`flex flex-col gap-2 mt-2 ${sidebarOpen ? "block" : "hidden md:block"}`}>
           <button
             onClick={() => handleClick("essentials")}
-            className={`p-3 rounded-lg text-left text-sm transition ${activeTab === "essentials" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
+            className={`p-3 rounded-lg text-left cursor-pointer text-sm transition ${activeTab === "essentials" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
               }`}
           >
             IV Essentials
@@ -57,7 +56,7 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, navbarH
 
           <button
             onClick={() => handleClick("upload")}
-            className={`p-3 rounded-lg text-left text-sm transition ${activeTab === "upload" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
+            className={`p-3 rounded-lg text-left cursor-pointer text-sm transition ${activeTab === "upload" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
               }`}
           >
             Upload Image
@@ -65,17 +64,16 @@ export default function Sidebar({ user, activeTab, setActiveTab, logout, navbarH
 
           <button
             onClick={() => handleClick("expenses")}
-            className={`p-3 rounded-lg text-left text-sm transition ${activeTab === "expenses" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
+            className={`p-3 rounded-lg cursor-pointer text-left text-sm transition ${activeTab === "expenses" ? "bg-white/20 text-white font-medium" : "hover:bg-white/10 text-white"
               }`}
           >
             Expense Details
           </button>
         </div>
 
-        {/* Logout Button Full Width */}
         <button
           onClick={() => handleClick("logout")}
-          className="mt-4 w-full px-5 py-3 bg-red-500 hover:bg-red-400 rounded-lg font-semibold text-sm text-white transition"
+          className="mt-4 w-full px-5 cursor-pointer py-3 bg-red-500 hover:bg-red-400 rounded-lg font-semibold text-sm text-white transition"
         >
           Logout
         </button>
