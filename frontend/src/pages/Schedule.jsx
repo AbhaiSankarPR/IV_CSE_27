@@ -36,18 +36,32 @@ export default function Schedule() {
 
   const getIcon = (title) => {
     title = title.toLowerCase();
+    if (title.includes("final"))
+      return <Plane className="w-5 h-5 text-cyan-400" />;
     if (title.includes("departure") || title.includes("arrival"))
       return <Train className="w-5 h-5 text-blue-400" />;
-    if (title.includes("hotel") || title.includes("stay") || title.includes("check-in"))
+    if (
+      title.includes("hotel") ||
+      title.includes("stay") ||
+      title.includes("check-in")
+    )
       return <Bed className="w-5 h-5 text-yellow-400" />;
-    if (title.includes("visit") || title.includes("tour") || title.includes("sightseeing"))
+    if (
+      title.includes("visit") ||
+      title.includes("tour") ||
+      title.includes("sightseeing")
+    )
       return <Camera className="w-5 h-5 text-pink-400" />;
-    if (title.includes("lunch") || title.includes("dinner") || title.includes("breakfast"))
+    if (
+      title.includes("lunch") ||
+      title.includes("dinner") ||
+      title.includes("breakfast")
+    )
       return <Utensils className="w-5 h-5 text-green-400" />;
     if (title.includes("transfer") || title.includes("proceed"))
       return <MapPin className="w-5 h-5 text-purple-400" />;
-    if (title.includes("institute")) return <Briefcase className="w-5 h-5 text-orange-400" />;
-    if (title.includes("airport")) return <Plane className="w-5 h-5 text-cyan-400" />;
+    if (title.includes("institute"))
+      return <Briefcase className="w-5 h-5 text-orange-400" />;
     return <Calendar className="w-5 h-5 text-gray-400" />;
   };
 
@@ -63,10 +77,10 @@ export default function Schedule() {
     }))
     .filter((day) => day.events.length > 0);
 
-  if (loading) return <Loading message="Loading Schedule..."  />;
+  if (loading) return <Loading message="Loading Schedule..." />;
 
   return (
-<div className="min-h-screen bg-[#0d0d0d]/25 backdrop-blur-md text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">
+    <div className="min-h-screen bg-[#0d0d0d]/25 backdrop-blur-md text-gray-200 px-6 md:px-16 py-16 font-[Poppins] relative">
       <div className="max-w-4xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -128,8 +142,12 @@ export default function Schedule() {
                       className={`text-lg font-medium leading-tight ${
                         event.train ? "cursor-pointer hover:text-blue-400" : ""
                       }`}
-                      onClick={() => event.train && setSelectedTrain(event.train)}
-                      onMouseEnter={() => event.train && setHoverInfo(event.train)}
+                      onClick={() =>
+                        event.train && setSelectedTrain(event.train)
+                      }
+                      onMouseEnter={() =>
+                        event.train && setHoverInfo(event.train)
+                      }
                       onMouseLeave={() => setHoverInfo(null)}
                     >
                       {event.title}
@@ -139,13 +157,16 @@ export default function Schedule() {
 
                     {hoverInfo === event.train && (
                       <div className="absolute bg-gray-900 border border-gray-700 text-sm rounded-lg p-3 mt-1 ml-2 w-64 shadow-xl z-20">
-                        <p className="font-semibold text-blue-400">{event.train.name}</p>
+                        <p className="font-semibold text-blue-400">
+                          {event.train.name}
+                        </p>
                         <p>Train No: {event.train.number}</p>
                         <p>
                           {event.train.from} → {event.train.to}
                         </p>
                         <p>
-                          Departure: {event.train.dep} | Arrival: {event.train.arr}
+                          Departure: {event.train.dep} | Arrival:{" "}
+                          {event.train.arr}
                         </p>
                       </div>
                     )}
