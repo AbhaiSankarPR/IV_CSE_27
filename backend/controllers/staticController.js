@@ -1,6 +1,4 @@
-const { google } = require("googleapis");
 const { db } = require("../config/firebase");
-const credentials = require("../credentials.json");
 
 async function getItineraries() {
   try {
@@ -37,28 +35,7 @@ async function getUtensils() {
   }
 }
 
-async function getSheetData() {
-  const auth = new google.auth.GoogleAuth({
-    credentials: credentials,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
-  });
-
-  const client = await auth.getClient();
-  const sheets = google.sheets({ version: "v4", auth: client });
-
-  const { spreadsheetId } = process.env;
-  const range = "Sheet1!A1:B2";
-
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range,
-  });
-
-  return response.data.values;
-}
-
 module.exports = {
   getItineraries,
   getUtensils,
-  getSheetData,
 };
