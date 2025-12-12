@@ -183,10 +183,10 @@ export default function Schedule() {
       </div>
 
       {selectedTrain && (
-        <div
-          className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
-          onClick={() => setSelectedTrain(null)}
-        >
+<div className="fixed inset-0 bg-black/70 grid place-items-center z-50"
+onClick={() => setSelectedTrain(null)}
+>
+       
           <div
             className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
             onClick={(e) => e.stopPropagation()}
