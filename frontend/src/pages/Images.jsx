@@ -12,7 +12,7 @@ export default function Images() {
 
   const isAdmin = user?.role === "admin";
 
-  useEffect(() => {
+  const refreshImages = async () => {
     setIsLoading(true);
 
     fetch(`${import.meta.env.VITE_BACKEND_URL}/images/public`)
@@ -28,6 +28,10 @@ export default function Images() {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    refreshImages();
   }, []);
 
   if (isLoading) {
@@ -64,6 +68,7 @@ export default function Images() {
         images={imageUrls}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        refreshImages={refreshImages}
         isAdmin={isAdmin}
       />
     </div>
