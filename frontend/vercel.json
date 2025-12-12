@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data: blob: https://osuovssbexceivgwncfh.supabase.co; connect-src 'self' https://iv-backend-fczf.onrender.com https://osuovssbexceivgwncfh.supabase.co; object-src 'none'; base-uri 'self'; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data: blob: https://osuovssbexceivgwncfh.supabase.co; connect-src 'self' https://iv-backend-fczf.onrender.com https://osuovssbexceivgwncfh.supabase.co https://api.openrouteservice.org; object-src 'none'; base-uri 'self'; frame-ancestors 'none';"
         }
       ]
     }
