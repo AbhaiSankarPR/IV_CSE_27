@@ -39,7 +39,9 @@ export default function Signup({ onToggleMode }) {
         alert(result.message || "Profile created successfully!");
         login(result);
       } else {
-        alert(result.error || "Signup failed. Check your passkey or details.");
+        alert(
+          result.message || "Signup failed. Check your passkey or details."
+        );
       }
     } catch (err) {
       console.error("Error creating profile:", err);
@@ -87,6 +89,7 @@ export default function Signup({ onToggleMode }) {
         <input
           type="password"
           placeholder="Password"
+          autoComplete="new-password"
           {...register("password", {
             required: "Password is required",
             minLength: {
@@ -104,6 +107,7 @@ export default function Signup({ onToggleMode }) {
         <input
           type="password"
           placeholder="Confirm Password"
+          autoComplete="new-password"
           {...register("confirmPassword", {
             required: "Please confirm your password",
             validate: (value) =>
@@ -121,10 +125,14 @@ export default function Signup({ onToggleMode }) {
         <input
           type="password"
           placeholder="Passkey"
+          autoComplete="off"
           {...register("passkey", { required: "PassKey is required" })}
           disabled={loading}
           className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
         />
+        {errors.passkey && (
+          <p className="text-red-400 text-sm">{errors.passkey.message}</p>
+        )}
 
         <button
           type="submit"
@@ -132,7 +140,7 @@ export default function Signup({ onToggleMode }) {
           className={`w-full py-3 rounded font-semibold transition ${
             !isValid || loading
               ? "bg-gray-600 cursor-not-allowed"
-              : "bg-green-500 text-black hover:bg-green-400"
+              : "bg-green-500 text-black hover:bg-green-400 cursor-pointer"
           }`}
         >
           {loading ? "Creating Account..." : "Sign Up"}

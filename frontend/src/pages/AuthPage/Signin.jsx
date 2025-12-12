@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Signin({ onToggleMode }) {
   const { login } = useAuth();
@@ -12,10 +12,18 @@ export default function Signin({ onToggleMode }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
   });
+
+  const email = watch("email");
+  const password = watch("password");
+
+  useEffect(() => {
+    setLoginError("");
+  }, [email, password]);
 
   const onLoginSubmit = async (data) => {
     setLoading(true);
@@ -37,7 +45,7 @@ export default function Signin({ onToggleMode }) {
         login(result);
         navigate("/dashboard");
       } else {
-        setLoginError(result.error || "Invalid email or password");
+        setLoginError(result.message || "Invalid email or password");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -74,6 +82,7 @@ export default function Signin({ onToggleMode }) {
         <input
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
           className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
           {...register("password", { required: "Password is required" })}
           disabled={loading}
