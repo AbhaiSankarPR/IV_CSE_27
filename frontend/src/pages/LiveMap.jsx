@@ -166,33 +166,31 @@ export default function JourneyMap() {
     }
   };
   useEffect(() => {
-  const fetchSavedLocation = async () => {
-    try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/loc/get`;
-      const res = await api.get(url);
+    const fetchSavedLocation = async () => {
+      try {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/loc/get`;
+        const res = await api.get(url);
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch saved location");
+        if (!res.ok) {
+          throw new Error("Failed to fetch saved location");
+        }
+
+        const data = await res.json();
+
+        const formatted = {
+          lat: data.latitude,
+          lon: data.longitude,
+        };
+
+        setSavedLocation(formatted);
+        localStorage.setItem("savedLocation", JSON.stringify(formatted));
+      } catch (err) {
+        console.error("Error loading saved location:", err);
       }
+    };
 
-      const data = await res.json();
-
-      const formatted = {
-        lat: data.latitude,
-        lon: data.longitude,
-      };
-
-      setSavedLocation(formatted);
-      localStorage.setItem("savedLocation", JSON.stringify(formatted));
-
-    } catch (err) {
-      console.error("Error loading saved location:", err);
-    }
-  };
-
-  fetchSavedLocation();
-}, []);
-
+    fetchSavedLocation();
+  }, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
@@ -265,7 +263,7 @@ export default function JourneyMap() {
         <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-[1000]">
           <button
             onClick={handleZoomToMe}
-            className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
+            className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md text-sm cursor-pointer"
           >
             🎯 My Location
           </button>
@@ -273,7 +271,7 @@ export default function JourneyMap() {
           {(user?.role === "admin" || user?.role === "student") && (
             <button
               onClick={handleGetDirections}
-              className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md text-sm"
+              className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md text-sm cursor-pointer"
             >
               🧭 Get Directions
             </button>
@@ -282,7 +280,7 @@ export default function JourneyMap() {
       </div>
 
       <p className="text-gray-400 mt-4 text-center text-sm">
-        Blue = trip route | Red = you | Green = meeting point | Orange = driving
+        Blue = Trip route | Red = You | Green = Meeting point | Orange = Driving
         path
       </p>
 
@@ -291,7 +289,7 @@ export default function JourneyMap() {
       {user?.role === "admin" && (
         <button
           onClick={handleSaveLocation}
-          className="mt-6 px-6 py-3 bg-green-500 hover:bg-green-400 text-black rounded-lg font-semibold transition"
+          className="mt-6 px-6 py-3 bg-green-500 hover:bg-green-400 text-black rounded-lg font-semibold transition cursor-pointer"
         >
           Update Location
         </button>
