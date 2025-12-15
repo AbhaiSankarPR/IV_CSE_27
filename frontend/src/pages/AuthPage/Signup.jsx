@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Signup({ onToggleMode }) {
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -86,36 +89,68 @@ export default function Signup({ onToggleMode }) {
           <p className="text-red-400 text-sm">{errors.email.message}</p>
         )}
 
-        <input
-          type="password"
-          placeholder="Password"
-          autoComplete="new-password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters",
-            },
-          })}
-          disabled={loading}
-          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            autoComplete="new-password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
+            disabled={loading}
+            className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+          />
+
+          <button
+            type="button"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-400 cursor-pointer"
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+
         {errors.password && (
           <p className="text-red-400 text-sm">{errors.password.message}</p>
         )}
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          autoComplete="new-password"
-          {...register("confirmPassword", {
-            required: "Please confirm your password",
-            validate: (value) =>
-              value === getValues("password") || "Passwords do not match",
-          })}
-          disabled={loading}
-          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
-        />
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            autoComplete="new-password"
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === getValues("password") || "Passwords do not match",
+            })}
+            disabled={loading}
+            className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+          />
+
+          <button
+            type="button"
+            aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+            onClick={() => setShowConfirmPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-400 cursor-pointer"
+          >
+            {showConfirmPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+
         {errors.confirmPassword && (
           <p className="text-red-400 text-sm">
             {errors.confirmPassword.message}

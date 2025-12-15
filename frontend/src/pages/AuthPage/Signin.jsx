@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Signin({ onToggleMode }) {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -79,14 +81,30 @@ export default function Signin({ onToggleMode }) {
           <p className="text-red-400 text-sm">{errors.email.message}</p>
         )}
 
-        <input
-          type="password"
-          placeholder="Password"
-          autoComplete="current-password"
-          className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
-          {...register("password", { required: "Password is required" })}
-          disabled={loading}
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            autoComplete="current-password"
+            className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-green-500"
+            {...register("password", { required: "Password is required" })}
+            disabled={loading}
+          />
+
+          <button
+            type="button"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-400 cursor-pointer"
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+
         {errors.password && (
           <p className="text-red-400 text-sm">{errors.password.message}</p>
         )}
