@@ -10,7 +10,8 @@ import Schedule from "../pages/Schedule";
 import Map from "../pages/LiveMap";
 import Dashboard from "../pages/admin/dashboard";
 import Memories from "../pages/Memories";
-import Credit from "../pages/credit/CreditsRoll"
+import Credit from "../pages/credit/CreditsRoll";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -44,11 +45,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/memories",
-        element: <Memories />,
+        element: (
+          <ProtectedRoute>
+            <Memories />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/credits",
