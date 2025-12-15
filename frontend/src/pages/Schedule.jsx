@@ -238,39 +238,56 @@ export default function Schedule() {
       </div>
 
       {selectedItem && (
-  <div
-    className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
-    onClick={() => setSelectedItem(null)}
-  >
-    <div
-      className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="absolute top-3 right-3 text-gray-400 hover:text-red-500 cursor-pointer"
-        onClick={() => setSelectedItem(null)}
-      >
-        <X />
-      </button>
+        <div
+          className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+          onClick={() => setSelectedTrain(null)}
+        >
+          <div
+            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 cursor-pointer"
+              onClick={() => setSelectedItem(null)}
+            >
+              <X />
+            </button>
 
-      <h2 className="text-xl font-semibold text-cyan-400 mb-2">
-        {selectedItem.airline || selectedItem.name}
-      </h2>
+            <h2 className="text-xl font-semibold text-cyan-400 mb-2">
+              {selectedItem.airline || selectedItem.name}
+            </h2>
 
-      {selectedItem.flightNo && <p className="text-gray-300">Flight No: {selectedItem.flightNo}</p>}
+            {selectedItem.flightNo && (
+              <p className="text-gray-300">
+                Flight No: {selectedItem.flightNo}
+              </p>
+            )}
 
-      {selectedItem.from && selectedItem.to && (
-        <p className="text-gray-400">{selectedItem.from} → {selectedItem.to}</p>
+            {selectedItem.from && selectedItem.to && (
+              <p className="text-gray-400">
+                {selectedItem.from} → {selectedItem.to}
+              </p>
+            )}
+
+            {selectedItem.dep && (
+              <p className="text-gray-400 mt-2">
+                Departure: {selectedItem.dep}
+              </p>
+            )}
+            {selectedItem.arr && (
+              <p className="text-gray-400">Arrival: {selectedItem.arr}</p>
+            )}
+            {selectedItem.duration && (
+              <p className="text-gray-400 mt-1">
+                Duration: {selectedItem.duration}
+              </p>
+            )}
+            {selectedItem.price && (
+              <p className="text-gray-400 mt-1">Price: {selectedItem.price}</p>
+            )}
+          </div>
+        </div>
       )}
-
-      {selectedItem.dep && <p className="text-gray-400 mt-2">Departure: {selectedItem.dep}</p>}
-      {selectedItem.arr && <p className="text-gray-400">Arrival: {selectedItem.arr}</p>}
-      {selectedItem.duration && <p className="text-gray-400 mt-1">Duration: {selectedItem.duration}</p>}
-      {selectedItem.price && <p className="text-gray-400 mt-1">Price: {selectedItem.price}</p>}
-    </div>
-  </div>
-)}
-
     </>
   );
 }
