@@ -51,8 +51,7 @@ export default function CreditsPage() {
     const vpHeight = vp.clientHeight;
     const contentHeight = ct.scrollHeight;
 
-    setTranslateY(vpHeight); // start from bottom
-
+    setTranslateY(vpHeight); 
     let lastTime = null;
 
     function animate(ts) {
@@ -62,8 +61,6 @@ export default function CreditsPage() {
 
       setTranslateY((prev) => {
         const next = prev - speed * delta * vpHeight * 0.01;
-
-        // when content is fully above the viewport, restart from bottom
         if (next + contentHeight < 0) return vpHeight;
         return next;
       });

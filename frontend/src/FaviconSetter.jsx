@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import logo from "./assets/logo/Odyssey.png"; // adjust the path correctly
+import logo from "./assets/logo/Odyssey.png";
 
 export default function FaviconSetter() {
   useEffect(() => {
