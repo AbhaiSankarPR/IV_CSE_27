@@ -33,7 +33,7 @@ const narayanan =
 
 const mainCoordinators = [
   {
-    name: "Adithyan Pramad",
+    name: "Aadithyan Pramad",
     img: pramad,
     link: "https://www.instagram.com/aadithyan_pramad?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   },
@@ -47,7 +47,7 @@ const mainCoordinators = [
 const teams = {
   finance: [
     {
-      name: "Aditya Narayanan",
+      name: "A S Adityanarayanan",
       img: narayanan,
       link: "https://www.instagram.com/_.sxssy._?igsh=MWVjenNlZWxldXkxbA==",
     },
@@ -64,12 +64,12 @@ const teams = {
       link: "https://www.instagram.com/4ksheeyy/",
     },
     {
-      name: "Sreenandan",
+      name: "Sreenandan S",
       img: sreenandan,
       link: "https://www.instagram.com/im_sreenandan?igsh=eTZzMDBpMG9ubzNi",
     },
     {
-      name: "Sneha",
+      name: "Sneha S A",
       img: sneha,
     },
     {
@@ -78,7 +78,7 @@ const teams = {
       link: "https://www.instagram.com/the_hridhikesh/",
     },
     {
-      name: "Devanand",
+      name: "Devanand S",
       img: jk,
       link: "https://www.instagram.com/the_xiphoss/",
     },
@@ -95,12 +95,12 @@ const teams = {
       link: "https://www.instagram.com/nxn_dana?igsh=eWxzdXVxMHdxazVn",
     },
     {
-      name: "Negha",
+      name: "Negha R",
       img: negha,
       link: "https://www.instagram.com/n_3gh_4?igsh=MW5zZ2thaXk2emt3dw==",
     },
     {
-      name: "Kevin",
+      name: "Kevin L",
       img: kevin,
       link: "https://www.instagram.com/leo_kev_n?igsh=N2R6dWEyZm54eHJh",
     },
@@ -110,7 +110,7 @@ const teams = {
       link: "https://www.instagram.com/_s.i.d.h.a.r.t.h333_?igsh=MW0zdDE5MG1yOHl4Nw==",
     },
     {
-      name: "Vinayak",
+      name: "Vinayak D",
       img: vinayak,
       link: "https://www.instagram.com/winayak._/",
     },
