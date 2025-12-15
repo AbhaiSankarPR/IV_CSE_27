@@ -21,6 +21,9 @@ export default function Schedule() {
   const [hoverInfo, setHoverInfo] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const isTouchDevice = () => {
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/static/itinerary`)
@@ -152,9 +155,11 @@ export default function Schedule() {
                           if (event.flight) setSelectedItem(event.flight);
                         }}
                         onMouseEnter={() => {
-                          if (event.train) setHoverInfo(event.train);
-                          if (event.hotel) setHoverInfo(event.hotel);
-                          if (event.flight) setHoverInfo(event.flight);
+                          if (!isTouchDevice()) {
+                            if (event.train) setHoverInfo(event.train);
+                            if (event.hotel) setHoverInfo(event.hotel);
+                            if (event.flight) setHoverInfo(event.flight);
+                          }
                         }}
                         onMouseLeave={() => setHoverInfo(null)}
                       >
@@ -240,10 +245,10 @@ export default function Schedule() {
       {selectedItem && (
         <div
           className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
-          onClick={() => setSelectedTrain(null)}
+          onClick={() => setSelectedItem(null)}
         >
           <div
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
+            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md max-h-[80dvh] overflow-y-auto relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -252,9 +257,16 @@ export default function Schedule() {
             >
               <X />
             </button>
+            <h2 className="flex items-center text-xl font-semibold text-cyan-400 mb-2 gap-2 truncate">
+              {selectedItem.airline && getIcon("final")}
+              {selectedItem.from && !selectedItem.duration && getIcon("departure")}
+              {selectedItem.rating && getIcon("hotel")}
 
-            <h2 className="text-xl font-semibold text-cyan-400 mb-2">
-              {selectedItem.airline || selectedItem.name}
+              <span className="truncate">
+                {selectedItem.airline ||
+                  selectedItem.name ||
+                  selectedItem.hotelName}
+              </span>
             </h2>
 
             {selectedItem.flightNo && (
@@ -262,13 +274,11 @@ export default function Schedule() {
                 Flight No: {selectedItem.flightNo}
               </p>
             )}
-
             {selectedItem.from && selectedItem.to && (
               <p className="text-gray-400">
                 {selectedItem.from} → {selectedItem.to}
               </p>
             )}
-
             {selectedItem.dep && (
               <p className="text-gray-400 mt-2">
                 Departure: {selectedItem.dep}
@@ -284,6 +294,19 @@ export default function Schedule() {
             )}
             {selectedItem.price && (
               <p className="text-gray-400 mt-1">Price: {selectedItem.price}</p>
+            )}
+
+            {selectedItem.rating && (
+              <p className="text-gray-400 mt-2 flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400" />
+                {selectedItem.rating} ({selectedItem.reviews} reviews)
+              </p>
+            )}
+            {selectedItem.address && (
+              <p className="text-gray-400 mt-1 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-purple-400" />
+                {selectedItem.address}
+              </p>
             )}
           </div>
         </div>
