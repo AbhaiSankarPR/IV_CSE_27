@@ -112,15 +112,6 @@ export default function Memories() {
     return () => document.removeEventListener("visibilitychange", onVisible);
   }, []);
 
-  if (!user)
-    return (
-      <div className="flex justify-center mt-10 text-white">
-        <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-lg">
-          <h2 className="text-xl">Please login to continue</h2>
-        </div>
-      </div>
-    );
-
   if (isLoading) return <Loading message="Loading Memories..." />;
 
   return (
