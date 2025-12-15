@@ -7,6 +7,7 @@ import {
   Briefcase,
   Train,
   Plane,
+  Star,
   Bed,
   Camera,
   X,
@@ -18,7 +19,7 @@ export default function Schedule() {
   const [scheduled, setSchedule] = useState([]);
   const [query, setQuery] = useState("");
   const [hoverInfo, setHoverInfo] = useState(null);
-  const [selectedTrain, setSelectedTrain] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -141,16 +142,18 @@ export default function Schedule() {
                     <div className="ml-6">
                       <p
                         className={`text-lg font-medium leading-tight ${
-                          event.train
+                          event.train || event.hotel
                             ? "cursor-pointer hover:text-blue-400"
                             : ""
                         }`}
-                        onClick={() =>
-                          event.train && setSelectedTrain(event.train)
-                        }
-                        onMouseEnter={() =>
-                          event.train && setHoverInfo(event.train)
-                        }
+                        onClick={() => {
+                          if (event.train) setSelectedItem(event.train);
+                          if (event.hotel) setSelectedItem(event.hotel);
+                        }}
+                        onMouseEnter={() => {
+                          if (event.train) setHoverInfo(event.train);
+                          if (event.hotel) setHoverInfo(event.hotel);
+                        }}
                         onMouseLeave={() => setHoverInfo(null)}
                       >
                         {event.title}
@@ -173,7 +176,36 @@ export default function Schedule() {
                           </p>
                         </div>
                       )}
+                      {hoverInfo === event.hotel && (
+                        <div className="absolute bg-gray-900 border border-gray-700 text-sm rounded-lg p-3 mt-1 ml-2 w-64 shadow-xl z-20">
+                          <p className="font-semibold text-yellow-400">
+                            {event.hotel.name}
+                          </p>
+                          <p className="flex items-center gap-2">
+                            <Star className="w-4 h-4 text-yellow-400" />
+                            {event.hotel.rating} ({event.hotel.reviews} reviews)
+                          </p>
+
+                          <p className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-purple-400" />
+                            {event.hotel.address}
+                          </p>
+                        </div>
+                      )}
                     </div>
+                    {event.hotel && (
+                      <div className="mt-2 text-sm text-gray-400 pt-3">
+                        <div className="flex items-center gap-2">
+                          <Star className="w-4 h-4 text-yellow-400" />
+                          {event.hotel.rating} ({event.hotel.reviews} reviews)
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-purple-400" />
+                          {event.hotel.address}
+                        </div>
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -186,10 +218,10 @@ export default function Schedule() {
         </div>
       </div>
 
-      {selectedTrain && (
+      {selectedItem && (
         <div
           className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
-          onClick={() => setSelectedTrain(null)}
+          onClick={() => setSelectedItem(null)}
         >
           <div
             className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
@@ -197,20 +229,52 @@ export default function Schedule() {
           >
             <button
               className="absolute top-3 right-3 text-gray-400 hover:text-red-500 cursor-pointer"
-              onClick={() => setSelectedTrain(null)}
+              onClick={() => setSelectedItem(null)}
             >
               <X />
             </button>
             <h2 className="text-xl font-semibold text-blue-400 mb-2">
-              {selectedTrain.name}
+              {selectedItem.name}
             </h2>
-            <p className="text-gray-300">Train No: {selectedTrain.number}</p>
-            <p className="text-gray-400">
-              {selectedTrain.from} → {selectedTrain.to}
-            </p>
-            <p className="text-gray-400 mt-2">Departure: {selectedTrain.dep}</p>
-            <p className="text-gray-400">Arrival: {selectedTrain.arr}</p>
-            <p className="text-gray-400 mt-1">Class: {selectedTrain.class}</p>
+
+            {selectedItem.number && (
+              <p className="text-gray-300">Train No: {selectedItem.number}</p>
+            )}
+
+            {selectedItem.from && selectedItem.to && (
+              <p className="text-gray-400">
+                {selectedItem.from} → {selectedItem.to}
+              </p>
+            )}
+
+            {selectedItem.dep && (
+              <p className="text-gray-400 mt-2">
+                Departure: {selectedItem.dep}
+              </p>
+            )}
+
+            {selectedItem.arr && (
+              <p className="text-gray-400">Arrival: {selectedItem.arr}</p>
+            )}
+
+            {selectedItem.class && (
+              <p className="text-gray-400 mt-1">Class: {selectedItem.class}</p>
+            )}
+
+            {selectedItem.rating && (
+              <p className="text-gray-400 mt-2">
+                <Star className="w-4 h-4 text-yellow-400" />
+                {selectedItem.rating} ({selectedItem.reviews} reviews)
+              </p>
+            )}
+
+            {selectedItem.address && (
+              <p className="text-gray-400 mt-1">
+                {" "}
+                <MapPin className="w-4 h-4 text-purple-400" />
+                {selectedItem.address}
+              </p>
+            )}
           </div>
         </div>
       )}
