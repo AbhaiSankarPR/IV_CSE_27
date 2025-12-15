@@ -258,7 +258,7 @@ export default function Schedule() {
               <X />
             </button>
             <h2 className="flex items-center text-xl font-semibold text-cyan-400 mb-2 gap-2 truncate">
-              {selectedItem.airline && getIcon("final")}
+              {selectedItem.airline && selectedItem.duration && getIcon("final")}
               {selectedItem.from && getIcon("departure")}
               {selectedItem.rating && getIcon("hotel")}
 
