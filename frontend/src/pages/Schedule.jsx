@@ -149,10 +149,12 @@ export default function Schedule() {
                         onClick={() => {
                           if (event.train) setSelectedItem(event.train);
                           if (event.hotel) setSelectedItem(event.hotel);
+                          if (event.flight) setSelectedItem(event.flight);
                         }}
                         onMouseEnter={() => {
                           if (event.train) setHoverInfo(event.train);
                           if (event.hotel) setHoverInfo(event.hotel);
+                          if (event.flight) setHoverInfo(event.flight);
                         }}
                         onMouseLeave={() => setHoverInfo(null)}
                       >
@@ -192,9 +194,26 @@ export default function Schedule() {
                           </p>
                         </div>
                       )}
+                      {hoverInfo === event.flight && (
+                        <div className="absolute bg-gray-900 border border-gray-700 text-sm rounded-lg p-3 mt-1 ml-2 w-64 shadow-xl z-20">
+                          <p className="font-semibold text-cyan-400">
+                            {event.flight.airline}
+                          </p>
+                          <p>Flight No: {event.flight.flightNo}</p>
+                          <p>
+                            {event.flight.from} → {event.flight.to}
+                          </p>
+                          <p>
+                            Departure: {event.flight.dep} | Arrival:{" "}
+                            {event.flight.arr}
+                          </p>
+                          <p>Duration: {event.flight.duration}</p>
+                          <p>Price: {event.flight.price}</p>
+                        </div>
+                      )}
                     </div>
                     {event.hotel && (
-                      <div className="mt-2 text-sm text-gray-400 pt-3">
+                      <div className="mt-2 text-sm text-gray-400 pl-3 pt-3">
                         <div className="flex items-center gap-2">
                           <Star className="w-4 h-4 text-yellow-400" />
                           {event.hotel.rating} ({event.hotel.reviews} reviews)
@@ -219,65 +238,39 @@ export default function Schedule() {
       </div>
 
       {selectedItem && (
-        <div
-          className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
-          onClick={() => setSelectedItem(null)}
-        >
-          <div
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 cursor-pointer"
-              onClick={() => setSelectedItem(null)}
-            >
-              <X />
-            </button>
-            <h2 className="text-xl font-semibold text-blue-400 mb-2">
-              {selectedItem.name}
-            </h2>
+  <div
+    className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+    onClick={() => setSelectedItem(null)}
+  >
+    <div
+      className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-[90%] max-w-md relative"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="absolute top-3 right-3 text-gray-400 hover:text-red-500 cursor-pointer"
+        onClick={() => setSelectedItem(null)}
+      >
+        <X />
+      </button>
 
-            {selectedItem.number && (
-              <p className="text-gray-300">Train No: {selectedItem.number}</p>
-            )}
+      <h2 className="text-xl font-semibold text-cyan-400 mb-2">
+        {selectedItem.airline || selectedItem.name}
+      </h2>
 
-            {selectedItem.from && selectedItem.to && (
-              <p className="text-gray-400">
-                {selectedItem.from} → {selectedItem.to}
-              </p>
-            )}
+      {selectedItem.flightNo && <p className="text-gray-300">Flight No: {selectedItem.flightNo}</p>}
 
-            {selectedItem.dep && (
-              <p className="text-gray-400 mt-2">
-                Departure: {selectedItem.dep}
-              </p>
-            )}
-
-            {selectedItem.arr && (
-              <p className="text-gray-400">Arrival: {selectedItem.arr}</p>
-            )}
-
-            {selectedItem.class && (
-              <p className="text-gray-400 mt-1">Class: {selectedItem.class}</p>
-            )}
-
-            {selectedItem.rating && (
-              <p className="text-gray-400 mt-2">
-                <Star className="w-4 h-4 text-yellow-400" />
-                {selectedItem.rating} ({selectedItem.reviews} reviews)
-              </p>
-            )}
-
-            {selectedItem.address && (
-              <p className="text-gray-400 mt-1">
-                {" "}
-                <MapPin className="w-4 h-4 text-purple-400" />
-                {selectedItem.address}
-              </p>
-            )}
-          </div>
-        </div>
+      {selectedItem.from && selectedItem.to && (
+        <p className="text-gray-400">{selectedItem.from} → {selectedItem.to}</p>
       )}
+
+      {selectedItem.dep && <p className="text-gray-400 mt-2">Departure: {selectedItem.dep}</p>}
+      {selectedItem.arr && <p className="text-gray-400">Arrival: {selectedItem.arr}</p>}
+      {selectedItem.duration && <p className="text-gray-400 mt-1">Duration: {selectedItem.duration}</p>}
+      {selectedItem.price && <p className="text-gray-400 mt-1">Price: {selectedItem.price}</p>}
+    </div>
+  </div>
+)}
+
     </>
   );
 }
