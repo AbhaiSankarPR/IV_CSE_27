@@ -189,7 +189,9 @@ export default function JourneyMap() {
       }
     };
 
-    fetchSavedLocation();
+    if(user) {
+      fetchSavedLocation();
+    }
   }, []);
 
   return (
