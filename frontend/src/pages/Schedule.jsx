@@ -21,6 +21,9 @@ export default function Schedule() {
   const [hoverInfo, setHoverInfo] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const isTouchDevice = () => {
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/static/itinerary`)
@@ -152,9 +155,11 @@ export default function Schedule() {
                           if (event.flight) setSelectedItem(event.flight);
                         }}
                         onMouseEnter={() => {
-                          if (event.train) setHoverInfo(event.train);
-                          if (event.hotel) setHoverInfo(event.hotel);
-                          if (event.flight) setHoverInfo(event.flight);
+                          if (!isTouchDevice()) {
+                            if (event.train) setHoverInfo(event.train);
+                            if (event.hotel) setHoverInfo(event.hotel);
+                            if (event.flight) setHoverInfo(event.flight);
+                          }
                         }}
                         onMouseLeave={() => setHoverInfo(null)}
                       >
