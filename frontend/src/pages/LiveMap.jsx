@@ -195,7 +195,7 @@ export default function JourneyMap() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
+    <div className="flex flex-col items-center min-h-dvh bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white font-[Poppins] py-10">
       <h1 className="text-3xl font-semibold mb-6 text-center">
         IV Journey Map
       </h1>

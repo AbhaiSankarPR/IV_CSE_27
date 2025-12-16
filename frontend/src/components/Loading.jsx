@@ -2,7 +2,7 @@ import ivLogo from "../assets/logo/Odyssey.png";
 
 export default function Loading({ message = "Loading..." }) {
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-[#0d0d0d] text-white p-4">
+        <div className="min-h-[90dvh] flex flex-col justify-center items-center bg-[#0d0d0d] text-white p-4">
             <img
                 src={ivLogo}
                 alt="Loading Logo"

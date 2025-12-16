@@ -14,8 +14,8 @@ export default function Index() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen pt-10 md:pt-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
-      <div className="relative w-full min-h-screen flex flex-col lg:flex-row overflow-hidden">
+    <div className="flex items-center justify-center min-h-[90dvh] pt-10 md:pt-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
+      <div className="relative w-full md:min-h-[90dvh] min-h-[80dvh] flex flex-col lg:flex-row overflow-hidden">
         <div
           className={`flex flex-col items-center justify-center w-full lg:w-1/2 px-6 sm:px-10 transition-transform duration-700 ease-in-out ${
             isLogin ? "translate-x-0" : "lg:translate-x-full"

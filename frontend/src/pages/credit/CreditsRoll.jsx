@@ -74,8 +74,8 @@ export default function CreditsPage() {
   }, []);
 
   return (
-    <div className="w-screen h-screen overflow-hidden  text-white relative flex items-center justify-center">
-      <div ref={viewportRef} className="absolute inset-0 overflow-hidden">
+    <div className="max-w-dvw min-h-[90dvh] overflow-hidden scrollbar-hide  text-white relative flex items-center justify-center">
+      <div ref={viewportRef} className="absolute inset-0 ">
         <div
           ref={contentRef}
           className="absolute left-1/2 -translate-x-1/2 px-4 max-w-[95vw]"
