@@ -15,7 +15,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-dark-primary text-white border-b border-[rgba(50,50,50,0.838)]">
+    <nav className="bg-dark-primary text-white border-b border-[rgba(50,50,50,0.838)] sticky top-0 z-50">
       <div className="flex items-center justify-between py-4 px-6 md:px-8">
         <Link to="/credits">
           <img
