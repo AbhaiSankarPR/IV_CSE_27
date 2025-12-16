@@ -217,19 +217,6 @@ export default function Schedule() {
                         </div>
                       )}
                     </div>
-                    {event.hotel && (
-                      <div className="mt-2 text-sm text-gray-400 pl-3 pt-3">
-                        <div className="flex items-center gap-2">
-                          <Star className="w-4 h-4 text-yellow-400" />
-                          {event.hotel.rating} ({event.hotel.reviews} reviews)
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-purple-400" />
-                          {event.hotel.address}
-                        </div>
-                      </div>
-                    )}
                   </motion.div>
                 ))}
               </div>
