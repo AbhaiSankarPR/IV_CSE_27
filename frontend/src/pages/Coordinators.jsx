@@ -15,11 +15,11 @@ const vinayak =
 const nandanav =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/nandanav.png";
 const sneha =
-  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/sneha.png";
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Sneha.jpeg";
 const akshay =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/akshaymnair.png";
 const negha =
-  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/negha.jpg";
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/negha.jpeg";
 const kevin =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/KevinL.jpg";
 const sonal =
@@ -71,7 +71,7 @@ const teams = {
     {
       name: "Sneha S A",
       img: sneha,
-      link:"https://www.instagram.com/snehxsx?igsh=a2pyazN2MnVjYjc5",
+      link: "https://www.instagram.com/snehxsx?igsh=a2pyazN2MnVjYjc5",
     },
     {
       name: "Hridhikesh S Premnath",

@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
       registerType: "autoUpdate",
       manifest: {
@@ -55,4 +55,5 @@ export default defineConfig({
       },
     }),
   ],
+  mode: "production",
 });
