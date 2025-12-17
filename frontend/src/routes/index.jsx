@@ -1,17 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 import App from "../App";
-
-import Home from "../pages/Home";
-import Coordinators from "../pages/Coordinators";
-import Images from "../pages/Images";
-import ErrorPage from "../pages/ErrorPage";
-import AuthPage from "../pages/AuthPage";
-import Schedule from "../pages/Schedule";
-import Map from "../pages/LiveMap";
-import Dashboard from "../pages/admin/dashboard";
-import Memories from "../pages/Memories";
-import Credit from "../pages/credit/CreditsRoll";
 import ProtectedRoute from "./ProtectedRoute";
+import ErrorPage from "../pages/ErrorPage";
+
+const Home = lazy(() => import("../pages/Home"));
+const Coordinators = lazy(() => import("../pages/Coordinators"));
+const Images = lazy(() => import("../pages/Images"));
+const AuthPage = lazy(() => import("../pages/AuthPage"));
+const Schedule = lazy(() => import("../pages/Schedule"));
+const Map = lazy(() => import("../pages/LiveMap"));
+const Dashboard = lazy(() => import("../pages/admin/dashboard"));
+const Memories = lazy(() => import("../pages/Memories"));
+const Credit = lazy(() => import("../pages/credit/CreditsRoll"));
 
 export const router = createBrowserRouter([
   {
