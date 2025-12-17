@@ -1,17 +1,10 @@
 import { useState } from "react";
-import { useAuth } from "../../context/auth";
 import Signin from "./Signin";
 import Signup from "./Signup";
-import Dashboard from "../admin/dashboard";
 
 export default function Index() {
-  const { user } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const toggleAuthMode = () => setIsLogin((prev) => !prev);
-
-  if (user) {
-    return <Dashboard />;
-  }
 
   return (
     <div className="flex items-center justify-center min-h-[90dvh] pt-10 md:pt-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 font-[Poppins] text-white overflow-hidden">
