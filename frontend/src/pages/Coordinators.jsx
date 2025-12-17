@@ -71,6 +71,7 @@ const teams = {
     {
       name: "Sneha S A",
       img: sneha,
+      link:"https://www.instagram.com/snehxsx?igsh=a2pyazN2MnVjYjc5",
     },
     {
       name: "Hridhikesh S Premnath",
