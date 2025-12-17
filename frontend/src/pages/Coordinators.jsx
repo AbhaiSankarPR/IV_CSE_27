@@ -98,7 +98,7 @@ const teams = {
     {
       name: "Negha R",
       img: negha,
-      link: "https://www.instagram.com/n_3gh_4?igsh=MW5zZ2thaXk2emt3dw==",
+      link: "https://www.instagram.com/n_3gh_4?igsh=MWZkZjB6am1rZ3Nwag==",
     },
     {
       name: "Kevin L",
