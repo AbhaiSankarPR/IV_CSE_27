@@ -13,6 +13,7 @@ export default function CreditsPage() {
       list: [
         "Abhiram A R ",
         "Aadithyan Pramad",
+        "Arjun A S",
         "Abhin Anoop",
         "Abhiram A P",
         "Sreenandan S",
