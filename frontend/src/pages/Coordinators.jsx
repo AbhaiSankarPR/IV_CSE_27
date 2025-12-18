@@ -31,7 +31,7 @@ const anoop =
 const narayanan =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Adityanarayanan.jpg";
 const joel =
-  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/joel.jpeg";
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Kurian.jpeg";
 const abhinav =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Abhinav.jpeg";
 
