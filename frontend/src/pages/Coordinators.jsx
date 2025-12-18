@@ -1,5 +1,5 @@
 const pramad =
-  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/pramad.jpg";
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Pramad.jpeg";
 const preman =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/HridhikeshSPremnath.jpg";
 const jk =
@@ -30,6 +30,10 @@ const anoop =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Abhin.jpg";
 const narayanan =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Adityanarayanan.jpg";
+const joel =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/joel.jpeg";
+const abhinav =
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Abhinav.jpeg";
 
 const mainCoordinators = [
   {
@@ -48,10 +52,12 @@ const teams = {
   SubCoordinators: [
     {
       name: "Abhinav Krishnan",
+      img: abhinav,
       link: "https://www.instagram.com/abhinavkrishnanreal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     },
     {
       name: "Joel Kurian",
+      img: joel,
       link: "https://www.instagram.com/__joel_22__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     },
   ],
@@ -184,7 +190,6 @@ export default function Coordinators() {
         >
           <h3 className="text-brand-blue mb-2 text-xl font-semibold capitalize">
             {teamName} {teamName !== "SubCoordinators" && <span>Team</span>}
-
           </h3>
           <div className="flex gap-8 flex-wrap justify-center mt-6">
             {members.map((m, i) => (
