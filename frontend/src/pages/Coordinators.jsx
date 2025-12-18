@@ -23,7 +23,7 @@ const negha =
 const kevin =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/KevinL.jpg";
 const sonal =
-  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Sonal.jpg";
+  "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/sonal.jpeg";
 const sidharth =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Sidharth.jpg";
 const anoop =
