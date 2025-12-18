@@ -45,6 +45,16 @@ const mainCoordinators = [
 ];
 
 const teams = {
+  SubCoordinators: [
+    {
+      name: "Abhinav Krishnan",
+      link: "https://www.instagram.com/abhinavkrishnanreal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    },
+    {
+      name: "Joel Kurian",
+      link: "https://www.instagram.com/__joel_22__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    },
+  ],
   finance: [
     {
       name: "A S Adityanarayanan",
@@ -156,7 +166,6 @@ export default function Coordinators() {
         creativity.
       </p>
 
-      {/* Main Coordinators */}
       <div className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform relative z-50">
         <h3 className="text-brand-blue mb-2 text-xl font-semibold">
           Main Coordinators
@@ -168,14 +177,14 @@ export default function Coordinators() {
         </div>
       </div>
 
-      {/* Other Teams */}
       {Object.entries(teams).map(([teamName, members]) => (
         <div
           key={teamName}
           className="mb-8 bg-dark-secondary p-6 rounded-lg border-l-4 border-[#cdcdcd] hover:-translate-y-1 transition-transform relative z-50"
         >
           <h3 className="text-brand-blue mb-2 text-xl font-semibold capitalize">
-            {teamName} Team
+            {teamName} {teamName !== "SubCoordinators" && <span>Team</span>}
+
           </h3>
           <div className="flex gap-8 flex-wrap justify-center mt-6">
             {members.map((m, i) => (
