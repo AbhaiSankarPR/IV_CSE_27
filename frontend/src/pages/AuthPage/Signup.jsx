@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Signup({ onToggleMode }) {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -41,6 +43,7 @@ export default function Signup({ onToggleMode }) {
       if (response.ok) {
         alert(result.message || "Profile created successfully!");
         login(result);
+        navigate("/dashboard");
       } else {
         alert(
           result.message || "Signup failed. Check your passkey or details."
