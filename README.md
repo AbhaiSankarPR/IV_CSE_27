@@ -50,7 +50,7 @@ Try the app live here:
 ## 🎥 Screencast Walkthrough
 
 Watch a short demo of the system in action:  
-📺 [IV Portal Walkthrough](https://drive.google.com/file/d/1q5BLiAKCD8xo7anGKcw1GjrZWEEXnAJw/view?usp=sharing)  
+📺 [IV Portal Walkthrough](https://drive.google.com/file/d/10dJJp2ua9f5jp01DIehCeB7ucFGhtl_o/view?usp=sharing)  
 (_Covers location updating, admin dashboard, and gallery access controls._)
 
 ---
