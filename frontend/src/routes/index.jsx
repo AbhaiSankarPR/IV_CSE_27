@@ -3,16 +3,29 @@ import { lazy } from "react";
 import App from "../App";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
+import { isStaleBuildError, reloadOnceForStaleBuild } from "../utils/staleBuild";
 
-const Home = lazy(() => import("../pages/Home"));
-const Coordinators = lazy(() => import("../pages/Coordinators"));
-const Images = lazy(() => import("../pages/Images"));
-const AuthPage = lazy(() => import("../pages/AuthPage"));
-const Schedule = lazy(() => import("../pages/Schedule"));
-const Map = lazy(() => import("../pages/LiveMap"));
-const Dashboard = lazy(() => import("../pages/admin/dashboard"));
-const Memories = lazy(() => import("../pages/Memories"));
-const Credit = lazy(() => import("../pages/credit/CreditsRoll"));
+// Like React.lazy, but if the page file is missing because a newer version was
+// deployed, reload once with fresh files instead of showing the error page.
+const lazyPage = (load) =>
+  lazy(() =>
+    load().catch((error) => {
+      if (isStaleBuildError(error) && reloadOnceForStaleBuild()) {
+        return new Promise(() => {}); // keep showing the loader while reloading
+      }
+      throw error;
+    })
+  );
+
+const Home = lazyPage(() => import("../pages/Home"));
+const Coordinators = lazyPage(() => import("../pages/Coordinators"));
+const Images = lazyPage(() => import("../pages/Images"));
+const AuthPage = lazyPage(() => import("../pages/AuthPage"));
+const Schedule = lazyPage(() => import("../pages/Schedule"));
+const Map = lazyPage(() => import("../pages/LiveMap"));
+const Dashboard = lazyPage(() => import("../pages/admin/dashboard"));
+const Memories = lazyPage(() => import("../pages/Memories"));
+const Credit = lazyPage(() => import("../pages/credit/CreditsRoll"));
 
 export const router = createBrowserRouter([
   {

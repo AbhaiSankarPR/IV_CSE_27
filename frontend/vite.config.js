@@ -13,6 +13,14 @@ export default defineConfig({
         enabled: false,
       },
       registerType: "autoUpdate",
+      workbox: {
+        // Delete files from older builds and switch to a new build right away.
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+        // Never answer a request for a page file with index.html.
+        navigateFallbackDenylist: [/^\/assets\//],
+      },
       manifest: {
         name: "Odyssey",
         short_name: "Odyssey",

@@ -34,6 +34,58 @@ const greenIcon = new L.Icon({
   popupAnchor: [0, -28],
 });
 
+const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
+
+const MAPTILER_TILES = {
+  url: `https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${MAPTILER_KEY}`,
+  attribution: "&copy; MapTiler &copy; OpenStreetMap contributors",
+};
+
+// Free map tiles that need no key, used when MapTiler is unavailable.
+const FALLBACK_TILES = {
+  url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+};
+
+// Shows the free map straight away, then switches to MapTiler only if its key
+// works. A bad MapTiler key (expired, revoked, quota used up) doesn't fail the
+// tile requests: it returns "Invalid key" images instead, so the key has to be
+// checked up front rather than by watching for tile errors.
+function BaseTiles() {
+  const [tiles, setTiles] = useState(FALLBACK_TILES);
+
+  useEffect(() => {
+    if (!MAPTILER_KEY) return;
+    let cancelled = false;
+
+    fetch(
+      `https://api.maptiler.com/maps/streets-v4/tiles.json?key=${MAPTILER_KEY}`
+    )
+      .then((res) => {
+        if (cancelled) return;
+        if (res.ok) setTiles(MAPTILER_TILES);
+        else console.warn(`MapTiler key rejected (${res.status}); using free map.`);
+      })
+      .catch(() => {
+        if (!cancelled) console.warn("MapTiler unreachable; using free map.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <TileLayer
+      key={tiles.url}
+      url={tiles.url}
+      attribution={tiles.attribution}
+      subdomains={tiles.subdomains ?? "abc"}
+    />
+  );
+}
+
 function FlyToLocation({ liveLocation, trigger }) {
   const map = useMap();
   useEffect(() => {
@@ -208,13 +260,7 @@ export default function JourneyMap() {
           zoomControl={true}
           style={{ height: "100%", width: "100%" }}
         >
-          <TileLayer
-            url={`https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}@2x.webp?key=${
-              import.meta.env.VITE_MAPTILER_KEY
-            }`}
-            detectRetina={true}
-            attribution="&copy; MapTiler &copy; OpenStreetMap contributors"
-          />
+          <BaseTiles />
 
           <Polyline positions={mainRoute} color="deepskyblue" weight={4} />
 
