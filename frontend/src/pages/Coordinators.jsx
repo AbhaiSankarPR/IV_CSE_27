@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const pramad =
   "https://osuovssbexceivgwncfh.supabase.co/storage/v1/object/public/Avatars/Pramad.jpeg";
 const preman =
@@ -142,14 +144,35 @@ const teams = {
   ],
 };
 
+function initials(name) {
+  const parts = name.trim().split(/\s+/);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
+
 function PersonCard({ name, img, link }) {
+  // If the photo can't load, show initials instead. Otherwise the browser
+  // renders the alt text, and the name appears twice.
+  const [imgFailed, setImgFailed] = useState(!img);
+
   const content = (
     <div className="p-4 rounded-xl text-center w-[150px] transition-transform duration-200 ease-in-out hover:-translate-y-1.5 cursor-pointer">
-      <img
-        src={img}
-        alt={name}
-        className="w-32 h-32 object-cover rounded-full mb-4 mx-auto"
-      />
+      {imgFailed ? (
+        <div
+          aria-hidden="true"
+          className="w-32 h-32 rounded-full mb-4 mx-auto flex items-center justify-center bg-white/10 text-white text-3xl font-semibold select-none"
+        >
+          {initials(name)}
+        </div>
+      ) : (
+        <img
+          src={img}
+          alt=""
+          onError={() => setImgFailed(true)}
+          className="w-32 h-32 object-cover rounded-full mb-4 mx-auto"
+        />
+      )}
       <p className="text-white font-semibold text-sm text-center">{name}</p>
     </div>
   );
